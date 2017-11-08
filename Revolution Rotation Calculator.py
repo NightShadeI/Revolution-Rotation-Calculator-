@@ -55,10 +55,7 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adren
                     elif AbilityType[ability] == 'T':
                         Adrenaline -= 15
                     else:
-                        '''
                         Adrenaline -= (75 - Ring)
-                        '''
-                        Adrenaline = 0
                     if Adrenaline > 100:
                         Adrenaline = 100
                     # --- Adding shards if they are used, or using them if activated --- #
