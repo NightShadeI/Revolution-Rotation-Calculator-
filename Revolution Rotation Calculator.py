@@ -19,7 +19,7 @@ Binds = ['BARGE','DEEP IMPACT','BINDING SHOT','TIGHT BINDINGS']
 
 def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adrenaline, Auto_Adrenaline, Time): # Will return how much damage an ability bar will do over a given time
     # --- Defining Variables --- #
-    Altered_Bleeds = Fals
+    Altered_Bleeds = False
     Current = 0
     Current_Buff = float(1)
     Clock = 0
