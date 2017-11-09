@@ -344,7 +344,7 @@ while AbilityInput:
     if AbilityInput != '':
         # --- Add abilities to list to be analysed --- #
         if AbilityInput in AbilityDamage:
-            print("Ability " + AbilityInput + " deals " + str(AbilityDamage[AbilityInput]) + " damage")
+            #print("Ability " + AbilityInput + " deals " + str(AbilityDamage[AbilityInput]) + " damage")
             MyAbilities.append(AbilityInput)
             print('Success!')
             Counter += 1
