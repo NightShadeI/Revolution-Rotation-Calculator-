@@ -1,6 +1,13 @@
 import math
 import time
-Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 'BINDING SHOT', 'BLOOD TENDRILS', 'BOMBARDMENT', 'CHAIN', 'CLEAVE', 'COMBUST', 'CONCENTRATED BLAST', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DAZING SHOT', 'DEADSHOT', "DEATH'S SWIFTNESS", 'DEBILITATE', 'DECIMATE', 'DEEP IMPACT', 'DESTROY', 'DETONATE', 'DISMEMBER', 'DRAGON BREATH', 'FLURRY', 'FORCEFUL BACKHAND', 'FRAGMENTATION SHOT', 'FRENZY', 'FURY', 'HAVOC', 'HURRICANE', 'IMPACT', 'KICK', 'MASSACRE', 'METAMORPHOSIS', 'NEEDLE STRIKE', 'OMNIPOWER', 'ONSLAUGHT', 'OVERPOWER', 'PIERCING SHOT', 'PULVERISE', 'PUNISH', 'QUAKE', 'RAPID FIRE', 'RICOCHET', 'SACRIFICE', 'SEVER', 'SHADOW TENDRILS', 'SHATTER', 'SLAUGHTER', 'SLICE', 'SMASH', 'SMOKE TENDRILS', 'SNAP SHOT', 'SNIPE', 'SONIC WAVE', 'STOMP', 'STORM SHARDS', 'SUNSHINE', 'TIGHT BINDINGS', 'TSUNAMI', "TUSKA'S WRATH", 'UNLOAD', 'WILD MAGIC', 'WRACK']
+Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 
+'BINDING SHOT', 'BLOOD TENDRILS', 'BOMBARDMENT', 'CHAIN', 'CLEAVE', 'COMBUST', 
+'CONCENTRATED BLAST', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DAZING SHOT', 'DEADSHOT', "DEATH'S SWIFTNESS", 'DEBILITATE', 'DECIMATE', 
+'DEEP IMPACT', 'DESTROY', 'DETONATE', 'DISMEMBER', 'DRAGON BREATH', 'FLURRY', 'FORCEFUL BACKHAND', 'FRAGMENTATION SHOT', 'FRENZY', 'FURY', 
+'HAVOC', 'HURRICANE', 'IMPACT', 'KICK', 'MASSACRE', 'METAMORPHOSIS', 'NEEDLE STRIKE', 'OMNIPOWER', 'ONSLAUGHT', 'OVERPOWER', 'PIERCING SHOT', 
+'PULVERISE', 'PUNISH', 'QUAKE', 'RAPID FIRE', 'RICOCHET', 'SACRIFICE', 'SEVER', 'SHADOW TENDRILS', 'SHATTER', 'SLAUGHTER', 'SLICE', 'SMASH', 
+'SMOKE TENDRILS', 'SNAP SHOT', 'SNIPE', 'SONIC WAVE', 'STOMP', 'STORM SHARDS', 'SUNSHINE', 'TIGHT BINDINGS', 'TSUNAMI', "TUSKA'S WRATH", 'UNLOAD', 
+'WILD MAGIC', 'WRACK']
 # --- Defining how abilities work --- #
 AttackSpeedCooldowns = {'FASTEST': 2.4,'FAST': 3.0,'AVERAGE': 3.6,'SLOW': 4.2,'SLOWEST': 7.2} # Cooldowns for casewhere no abilities may be used
 AbilityDamage = {'DEBILITATE': 60, 'UNLOAD': 610, 'TIGHT BINDINGS': 120, 'SNIPE': 172, 'SNAP SHOT': 265, 'SHADOW TENDRILS': 283, 'RICOCHET': 60, 'RAPID FIRE': 451.2, 'PIERCING SHOT': 56.4, 'NEEDLE STRIKE': 94.2, 'FRAGMENTATION SHOT': 241.2, "DEATH'S SWIFTNESS": 0, 'DEADSHOT': 426.13, 'DAZING SHOT': 94.2, 'CORRUPTION SHOT': 200, 'BOMBARDMENT': 131.4, 'BINDING SHOT': 60, 'WRACK': 56.4, 'WILD MAGIC': 265, 'TSUNAMI': 250, 'SUNSHINE': 0, 'SONIC WAVE': 94.2, 'SMOKE TENDRILS': 345, 'OMNIPOWER': 300, 'METAMORPHOSIS': 0, 'IMPACT': 60, 'DRAGON BREATH': 112.8, 'DETONATE': 225, 'DEEP IMPACT': 120, 'CORRUPTION BLAST': 200, 'CONCENTRATED BLAST': 152.8, 'COMBUST': 241.2, 'CHAIN': 60, 'ASPHYXIATE': 451.2, "TUSKA'S WRATH": 5940, 'SHATTER': 0, 'STORM SHARDS': 0, 'SACRIFICE': 60, 'ONSLAUGHT': 532, 'PULVERISE': 300, 'FRENZY': 610, 'BERSERK': 0, 'OVERPOWER': 300, 'MASSACRE': 426.13, 'SEVER': 112.8, 'CLEAVE': 112.8, 'DESTROY': 451.2, 'BACKHAND': 60, 'BARGE': 75, 'BLOOD TENDRILS': 324, 'FLURRY': 204, 'FORCEFUL BACKHAND': 120, 'HAVOC': 75, 'HURRICANE': 265, 'SLAUGHTER': 435, 'SLICE': 75, 'SMASH': 75, 'ASSAULT': 525.6, 'DECIMATE': 112.8, 'DISMEMBER': 120.6, 'FURY': 152.8, 'KICK': 60, 'PUNISH': 56.4, 'QUAKE': 131.4, 'STOMP': 120} # Ability damage of every ability
@@ -16,6 +23,8 @@ CritBoost = ['NEEDLE STRIKE','FURY','CONCENTRATED BLAST',"DEATH'S SWIFTNESS",'SU
 Punishing = ['SLICE','PUNISH','WRACK','PIERCING SHOT'] # Abilities that do extra damage when target stun or bound
 Debilitating = ['BARGE','FORCEFUL BACKHAND','STOMP','DEEP IMPACT','BINDING SHOT','TIGHT BINDINGS','RAPID FIRE'] # Abilities that can stun or bind target
 Binds = ['BARGE','DEEP IMPACT','BINDING SHOT','TIGHT BINDINGS']
+AoEAverageTargetsHit = 2.5
+AoE = ['BOMBARDMENT', 'CHAIN', "DRAGON BREATH", 'CLEAVE', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'FLURRY', 'HURRICANE', 'QUAKE', 'RICOCHET', 'TSUNAMI']
 
 def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adrenaline, Auto_Adrenaline, Time): # Will return how much damage an ability bar will do over a given time
     # --- Defining Variables --- #
@@ -335,6 +344,7 @@ while AbilityInput:
     if AbilityInput != '':
         # --- Add abilities to list to be analysed --- #
         if AbilityInput in AbilityDamage:
+            print("Ability " + AbilityInput + " deals " + str(AbilityDamage[AbilityInput]) + " damage")
             MyAbilities.append(AbilityInput)
             print('Success!')
             Counter += 1
@@ -358,13 +368,31 @@ Runthrough = int(0)
 # --- Tracking of highest and lowest damaging ability bars  --- #
 CurrentHighest = float(0)
 CurrentLowest = float(100000000000000000000)
+
+while True:
+    try:
+        AoEAverageTargetsHit = float(input('How many targets on average will your AoE abilities hit?\n'))
+        break
+    except: Error()
+
 # --- Gets rotation length --- #
 while True:
     try:
         Time = float(input('How long will rotation last? WARNING: Longer times require longer wait times, a better processor will improve this speed. \n>> '))
         break
     except: Error()
+
+
+
+if AoEAverageTargetsHit != 1:
+    for ability in MyAbilities:
+        if ability in AoE:
+            #print("Altering damage of ability " + ability + " from " + str(AbilityDamage[ability]) + " to " + str(AbilityDamage[ability]*AoEAverageTargetsHit))
+            AbilityDamage[ability] = AbilityDamage[ability]*AoEAverageTargetsHit
+    
 # --- Calculations start here --- #
+
+print("Tuska's wrath damage: " + str(AbilityDamage["TUSKA'S WRATH"]))
 Start = int(time.time()) # Record time since epoch (UTC) (in seconds)
 try: # Will keep running until Control C (or other) is pressed to end process
     for index in range(0, Permutations):
@@ -379,6 +407,7 @@ try: # Will keep running until Control C (or other) is pressed to end process
             BestRotation = []
             BestRotation = list(AbilityPath)
             BestBar = list(Permutation)
+            print("New best bar with damage " + str(CurrentHighest) + ": " + str(BestBar))
         if round(Current, 1) < CurrentLowest:
             CurrentLowest = round(Current, 1)
             WorstRotation = []
