@@ -271,7 +271,7 @@ def Alter_Bleeds(Activate_Bleeds):
         if AbilityDamage['SLAUGHTER'] == 435:
             AbilityDamage['SLAUGHTER'] /= 3
             
-def Remove(CopyOfReady): # Removes abilities from lists and dictionaries not being used to save runtime
+def Remove(CopyOfReady): # Removes abilities from lists and dictionaries not being used to save runtime and memory
     for ability in Abilities:
         if not (ability in MyAbilities):
             del AbilityDamage[ability]
@@ -295,6 +295,8 @@ def Remove(CopyOfReady): # Removes abilities from lists and dictionaries not bei
                 SpecialBleeds.remove(ability)
             if ability in SpecialAbilities:
                 SpecialAbilities.remove(ability) 
+            if ability in AoE:
+                AoE.remove(ability)
     return dict(Ready)
 
 def Buff_Available(): # Determines if enemy vulnerable to extra damage due to stuns or binds
@@ -369,31 +371,31 @@ Runthrough = int(0)
 CurrentHighest = float(0)
 CurrentLowest = float(100000000000000000000)
 
+# --- Gets rotation length --- #
 while True:
     try:
-        AoEAverageTargetsHit = float(input('How many targets on average will your AoE abilities hit?\n'))
+        if len(AoE) > 0: # Only ask if AoE abilities are in MyAbilities
+            AoEAverageTargetsHit = float(input('How many targets on average will your AoE abilities hit? '))
+            if AoEAverageTargetsHit < 1:
+                print("Area of effect abilities should hit at least 1 target per use.")
+                continue
         break
     except: Error()
-
-# --- Gets rotation length --- #
+        
+if AoEAverageTargetsHit > 1:
+    for ability in MyAbilities:
+        if ability in AoE:
+            #print("Altering average damage of ability " + ability + " from " + str(AbilityDamage[ability]) + " to " + str(AbilityDamage[ability]*AoEAverageTargetsHit))
+            AbilityDamage[ability] = AbilityDamage[ability]*AoEAverageTargetsHit
+      
 while True:
     try:
         Time = float(input('How long will rotation last? WARNING: Longer times require longer wait times, a better processor will improve this speed. \n>> '))
         break
     except: Error()
-
-
-
-if AoEAverageTargetsHit != 1:
-    for ability in MyAbilities:
-        if ability in AoE:
-            #print("Altering damage of ability " + ability + " from " + str(AbilityDamage[ability]) + " to " + str(AbilityDamage[ability]*AoEAverageTargetsHit))
-            AbilityDamage[ability] = AbilityDamage[ability]*AoEAverageTargetsHit
     
 # --- Calculations start here --- #
 
-if "TUSKA'S WRATH" in AbilityDamage:
-    print("Tuska's wrath damage: " + str(AbilityDamage["TUSKA'S WRATH"]))
 Start = int(time.time()) # Record time since epoch (UTC) (in seconds)
 try: # Will keep running until Control C (or other) is pressed to end process
     for index in range(0, Permutations):
