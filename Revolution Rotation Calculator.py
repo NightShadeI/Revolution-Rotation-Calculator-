@@ -392,7 +392,8 @@ if AoEAverageTargetsHit != 1:
     
 # --- Calculations start here --- #
 
-print("Tuska's wrath damage: " + str(AbilityDamage["TUSKA'S WRATH"]))
+if "TUSKA'S WRATH" in AbilityDamage:
+    print("Tuska's wrath damage: " + str(AbilityDamage["TUSKA'S WRATH"]))
 Start = int(time.time()) # Record time since epoch (UTC) (in seconds)
 try: # Will keep running until Control C (or other) is pressed to end process
     for index in range(0, Permutations):
