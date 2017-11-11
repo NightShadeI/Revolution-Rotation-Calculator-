@@ -301,7 +301,7 @@ if len(ErrorLog) > 0:
     input('\nCould not complete setup, please change fields accordingly and run calculator again. Press enter to exit\n>> ')
     sys.exit()
         
-Adrenaline = int(configurations[0])
+Start_Adrenaline = int(configurations[0])
 Gain = int(configurations[1])
 AttackSpeed = configurations[2].upper()
 Activate_Bleeds = configurations[3]
