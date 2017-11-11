@@ -1,5 +1,4 @@
-import math
-import time
+import math, sys, time
 Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 
 'BINDING SHOT', 'BLOOD TENDRILS', 'BOMBARDMENT', 'CHAIN', 'CLEAVE', 'COMBUST', 
 'CONCENTRATED BLAST', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DAZING SHOT', 'DEADSHOT', "DEATH'S SWIFTNESS", 'DEBILITATE', 'DECIMATE', 
@@ -26,7 +25,7 @@ Binds = ['BARGE','DEEP IMPACT','BINDING SHOT','TIGHT BINDINGS']
 AoEAverageTargetsHit = 2.5
 AoE = ['BOMBARDMENT', 'CHAIN', "DRAGON BREATH", 'CLEAVE', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'FLURRY', 'HURRICANE', 'QUAKE', 'RICOCHET', 'TSUNAMI']
 
-def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adrenaline, Auto_Adrenaline, Time): # Will return how much damage an ability bar will do over a given time
+def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adrenaline, Auto_Adrenaline, Time): # Will return how much damage an ability bar will do over a given time
     # --- Defining Variables --- #
     Altered_Bleeds = False
     Current = 0
@@ -64,7 +63,7 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adren
                     elif AbilityType[ability] == 'T':
                         Adrenaline -= 15
                     else:
-                        Adrenaline -= (75 - Ring)  
+                        Adrenaline = Gain 
                     if Adrenaline > 100:
                         Adrenaline = 100
                     # --- Adding shards if they are used, or using them if activated --- #
@@ -183,44 +182,155 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adren
 
 def Error(): # Called on during invalid inputs
     print('Invalid Input')
+    
+def Repair():
+    repair = input('Configurations.txt has been modified, perform repair? (Y/N)\n>> ')
+    if (repair == 'Y') or (repair == 'YES'):
+        import os
+        correct_data = ['# Rotation Paramaters', '', 'Adrenaline: ', 'Gain: ', 'AttackSpeed: ', 'Bleeds: ', 'Stuns: ','Abilities: [,,,]', 'Style: (,)', 'Time: ', '', '# Mode', '', 'units: seconds']
+        if os.path.exists('Settings\Configurations.txt'):
+            os.remove('Settings\Configurations.txt')
+        with open('Settings\Configurations.txt','w') as settings:
+            for line in correct_data:
+                settings.write(line + str('\n'))
+        input('Repair successful! fill out settings in Configurations.txt before running calculator again. Press enter to exit\n>> ')
+    sys.exit()
+    
+def Compare(lines):
+    correct_data = {'Adrenaline': 2, 'Gain': 3, 'AttackSpeed': 4, 'Bleeds': 5, 'Stuns': 6, 'Abilities': 7, 'Style': 8, 'Time': 9, 'units': 13} # configuration followed by line number
+    for setting in correct_data:
+        if setting != lines[correct_data[setting]]:
+            return False
+    return True
+
+def Validate(configurations):
+    ErrorLog = []
+    Null = False
+    for config in configurations:
+        if config == '':
+            Null = True
+    if Null == True:
+        ErrorLog.append('One or more settings have been left as null')
+
+    try:
+        setting = int(configurations[0])
+        if not (0 <= setting <= 100):
+            ErrorLog.append('Adrenaline must be between 0 and 100 inclusive')
+    except ValueError:
+        ErrorLog.append('Adrenaline must be of form integer')
+        
+    try:
+        setting = int(configurations[1])
+        if not (0 <= setting <= 100):
+            ErrorLog.append('Gain must be a positive integer between 0 and 100')
+    except ValueError:
+        ErrorLog.append('Gain must be of form integer')
+       
+    if configurations[2].upper() not in ('SLOWEST', 'SLOW', 'AVERAGE', 'FAST', 'FASTEST'):
+        ErrorLog.append("AttackSpeed must either be one of the following options: ('slowest, slow, average, fast, fastest')")
+
+    setting = configurations[3]
+    if not ((setting.lower() == 'false') or (setting.lower() == 'true')):
+        ErrorLog.append('Bleeds must be true or false')
+
+    setting = configurations[4]
+    if not ((setting.lower() == 'false') or (setting.lower() == 'true')):
+        ErrorLog.append('Stuns must be true or false')
+
+    setting = configurations[5]
+    if (setting[0] == '[' and setting[-1] == ']'):
+        setting = setting[1:-1].split(',')
+        Counter = {}
+        if len(setting) > 0:
+            for ability in setting:
+                ability = ability.upper().strip()
+                if (ability not in Abilities) and (ability not in Counter):
+                    ErrorLog.append(str(ability.strip()) + ' ' + 'is not a recognised ability, or is not included in this calculator')
+                if ability in Counter:
+                    Counter[ability] += 1
+                    if Counter[ability] == 2:
+                        ErrorLog.append(str(ability.strip()) + ' ' + 'is referenced 2 or more times within array. Ensure it is only referenced once')
+                else:
+                    Counter[ability] = 1
+        else:
+            ErrorLog.append('No abilities were added')
+    else:
+        ErrorLog.append("Abilities must start and end with [], With abilities being seperated by comma's (,)")
+        
+    setting = configurations[6]
+    if (setting[0] == '(' and setting[-1] == ')'):
+        setting = setting[1:-1].split(',')
+        if setting[0].upper() not in ('MAGIC', 'RANGED', 'MELEE'):
+            ErrorLog.append('First option of Style should be either "magic", "ranged" or "melee" (without quotes)')
+        if setting[1] not in (1,2):
+            ErorrLog.append('Second option of Style should either be 1 or 2 (1 handed / 2 handed weapon)')
+    else:
+        ErrorLog.append('Style must start and end with (), with each option being seperate by a single comma (,)')
+
+    try:
+        setting = float(configurations[7])
+        if not (setting > 0):
+            ErrorLog.append('Time must be positive, and not equal to zero or negative')
+    except ValueError:
+        ErrorLog.append('Time must be a positive decimal (float) or a positive integer')
+
+    if configurations[8].upper() not in ('SECONDS', 'TICKS'):
+        ErrorLog.append('units must be either "seconds" or "ticks" (without quoets)')
+
+    return ErrorLog
 
 # --- Gets data for setup  --- #
-while True:
-    try:
-        Start_Adrenaline = int(input('How much adrenaline will you start rotation with? '))
-        break
-    except: Error()
-AttackSpeed = input('What is your stated attack speed? ').upper()
-while not AttackSpeed in AttackSpeedCooldowns:
-    print('Expected fastest, fast, average, slow or slowest.')
-    AttackSpeed = input('What is your stated attack speed? ').upper()
-Ring = input('Will you be using a ring of vigour? (Y/N) ')
-if Ring.upper() == 'Y' or Ring.upper() == 'YES':
-    Ring = 10
-else: Ring = 0
-Activate_Bleeds = False
-Activate_Bleeds = input('Will you be walking enemy with bleeds?(Y/N) ').upper()
-if Activate_Bleeds != 'Y' and Activate_Bleeds != 'YES':
+try:
+        filedata = []
+        configurations = []
+        with open('Settings\Configurations.txt', 'r') as settings:
+            for line in settings:
+                filedata.append(line.split(':')[0])
+                if ':' in line:
+                    configurations.append(line.split(':')[1].strip())
+        if Compare(filedata) == False:
+            Repair()
+    except:
+        Repair()
+        
+ErrorLog = Validate(configurations)
+    if len(ErrorLog) > 0:
+        print('Errors were found, which are listed below:\n')
+        for error in ErrorLog:
+            print(error)
+        input('\nCould not complete setup, please change fields accordingly and run calculator again. Press enter to exit\n>> ')
+        sys.exit()
+        
+Adrenaline = int(configurations[0])
+Gain = int(configurations[1])
+AttackSpeed = configurations[2].upper()
+Activate_Bleeds = configurations[3]
+if Activate_Bleeds == 'False':
     for item in AbilityDamage:
         # --- Adjusts DOT multiplier that occurs when an enemy moves during bleed --- #
         if item == 'FRAGMENTATION SHOT' or item == 'COMBUST':
             AbilityDamage[item] = AbilityDamage[item]/2 
         elif item == 'SLAUGHTER':
             AbilityDamage[item] = AbilityDamage[item]/3
-else: Activate_Bleeds = True
+Bound = configurations[4]
+if Bound == False:
+    Debilitating = []
+MyAbilities = []
+for ability in configurations[5][1:-1].split(','):
+    AbilityBar.append(MyAbilities.strip().upper())
 # --- Different styles of combat tree give varying amounts of adrenaline from auto attacks --- #
-Auto_Adrenaline = input('What style will you be using? ').upper()
-if Auto_Adrenaline == 'MAGIC':
+Style = tuple(configurations[6][1:-1].split(','))
+if Style[0] == 'MAGIC':
     Auto_Adrenaline = 2
 else:
-    Auto_Adrenaline = input('One handed or two handed weapon?(1/2) ').upper()
-    if Auto_Adrenaline != '2':
+    if Style[1] != '2':
         Auto_Adrenaline = 2
     else:
         Auto_Adrenaline = 3
-Bound = input('Can the enemy be stun or bound?(Y/N) ').upper()
-if Bound != 'Y' or Bound != 'YES':
-    Debilitating = []
+Time = float(configurations[7])
+Units = configurations[8]
+if Units == 'ticks':
+    Time *= 0.6
 # --- Functions are layed out here --- #
 def Auto_Available(): # Will check if an auto attack is needed to be used
     Is_Available = True
@@ -337,22 +447,6 @@ def AdjustCooldowns(Current_Buff, Adrenaline, Time): # Decreases Cooldowns of ab
                     Current_Buff = Current_Buff/Buff_Effect[Ability]
     return Current_Buff
     
-# --- Gets abilities to be analysed --- #
-MyAbilities = []
-Counter = 1
-AbilityInput = '.'
-while AbilityInput:
-    AbilityInput = input('Enter ability (' + str(Counter) + '): ').upper()
-    if AbilityInput != '':
-        # --- Add abilities to list to be analysed --- #
-        if AbilityInput in AbilityDamage:
-            #print("Ability " + AbilityInput + " deals " + str(AbilityDamage[AbilityInput]) + " damage")
-            MyAbilities.append(AbilityInput)
-            print('Success!')
-            Counter += 1
-        else:
-            print('Error: No such ability in database. Contact administrator')
-
 # --- Dictionaries, lists and other data types layed out here --- #
 print('Starting process ... ')
 AbilityTime = {'DEBILITATE': 1.8, 'UNLOAD': 4.2, 'TIGHT BINDINGS': 1.8, 'SNIPE': 3.6, 'SNAP SHOT': 1.8, 'SHADOW TENDRILS': 1.8, 'RICOCHET': 1.8, 'RAPID FIRE': 5.4, 'PIERCING SHOT': 1.8, 'NEEDLE STRIKE': 1.8, 'FRAGMENTATION SHOT': 1.8, "DEATH'S SWIFTNESS": 1.8, 'DEADSHOT': 1.8, 'DAZING SHOT': 1.8, 'CORRUPTION SHOT': 1.8, 'BOMBARDMENT': 1.8, 'BINDING SHOT': 1.8, 'WRACK': 1.8, 'WILD MAGIC': 1.8, 'TSUNAMI': 1.8, 'SUNSHINE': 1.8, 'SONIC WAVE': 1.8, 'SMOKE TENDRILS': 5.4,'OMNIPOWER': 1.8, 'METAMORPHOSIS': 1.8, 'IMPACT': 1.8, 'DRAGON BREATH': 1.8, 'DETONATE': 3.6, 'DEEP IMPACT': 1.8, 'CORRUPTION BLAST': 1.8, 'CONCENTRATED BLAST': 3.6, 'COMBUST': 1.8, 'CHAIN': 1.8, 'ASPHYXIATE': 5.4, "TUSKA'S WRATH": 1.8, 'SHATTER': 1.8, 'STORM SHARDS': 1.8, 'SACRIFICE': 1.8, 'ONSLAUGHT': 4.8, 'PULVERISE': 1.8, 'FRENZY': 4.2, 'BERSERK': 1.8, 'OVERPOWER': 1.8, 'MASSACRE': 1.8, 'SEVER': 1.8, 'CLEAVE': 1.8, 'DESTROY': 4.2, 'BACKHAND': 1.8, 'BARGE': 1.8, 'BLOOD TENDRILS': 1.8, 'FLURRY': 5.4, 'FORCEFUL BACKHAND': 1.8, 'HAVOC': 1.8, 'HURRICANE': 1.8, 'SLAUGHTER': 1.8, 'SLICE': 1.8, 'SMASH': 1.8, 'ASSAULT': 5.4, 'DECIMATE': 1.8, 'DISMEMBER': 1.8, 'FURY': 3.6, 'KICK': 1.8, 'PUNISH': 1.8, 'QUAKE': 1.8, 'STOMP': 1.8} # How long it takes to use each ability
@@ -369,7 +463,7 @@ Time_Remaining_Calculation = int(Permutations/10000)
 Runthrough = int(0)
 # --- Tracking of highest and lowest damaging ability bars  --- #
 CurrentHighest = float(0)
-CurrentLowest = float(100000000000000000000)
+CurrentLowest = float('inf')
 
 # --- Gets rotation length --- #
 while True:
@@ -387,13 +481,11 @@ if AoEAverageTargetsHit > 1:
         if ability in AoE:
             #print("Altering average damage of ability " + ability + " from " + str(AbilityDamage[ability]) + " to " + str(AbilityDamage[ability]*AoEAverageTargetsHit))
             AbilityDamage[ability] = AbilityDamage[ability]*AoEAverageTargetsHit
-      
-while True:
-    try:
-        Time = float(input('How long will rotation last? WARNING: Longer times require longer wait times, a better processor will improve this speed. \n>> '))
-        break
-    except: Error()
-    
+
+print('Startup Complete! Warning, the more abilities and the higher the time entered, higher times will be reached. A better processor will improve this speed.')
+choice = input('Start Calculations? (Y/N) ').upper()
+if (choice != 'Y') or (choice != 'YES'):
+    sys.exit()
 # --- Calculations start here --- #
 
 Start = int(time.time()) # Record time since epoch (UTC) (in seconds)
