@@ -5,7 +5,7 @@ AttackSpeed:
 Gain: 
 Bleeds: 
 Stuns: 
-Abilities: 
+Abilities: [,,,]
 Style: (,)
 Time: 
 
