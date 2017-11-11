@@ -484,7 +484,7 @@ if AoEAverageTargetsHit > 1:
 
 print('Startup Complete! Warning, the more abilities and the higher the time entered, higher wait times will be reached. A better processor will improve this speed.')
 choice = input('Start Calculations? (Y/N) ').upper()
-if (choice != 'Y') or (choice != 'YES'):
+if (choice != 'Y') and (choice != 'YES'):
     sys.exit()
 # --- Calculations start here --- #
 
@@ -492,7 +492,7 @@ Start = int(time.time()) # Record time since epoch (UTC) (in seconds)
 try: # Will keep running until Control C (or other) is pressed to end process
     for index in range(0, Permutations):
         Permutation = Get_Permutation(MyAbilities, index)
-        Current = AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adrenaline, Auto_Adrenaline, Time)
+        Current = AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adrenaline, Auto_Adrenaline, Time)
         # --- Reset data ready for next ability bar to be tested and check if any better/worse bars have been found --- #
         Ready = dict(CopyOfReady)
         TrackCooldown = {}
