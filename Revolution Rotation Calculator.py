@@ -1,30 +1,40 @@
 import math
 import time
-Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 
-'BINDING SHOT', 'BLOOD TENDRILS', 'BOMBARDMENT', 'CHAIN', 'CLEAVE', 'COMBUST', 
-'CONCENTRATED BLAST', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DAZING SHOT', 'DEADSHOT', "DEATH'S SWIFTNESS", 'DEBILITATE', 'DECIMATE', 
-'DEEP IMPACT', 'DESTROY', 'DETONATE', 'DISMEMBER', 'DRAGON BREATH', 'FLURRY', 'FORCEFUL BACKHAND', 'FRAGMENTATION SHOT', 'FRENZY', 'FURY', 
-'HAVOC', 'HURRICANE', 'IMPACT', 'KICK', 'MASSACRE', 'METAMORPHOSIS', 'NEEDLE STRIKE', 'OMNIPOWER', 'ONSLAUGHT', 'OVERPOWER', 'PIERCING SHOT', 
-'PULVERISE', 'PUNISH', 'QUAKE', 'RAPID FIRE', 'RICOCHET', 'SACRIFICE', 'SEVER', 'SHADOW TENDRILS', 'SHATTER', 'SLAUGHTER', 'SLICE', 'SMASH', 
-'SMOKE TENDRILS', 'SNAP SHOT', 'SNIPE', 'SONIC WAVE', 'STOMP', 'STORM SHARDS', 'SUNSHINE', 'TIGHT BINDINGS', 'TSUNAMI', "TUSKA'S WRATH", 'UNLOAD', 
-'WILD MAGIC', 'WRACK']
+
+import config
+
+
+def extract(key):
+    return {ability['name'].upper(): ability[key] for ability in config.ABILITIES if key in ability}
+
+
+Abilities = [ability['name'].upper() for ability in config.ABILITIES]
 # --- Defining how abilities work --- #
-AttackSpeedCooldowns = {'FASTEST': 2.4,'FAST': 3.0,'AVERAGE': 3.6,'SLOW': 4.2,'SLOWEST': 7.2} # Cooldowns for casewhere no abilities may be used
-AbilityDamage = {'DEBILITATE': 60, 'UNLOAD': 610, 'TIGHT BINDINGS': 120, 'SNIPE': 172, 'SNAP SHOT': 265, 'SHADOW TENDRILS': 283, 'RICOCHET': 60, 'RAPID FIRE': 451.2, 'PIERCING SHOT': 56.4, 'NEEDLE STRIKE': 94.2, 'FRAGMENTATION SHOT': 241.2, "DEATH'S SWIFTNESS": 0, 'DEADSHOT': 426.13, 'DAZING SHOT': 94.2, 'CORRUPTION SHOT': 200, 'BOMBARDMENT': 131.4, 'BINDING SHOT': 60, 'WRACK': 56.4, 'WILD MAGIC': 265, 'TSUNAMI': 250, 'SUNSHINE': 0, 'SONIC WAVE': 94.2, 'SMOKE TENDRILS': 345, 'OMNIPOWER': 300, 'METAMORPHOSIS': 0, 'IMPACT': 60, 'DRAGON BREATH': 112.8, 'DETONATE': 225, 'DEEP IMPACT': 120, 'CORRUPTION BLAST': 200, 'CONCENTRATED BLAST': 152.8, 'COMBUST': 241.2, 'CHAIN': 60, 'ASPHYXIATE': 451.2, "TUSKA'S WRATH": 5940, 'SHATTER': 0, 'STORM SHARDS': 0, 'SACRIFICE': 60, 'ONSLAUGHT': 532, 'PULVERISE': 300, 'FRENZY': 610, 'BERSERK': 0, 'OVERPOWER': 300, 'MASSACRE': 426.13, 'SEVER': 112.8, 'CLEAVE': 112.8, 'DESTROY': 451.2, 'BACKHAND': 60, 'BARGE': 75, 'BLOOD TENDRILS': 324, 'FLURRY': 204, 'FORCEFUL BACKHAND': 120, 'HAVOC': 94.2, 'HURRICANE': 265, 'SLAUGHTER': 435, 'SLICE': 75, 'SMASH': 94.2, 'ASSAULT': 525.6, 'DECIMATE': 112.8, 'DISMEMBER': 120.6, 'FURY': 152.8, 'KICK': 60, 'PUNISH': 56.4, 'QUAKE': 131.4, 'STOMP': 120} # Ability damage of every ability
-AbilityCooldown = {'DEBILITATE': 30, 'UNLOAD': 60, 'TIGHT BINDINGS': 15, 'SNIPE': 10.2, 'SNAP SHOT': 20.4, 'SHADOW TENDRILS': 45, 'RICOCHET': 10.2, 'RAPID FIRE': 20.4, 'PIERCING SHOT': 3, 'NEEDLE STRIKE': 5.4, 'FRAGMENTATION SHOT': 15, "DEATH'S SWIFTNESS": 60, 'DEADSHOT': 30, 'DAZING SHOT': 5.4, 'CORRUPTION SHOT': 15, 'BOMBARDMENT': 30, 'BINDING SHOT': 15, 'WRACK': 3, 'WILD MAGIC': 20.4, 'TSUNAMI': 60, 'SUNSHINE': 60, 'SONIC WAVE': 5.4, 'SMOKE TENDRILS': 45, 'OMNIPOWER': 30, 'METAMORPHOSIS': 60, 'IMPACT': 15, 'DRAGON BREATH': 10.2, 'DETONATE': 30, 'DEEP IMPACT': 15, 'CORRUPTION BLAST': 15, 'CONCENTRATED BLAST': 5.4, 'COMBUST': 15, 'CHAIN': 10.2, 'ASPHYXIATE': 20.4, "TUSKA'S WRATH": 120, 'SHATTER': 120, 'STORM SHARDS': 30, 'SACRIFICE': 30, 'ONSLAUGHT': 120, 'PULVERISE': 60, 'FRENZY': 60, 'BERSERK': 60, 'OVERPOWER': 60, 'MASSACRE': 60,  'SEVER': 15, 'CLEAVE': 7.2, 'DESTROY': 20.4, 'BACKHAND': 15, 'BARGE': 20.4, 'BLOOD TENDRILS': 45, 'FLURRY': 20.4, 'FORCEFUL BACKHAND': 15, 'HAVOC': 10.2, 'HURRICANE': 20.4, 'SLAUGHTER': 30, 'SLICE': 3, 'SMASH': 10.2, 'ASSAULT': 30, 'DECIMATE': 7.2, 'DISMEMBER': 15, 'FURY': 5.4, 'KICK': 15, 'PUNISH': 3, 'QUAKE': 20.4, 'STOMP': 15} # Cooldowns of abilties (in seconds)
-AbilityType = {'DEBILITATE': 'T', 'UNLOAD': 'U', 'TIGHT BINDINGS': 'T', 'SNIPE': 'B', 'SNAP SHOT': 'T', 'SHADOW TENDRILS': 'T', 'RICOCHET': 'B', 'RAPID FIRE': 'T', 'PIERCING SHOT': 'B', 'NEEDLE STRIKE': 'B', 'FRAGMENTATION SHOT': 'B', "DEATH'S SWIFTNESS": 'U', 'DEADSHOT': 'U', 'DAZING SHOT': 'B', 'CORRUPTION SHOT': 'B', 'BOMBARDMENT': 'T', 'BINDING SHOT': 'B', 'WRACK': 'B', 'WILD MAGIC': 'T', 'TSUNAMI': 'U', 'SUNSHINE': 'U', 'SONIC WAVE': 'B', 'SMOKE TENDRILS': 'T', 'OMNIPOWER': 'U', 'METAMORPHOSIS': 'U', 'IMPACT': 'B', 'DRAGON BREATH': 'B', 'DETONATE': 'T', 'DEEP IMPACT': 'T', 'CORRUPTION BLAST': 'B', 'CONCENTRATED BLAST': 'B', 'COMBUST': 'B', 'CHAIN': 'B', 'ASPHYXIATE': 'T', "TUSKA'S WRATH": 'B', 'SHATTER': 'T', 'STORM SHARDS': 'B', 'SACRIFICE': 'B', 'ONSLAUGHT': 'U', 'PULVERISE': 'U', 'FRENZY': 'U', 'BERSERK': 'U', 'OVERPOWER': 'U', 'SEVER': 'B', 'CLEAVE': 'B', 'DESTROY': 'T', 'BACKHAND': 'B', 'BARGE': 'B', 'BLOOD TENDRILS': 'T', 'FLURRY': 'T', 'FORCEFUL BACKHAND': 'T', 'HAVOC': 'B', 'HURRICANE': 'T', 'SLAUGHTER': 'T', 'SLICE': 'B', 'SMASH': 'B', 'ASSAULT': 'T', 'DECIMATE': 'B', 'DISMEMBER': 'B', 'FURY': 'B', 'KICK': 'B', 'PUNISH': 'B', 'QUAKE': 'T', 'STOMP': 'T', 'MASSACRE': 'U'} # Type of ability (B = basic, T = threshold, U = ultimate)
-Ready = {'DEBILITATE': False, 'UNLOAD': False, 'TIGHT BINDINGS': False, 'SNIPE': True, 'SNAP SHOT': False, 'SHADOW TENDRILS': False, 'RICOCHET': True, 'RAPID FIRE': False, 'PIERCING SHOT': True, 'NEEDLE STRIKE': True, 'FRAGMENTATION SHOT': True, "DEATH'S SWIFTNESS": False, 'DEADSHOT': False, 'DAZING SHOT': True, 'CORRUPTION SHOT': True, 'BOMBARDMENT': False, 'BINDING SHOT': True, 'WRACK': True, 'WILD MAGIC': False, 'TSUNAMI': False, 'SUNSHINE': False, 'SONIC WAVE': True, 'SMOKE TENDRILS': False, 'OMNIPOWER': False, 'METAMORPHOSIS': False, 'IMPACT': True, 'DRAGON BREATH': True, 'DETONATE': False, 'DEEP IMPACT': False, 'CORRUPTION BLAST': True, 'CONCENTRATED BLAST': True, 'COMBUST': True, 'CHAIN': True, 'ASPHYXIATE': False, "TUSKA'S WRATH": True, 'SHATTER': False, 'STORM SHARDS': True, 'SACRIFICE': True, 'ONSLAUGHT': False, 'PULVERISE': False, 'FRENZY': False, 'BERSERK': False, 'OVERPOWER': False, 'SEVER': True, 'CLEAVE': True, 'DESTROY': False, 'BACKHAND': True, 'BARGE': True, 'BLOOD TENDRILS': False, 'FLURRY': False, 'FORCEFUL BACKHAND': False, 'HAVOC': True, 'HURRICANE': False, 'SLAUGHTER': False, 'SLICE': True, 'SMASH': True, 'ASSAULT': False, 'DECIMATE': True, 'DISMEMBER': True, 'FURY': True, 'KICK': True, 'PUNISH': True, 'QUAKE': False, 'STOMP': False, 'MASSACRE': False} # Flag on if you can use abilties (based on adrenaline)
-Bleeds = {'SHADOW TENDRILS': 1.8, 'FRAGMENTATION SHOT': 6, 'DEADSHOT': 6, 'CORRUPTION SHOT': 6, 'SMOKE TENDRILS': 5.4, 'CORRUPTION BLAST': 6, 'COMBUST': 6, 'SLAUGHTER': 6, 'DISMEMBER': 6, 'BLOOD TENDRILS': 4.8, 'MASSACRE': 6}  # time DOT abilties last (seconds)
-SpecialBleeds = ['MASSACRE','DEADSHOT'] # Bleeds that have their first hit affected by damage modifying abilities
-SpecialAbilities = ['DEEP IMPACT','SNIPE'] # Abilities that take longer than 1.8 seconds to use but will still have full impact from abilties in list CritBoost
-Buff_Time = {'BARGE': 6.6, 'FURY': 5.4, 'RAPID FIRE': 6, 'TIGHT BINDINGS': 9.6, 'BINDING SHOT': 9.6, 'NEEDLE STRIKE': 3.6, "DEATH'S SWIFTNESS": 30, 'SUNSHINE': 30, 'METAMORPHOSIS': 15, 'DEEP IMPACT': 3.6, 'CONCENTRATED BLAST': 5.4, 'BERSERK': 19.8, 'FORCEFUL BACKHAND': 3.6, 'STOMP': 3.6} # How long stuns, DPS increases .. etc last
-Buff_Effect = {'NEEDLE STRIKE': 1.07, "DEATH'S SWIFTNESS": 1.5, 'SUNSHINE': 1.5, 'METAMORPHOSIS': 1.625, 'FURY': 1.1, 'CONCENTRATED BLAST': 1.1, 'BERSERK': 2,'SLICE':1.506,'PUNISH':2,'WRACK':2,'PIERCING SHOT':2} # multiplier for boosted damage
-CritBoost = ['NEEDLE STRIKE','FURY','CONCENTRATED BLAST',"DEATH'S SWIFTNESS",'SUNSHINE','BERSERK','METAMORPHOSIS']
-Punishing = ['SLICE','PUNISH','WRACK','PIERCING SHOT'] # Abilities that do extra damage when target stun or bound
-Debilitating = ['BARGE','FORCEFUL BACKHAND','STOMP','DEEP IMPACT','BINDING SHOT','TIGHT BINDINGS','RAPID FIRE'] # Abilities that can stun or bind target
-Binds = ['BARGE','DEEP IMPACT','BINDING SHOT','TIGHT BINDINGS']
-AoEAverageTargetsHit = 2.5
-AoE = ['BOMBARDMENT', 'CHAIN', "DRAGON BREATH", 'CLEAVE', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'FLURRY', 'HURRICANE', 'QUAKE', 'RICOCHET', 'TSUNAMI']
+AttackSpeedCooldowns = {str(speed['name']).upper(): speed['time'] for speed in config.ATTACK_SPEED_COOLDOWNS}
+AbilityDamage = extract('damage')  # Ability damage of every ability
+AbilityCooldown = extract('cooldown')  # Cooldowns of abilities (in seconds)
+# Type of ability (B = basic, T = threshold, U = ultimate)
+AbilityType = {key: value[0].upper() for (key, value) in extract('type').items()}
+# Flag on if you can use abilties (based on adrenaline)
+Ready = {ability['name'].upper(): ability['type'] == 'basic' for ability in config.ABILITIES}
+# Number of seconds DOT abilities last
+Bleeds = {key: value['time'] for (key, value) in extract('bleed').items()}
+# Bleeds that have their first hit affected by damage modifying abilities
+SpecialBleeds = [key for (key, value) in extract('bleed').items() if value['first_hit_buffable']]
+# Abilities that take longer than 1.8 seconds to use but will still have full impact from abilties in list CritBoost
+SpecialAbilities = [key for (key, value) in extract('crit_boost_affected').items() if value]
+# How long stuns, DPS increases .. etc last
+Buff_Time = {key: value['time'] for (key, value) in extract('buff').items()}
+# Multiplier for boosted damage
+Buff_Effect = {key: value['multiplier'] for (key, value) in extract('buff').items() if 'multiplier' in value}
+CritBoost = [key for (key, value) in extract('buff').items() if value.get('crit_boost', False)]
+# Abilities that do extra damage when target stun or bound
+Punishing = [key for (key, value) in extract('punishing').items() if value]
+# Abilities that can stun or bind target
+Debilitating = [key for (key, value) in extract('debilitating').items() if value]
+Binds = [key for (key, value) in extract('binds').items() if value]
+AoEAverageTargetsHit = config.AOE_AVERAGE_TARGETS_HIT
+AoE = [key for (key, value) in extract('aoe').items() if value]
 
 def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Ring, Start_Adrenaline, Auto_Adrenaline, Time): # Will return how much damage an ability bar will do over a given time
     # --- Defining Variables --- #
@@ -355,7 +365,7 @@ while AbilityInput:
 
 # --- Dictionaries, lists and other data types layed out here --- #
 print('Starting process ... ')
-AbilityTime = {'DEBILITATE': 1.8, 'UNLOAD': 4.2, 'TIGHT BINDINGS': 1.8, 'SNIPE': 3.6, 'SNAP SHOT': 1.8, 'SHADOW TENDRILS': 1.8, 'RICOCHET': 1.8, 'RAPID FIRE': 5.4, 'PIERCING SHOT': 1.8, 'NEEDLE STRIKE': 1.8, 'FRAGMENTATION SHOT': 1.8, "DEATH'S SWIFTNESS": 1.8, 'DEADSHOT': 1.8, 'DAZING SHOT': 1.8, 'CORRUPTION SHOT': 1.8, 'BOMBARDMENT': 1.8, 'BINDING SHOT': 1.8, 'WRACK': 1.8, 'WILD MAGIC': 1.8, 'TSUNAMI': 1.8, 'SUNSHINE': 1.8, 'SONIC WAVE': 1.8, 'SMOKE TENDRILS': 5.4,'OMNIPOWER': 1.8, 'METAMORPHOSIS': 1.8, 'IMPACT': 1.8, 'DRAGON BREATH': 1.8, 'DETONATE': 3.6, 'DEEP IMPACT': 1.8, 'CORRUPTION BLAST': 1.8, 'CONCENTRATED BLAST': 3.6, 'COMBUST': 1.8, 'CHAIN': 1.8, 'ASPHYXIATE': 5.4, "TUSKA'S WRATH": 1.8, 'SHATTER': 1.8, 'STORM SHARDS': 1.8, 'SACRIFICE': 1.8, 'ONSLAUGHT': 4.8, 'PULVERISE': 1.8, 'FRENZY': 4.2, 'BERSERK': 1.8, 'OVERPOWER': 1.8, 'MASSACRE': 1.8, 'SEVER': 1.8, 'CLEAVE': 1.8, 'DESTROY': 4.2, 'BACKHAND': 1.8, 'BARGE': 1.8, 'BLOOD TENDRILS': 1.8, 'FLURRY': 5.4, 'FORCEFUL BACKHAND': 1.8, 'HAVOC': 1.8, 'HURRICANE': 1.8, 'SLAUGHTER': 1.8, 'SLICE': 1.8, 'SMASH': 1.8, 'ASSAULT': 5.4, 'DECIMATE': 1.8, 'DISMEMBER': 1.8, 'FURY': 3.6, 'KICK': 1.8, 'PUNISH': 1.8, 'QUAKE': 1.8, 'STOMP': 1.8} # How long it takes to use each ability
+AbilityTime = extract('time') # How long it takes to use each ability
 CopyOfReady = {}
 CopyOfReady = Remove(CopyOfReady)
 TrackCooldown = {}
