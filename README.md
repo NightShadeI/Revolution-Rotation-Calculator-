@@ -13,6 +13,7 @@ Once the project has been downloaded locally, navigate into the download directo
 ```bash
 $ cd Revolution-Rotation-Calculator-
 $ python3 Revolution Rotation Calculator.py
+Startup Complete! Warning, the more abilities and the higher the time entered, higher wait times will be reached. A better processor will improve this speed.
 Start Calculations? (Y/N) Y
 ```
 
