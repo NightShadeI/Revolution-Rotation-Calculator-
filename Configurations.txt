@@ -1,8 +1,8 @@
 # Rotation Paramaters
 
 Adrenaline: 
-AttackSpeed: 
-Gain: 
+Gain:  
+AttackSpeed:  
 Bleeds: 
 Stuns: 
 Abilities: [,,,]
