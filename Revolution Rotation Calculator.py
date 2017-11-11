@@ -482,7 +482,7 @@ if AoEAverageTargetsHit > 1:
             #print("Altering average damage of ability " + ability + " from " + str(AbilityDamage[ability]) + " to " + str(AbilityDamage[ability]*AoEAverageTargetsHit))
             AbilityDamage[ability] = AbilityDamage[ability]*AoEAverageTargetsHit
 
-print('Startup Complete! Warning, the more abilities and the higher the time entered, higher times will be reached. A better processor will improve this speed.')
+print('Startup Complete! Warning, the more abilities and the higher the time entered, higher wait times will be reached. A better processor will improve this speed.')
 choice = input('Start Calculations? (Y/N) ').upper()
 if (choice != 'Y') or (choice != 'YES'):
     sys.exit()
