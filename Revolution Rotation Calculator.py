@@ -283,7 +283,7 @@ def Validate(configurations):
 try:
         filedata = []
         configurations = []
-        with open('Settings\Configurations.txt', 'r') as settings:
+        with open('Configurations.txt', 'r') as settings:
             for line in settings:
                 filedata.append(line.split(':')[0])
                 if ':' in line:
