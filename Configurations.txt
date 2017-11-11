@@ -1,11 +1,13 @@
 # Rotation Parameters
 
-Adrenaline: 0
-Gain: 25
-Bleeds: False
-Stuns: False
+Adrenaline: 
+AttackSpeed: 
+Gain: 
+Bleeds: 
+Stuns: 
 Abilities: [,,,]
-Time: 60
+Style: 
+Time: 
 
 # Mode
 
