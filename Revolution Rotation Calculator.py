@@ -262,7 +262,7 @@ def Validate(configurations):
         setting = setting[1:-1].split(',')
         if setting[0].upper() not in ('MAGIC', 'RANGED', 'MELEE'):
             ErrorLog.append('First option of Style should be either "magic", "ranged" or "melee" (without quotes)')
-        if setting[1] not in (1,2):
+        if setting[1] not in ('1','2'):
             ErrorLog.append('Second option of Style should either be 1 or 2 (1 handed / 2 handed weapon)')
     else:
         ErrorLog.append('Style must start and end with (), with each option being seperate by a single comma (,)')
@@ -317,7 +317,7 @@ if Bound == False:
     Debilitating = []
 MyAbilities = []
 for ability in configurations[5][1:-1].split(','):
-    AbilityBar.append(MyAbilities.strip().upper())
+    MyAbilities.append(ability.strip().upper())
 # --- Different styles of combat tree give varying amounts of adrenaline from auto attacks --- #
 Style = tuple(configurations[6][1:-1].split(','))
 if Style[0] == 'MAGIC':
