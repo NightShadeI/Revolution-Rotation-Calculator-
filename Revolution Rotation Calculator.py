@@ -263,7 +263,7 @@ def Validate(configurations):
         if setting[0].upper() not in ('MAGIC', 'RANGED', 'MELEE'):
             ErrorLog.append('First option of Style should be either "magic", "ranged" or "melee" (without quotes)')
         if setting[1] not in (1,2):
-            ErorrLog.append('Second option of Style should either be 1 or 2 (1 handed / 2 handed weapon)')
+            ErrorLog.append('Second option of Style should either be 1 or 2 (1 handed / 2 handed weapon)')
     else:
         ErrorLog.append('Style must start and end with (), with each option being seperate by a single comma (,)')
 
@@ -281,25 +281,25 @@ def Validate(configurations):
 
 # --- Gets data for setup  --- #
 try:
-        filedata = []
-        configurations = []
-        with open('Configurations.txt', 'r') as settings:
-            for line in settings:
-                filedata.append(line.split(':')[0])
-                if ':' in line:
-                    configurations.append(line.split(':')[1].strip())
-        if Compare(filedata) == False:
-            Repair()
-    except:
+    filedata = []
+    configurations = []
+    with open('Configurations.txt', 'r') as settings:
+        for line in settings:
+            filedata.append(line.split(':')[0])
+            if ':' in line:
+                configurations.append(line.split(':')[1].strip())
+    if Compare(filedata) == False:
         Repair()
+except:
+    Repair()
         
 ErrorLog = Validate(configurations)
-    if len(ErrorLog) > 0:
-        print('Errors were found, which are listed below:\n')
-        for error in ErrorLog:
-            print(error)
-        input('\nCould not complete setup, please change fields accordingly and run calculator again. Press enter to exit\n>> ')
-        sys.exit()
+if len(ErrorLog) > 0:
+    print('Errors were found, which are listed below:\n')
+    for error in ErrorLog:
+        print(error)
+    input('\nCould not complete setup, please change fields accordingly and run calculator again. Press enter to exit\n>> ')
+    sys.exit()
         
 Adrenaline = int(configurations[0])
 Gain = int(configurations[1])
