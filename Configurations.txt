@@ -1,0 +1,14 @@
+# Rotation Paramaters
+
+Adrenaline: 
+AttackSpeed: 
+Gain: 
+Bleeds: 
+Stuns: 
+Abilities: 
+Style: (,)
+Time: 
+
+# Mode
+
+units: seconds
