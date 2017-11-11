@@ -423,7 +423,7 @@ try: # Will keep running until Control C (or other) is pressed to end process
             End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
         if Runthrough % 10000 == 0:
             print(str('\r===== ') + str(round(float(Runthrough/Permutations) * 100, 3)) + str('% ===== ') + str('Estimated time remaining: ') + str(Get_Time(int(End_Estimation - (time.time() - Start)))) + '; Best found: ' + str(CurrentHighest) + '%' +
-                  (' ' * 22), end = '')
+                  (' ' * 22))
             Time_Remaining_Calculation -= 1
             End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
             Start = time.time()
