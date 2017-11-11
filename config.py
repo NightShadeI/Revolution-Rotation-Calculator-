@@ -33,20 +33,29 @@ AOE_AVERAGE_TARGETS_HIT = 2.5
 Format:
     ABILITIES = [
         {
-            'name': '<ability name>', # Required
-            'cooldown': <time in seconds>, # Required - Number of seconds that the ability goes on cooldown for
-            'type': '<ultimate | threshold | basic>, # Optional - defaults to basic
-            'damage': <some number>, # Optional - defaults to 0 (no on hit damage)
-            'time': <no idea>
-        },
-    ]
-
-Example:
-    ABILITIES = [
-        'MY CUSTOM ABILITY': {
-            'name': 'My Custom Ability',
-            'cooldown': 3,
-            'damage': 150,
+            'name': '<ability name>',
+            'cooldown': <number>, # Number of seconds that the ability goes on cooldown for
+            'type': '<ultimate | threshold | basic>',
+            'damage': <number>, # Set to zero for no on-hit damage
+            'time': <number>, # How long an ability takes to use in seconds
+            'debilitating': <True | False>, # Whether the abilities can stun or bind target
+            'binds': <True | False>, # Whether the abilities can bind target,
+            'punishing': <True | False>, # Whether the abilities does extra damage to targets that are stunned or bound
+            'aoe': <True | False>,
+            # Abilities that take longer than 1.8 seconds by default aren't affected by crit-boot. Use this to override.
+            'crit_boost_affected': <True | False>,
+            # Fill out these settings if it's a buffing ability
+            'buff': {
+                'time': <number>, # Duration of the buff in seconds
+                'crit_boost': <True | False>, # Whether or not this ability buffs your crit-chance
+                'multiplier': <number>, # Multiplier for boosted damage
+            },
+            # Fill out these settings if it's an ability that applies a bleed
+            'bleed': {
+                'time': <number>, # Duration of the bleed effect
+                # Whether or not the first hit of this bleed is affected by damage modifying abilities 
+                'first_hit_buffable': <True | False>,
+            },
         }
     ]
 """
