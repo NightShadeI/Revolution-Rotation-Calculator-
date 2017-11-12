@@ -188,9 +188,9 @@ def Repair():
     if (repair == 'Y') or (repair == 'YES'):
         import os
         correct_data = ['# Rotation Paramaters', '', 'Adrenaline: ', 'Gain: ', 'AttackSpeed: ', 'Bleeds: ', 'Stuns: ','Abilities: [,,,]', 'Style: (,)', 'Time: ', '', '# Mode', '', 'units: seconds']
-        if os.path.exists('Settings\Configurations.txt'):
-            os.remove('Settings\Configurations.txt')
-        with open('Settings\Configurations.txt','w') as settings:
+        if os.path.exists('Configurations.txt'):
+            os.remove('Configurations.txt')
+        with open('Configurations.txt','w') as settings:
             for line in correct_data:
                 settings.write(line + str('\n'))
         input('Repair successful! fill out settings in Configurations.txt before running calculator again. Press enter to exit\n>> ')
