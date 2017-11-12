@@ -184,7 +184,7 @@ def Error(): # Called on during invalid inputs
     print('Invalid Input')
     
 def Repair():
-    repair = input('Configurations.txt has been modified, perform repair? (Y/N)\n>> ')
+    repair = input('Configurations.txt has been modified, perform repair? (Y/N)\n>> ').upper()
     if (repair == 'Y') or (repair == 'YES'):
         import os
         correct_data = ['# Rotation Paramaters', '', 'Adrenaline: ', 'Gain: ', 'AttackSpeed: ', 'Bleeds: ', 'Stuns: ','Abilities: [,,,]', 'Style: (,)', 'Time: ', '', '# Mode', '', 'units: seconds']
