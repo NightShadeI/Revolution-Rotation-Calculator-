@@ -51,7 +51,7 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
     while Clock < Time:
         for ability in Permutation:
             if Clock < Time: #TODO: This is used a lot, is it a necessity?
-                if Ready[ability] == True:  # Checks if ability can be used
+                if Ready[ability] is True: # Checks if ability can be used
                     Ready[ability] = False
                     # --- Modifying adrenaline as required --- #
                     AbilityPath.append(f'{ability} D: {round(Current, 1)} T: {round(Clock, 1)} A: {Adrenaline}')
@@ -78,35 +78,29 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                             Warning = True  # Determins if abilties increasing potential damage next hit will runout during ability usage.
                             Multiplier = Multiplier * ((Buff_Time[Ability] - TrackBuff[Ability]) / AbilityTime[ability])
                     if ability in Bleeds:
-                        if (Activate_Bleeds == True) and (Altered_Bleeds == False):
-                            for Ability in (a for a in Binds if a in TrackBuff):
+                        if (Activate_Bleeds is True) and (Altered_Bleeds is False):
+                            if Ability in (a for a in Binds if a in TrackBuff):
                                 Alter_Bleeds(Activate_Bleeds)
                                 Altered_Bleeds = True
-                                break
                         if ability in SpecialBleeds:
                             AbilityDamage[ability] = ((112.8 * Current_Buff) + 313.33)
                         if (Time - Clock) >= Bleeds[ability]:
                             Current += round(AbilityDamage[ability], 1)
                         else:
                             Current += round((float(float(Time - Clock) / Bleeds[ability]) * AbilityDamage[ability]), 1)
-                        if (Activate_Bleeds == True) and (Altered_Bleeds == True):
-                            Condition = False
-                            for Ability in (a for a in Binds if a in TrackBuff):
-                                Condition = True
-                                break
-                            if Condition == False:
+                        if (Activate_Bleeds is True) and (Altered_Bleeds is True) and (Ability not in (a for a in Binds if a in TrackBuff)):
                                 Alter_Bleeds(Activate_Bleeds)
                                 Altered_Bleeds = False
-                    elif (ability in Punishing) and (Buff_Available() == True):
+                    elif (ability in Punishing) and (Buff_Available() is True):
                         if (Time - Clock) >= AbilityTime[ability]:
                             Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Current_Buff, 1)
                         else:
                             Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Current_Buff * ((Time - Clock) / AbilityTime[ability]), 1)
-                    elif (Warning == True) and (Current_Buff > 1) and (AbilityTime[ability] > 1.8) and (ability not in SpecialAbilities):
-                            if (Time - Clock) >= AbilityTime[ability]:
-                                Current += round(AbilityDamage[ability] * (((Current_Buff - 1) * Multiplier) + 1), 1)
-                            else:
-                                Current += round(AbilityDamage[ability] * (((Current_Buff - 1) * Multiplier) + 1) * ((Time - Clock) / AbilityTime[ability]), 1)
+                    elif (Warning is True) and (Current_Buff > 1) and (AbilityTime[ability] > 1.8) and (ability not in SpecialAbilities):
+                        if (Time - Clock) >= AbilityTime[ability]:
+                            Current += round(AbilityDamage[ability] * (((Current_Buff - 1) * Multiplier) + 1), 1)
+                        else:
+                            Current += round(AbilityDamage[ability] * (((Current_Buff - 1) * Multiplier) + 1) * ((Time - Clock) / AbilityTime[ability]), 1)
                     else:
                         if (Time - Clock) >= AbilityTime[ability]:
                             Current += round(AbilityDamage[ability] * Current_Buff, 1)
@@ -118,8 +112,9 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                     TrackCooldown[ability] = float(0)
                     if ability in Buff_Time and ability not in Punishing:
                         TrackBuff[ability] = 0
-                        Current_Buff = Current_Buff * Buff_Effect[ability]
-                    Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, AbilityTime[ability])  # Will also manage cooldowns
+                        if ability in Buff_Effect:
+                            Current_Buff = Current_Buff * Buff_Effect[ability]
+                    Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, AbilityTime[ability]) # Will also manage cooldowns
                     break
         # --- Determines whether thresholds or ultimates may be used --- #
         if Clock < Time:
@@ -140,10 +135,11 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
         # --- Determines if any abilities available/ whether auto attacks must be used --- #
         if Clock < Time:
             AbilityAvailable = False
-            for ability in (a for a in Permutation if Ready[a]):
+            for _ in (a for a in Permutation if Ready[a]):
                 AbilityAvailable = True
-            if AbilityAvailable == False:
-                if Auto_Available() == True:
+                break
+            if AbilityAvailable is False:
+                if Auto_Available() is True:
                     if (Clock + AttackSpeedCooldowns[AttackSpeed]) <= Time:
                         Clock +=  AttackSpeedCooldowns[AttackSpeed]
                         Clock = round(Clock, 1)
@@ -196,7 +192,7 @@ def Validate(configurations):
     for config in configurations:
         if config == '':
             Null = True
-    if Null == True:
+    if Null is True:
         ErrorLog.append('One or more settings have been left as null')
 
     try:
@@ -232,11 +228,11 @@ def Validate(configurations):
             for ability in setting:
                 ability = ability.upper().strip()
                 if (ability not in Abilities) and (ability not in Counter):
-                    ErrorLog.append(str(ability.strip()) + ' ' + 'is not a recognised ability, or is not included in this calculator')
+                    ErrorLog.append(f'{ability.strip()} is not a recognised ability, or is not included in this calculator')
                 if ability in Counter:
                     Counter[ability] += 1
                     if Counter[ability] == 2:
-                        ErrorLog.append(str(ability.strip()) + ' ' + 'is referenced 2 or more times within array. Ensure it is only referenced once')
+                        ErrorLog.append(f'{(ability.strip())} is referenced 2 or more times within array. Ensure it is only referenced once')
                 else:
                     Counter[ability] = 1
         else:
@@ -275,7 +271,7 @@ try:
             filedata.append(line.split(':')[0])
             if ':' in line:
                 configurations.append(line.split(':')[1].strip())
-    if Compare(filedata) == False:
+    if Compare(filedata) is False:
         Repair()
 except:
     Repair()
@@ -348,7 +344,7 @@ def Get_Time(Seconds): # Converts raw seconds into Years, Weeks, etc...
     Seconds -= Hours * 3600
     Minutes = int(Seconds/60)
     Seconds -= Minutes * 60
-    Time = str(Years) + ' years, ' + str(Weeks) + ' weeks, ' + str(Days) + ' days, ' + str(Hours) + ' hours, ' + str(Minutes) + ' minutes and ' + str(Seconds) + ' seconds'
+    Time = str(Years) + f' years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds'
     return Time
 
 def Alter_Bleeds(Activate_Bleeds):
@@ -502,7 +498,8 @@ try: # Will keep running until Control C (or other) is pressed to end process
         if Runthrough == 10000:
             End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
         if Runthrough % 10000 == 0:
-            print(str('\r===== ') + str(round(float(Runthrough/Permutations) * 100, 3)) + str('% ===== ') + str('Estimated time remaining: ') + str(Get_Time(int(End_Estimation - (time.time() - Start)))) + '; Best found: ' + str(CurrentHighest) + '%' +
+            # print(f'\r===== {round(float(Runthrough/Permutations) * 100, 3)}% ===== Estimated time remaining: {Get_Time(int(End_Estimation - (time.time() - Start)))}; Best found: {CurrentHighest}%' + (' ' * 22), end = '')
+            print('\r===== ' + str(round(float(Runthrough/Permutations) * 100, 3)) + '% ===== Estimated time remaining: ' + str(Get_Time(int(End_Estimation - (time.time() - Start)))) + '; Best found: ' + str(CurrentHighest) + '%' +
                   (' ' * 22), end = '')
             Time_Remaining_Calculation -= 1
             End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
@@ -510,10 +507,9 @@ try: # Will keep running until Control C (or other) is pressed to end process
 except KeyboardInterrupt:
     print('\nProcess terminated!')
 # --- Display results --- #
-print('\n\nHighest ability damage: ' + str(CurrentHighest) + '%')
-print('Best ability bar found: ' + str(BestBar))
-print(str(BestRotation) + '\n')
-print('Lowest ability damage: ' + str(CurrentLowest) + '%')
-print('Worst ability bar found: ' + str(WorstBar))
-print(str(WorstRotation))
-input('\nPress enter to exit\n')
+print(f'\n\nHighest ability damage: {CurrentHighest}%')
+print(f'Best ability bar found: {BestBar}')
+print(f'{BestRotation}\n')
+print(f'Lowest ability damage: {CurrentLowest}%')
+print(f'Worst ability bar found: {WorstBar}')
+print(WorstRotation)
