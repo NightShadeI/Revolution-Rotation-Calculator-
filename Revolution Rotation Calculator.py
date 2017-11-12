@@ -313,7 +313,7 @@ if Activate_Bleeds == 'False':
         elif item == 'SLAUGHTER':
             AbilityDamage[item] = AbilityDamage[item]/3
 Bound = configurations[4]
-if Bound == False:
+if Bound == 'False':
     Debilitating = []
 MyAbilities = []
 for ability in configurations[5][1:-1].split(','):
