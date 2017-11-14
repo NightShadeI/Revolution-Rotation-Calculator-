@@ -79,19 +79,19 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                     Bleed_Multiplier = float(1) # Multiplier incase target is bound (and bind about to run out)
                     for Ability in TrackBuff:
                         if Ability in CritBoost:
-                            if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[AbilityBar[position]]) and ((AbilityBar[position] not in SpecialAbilities) and (AbilityTime[AbilityBar[position]] > 1.8)):
-                                Damage_Multiplier *= ((((Buff_Time[Ability] - TrackBuff[Ability])/AbilityTime[AbilityBar[position]]) * (Buff_Effect[Ability]-1))+1)
+                            if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[ability]) and ((ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8)):
+                                Damage_Multiplier *= ((((Buff_Time[Ability] - TrackBuff[Ability])/AbilityTime[ability]) * (Buff_Effect[Ability]-1))+1)
                             else:
                                 Damage_Multiplier *= Buff_Effect[Ability]
                         elif (Ability in Binds) and (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (len(Debilitating) > 0):
-                            if (MoreBinds is False) and (Buff_Time[Ability] - TrackBuff[Ability] < Bleeds[AbilityBar[position]]):
-                                Bleed_Multiplier = Walking_Bleeds[AbilityBar[position]] * (1 + (Buff_Time[Ability] - TrackBuff[Ability])/Bleeds[AbilityBar[position]])
+                            if (MoreBinds is False) and (Buff_Time[Ability] - TrackBuff[Ability] < Bleeds[ability]):
+                                Bleed_Multiplier = Walking_Bleeds[ability] * (1 + (Buff_Time[Ability] - TrackBuff[Ability])/Bleeds[ability])
                             else:
                                 Bleed_Multiplier = 1
                                 MoreBinds = True
-                             Altered_Bleeds = True
+                            Altered_Bleeds = True
                     if (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (Altered_Bleeds is False):
-                        Bleed_Multiplier = Walking_Bleeds[AbilityBar[position]] * 2
+                        Bleed_Multiplier = Walking_Bleeds[ability] * 2
                     Altered_Bleeds = False
                     TimeMultiplier = ModifyTime(Time,Clock,ability)
                     if ability in Bleeds:
