@@ -9,13 +9,14 @@ Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK',
 'WILD MAGIC', 'WRACK']
 # --- Defining how abilities work --- #
 AttackSpeedCooldowns = {'FASTEST': 2.4,'FAST': 3.0,'AVERAGE': 3.6,'SLOW': 4.2,'SLOWEST': 7.2} # Cooldowns for casewhere no abilities may be used
-AbilityDamage = {'DEBILITATE': 60, 'UNLOAD': 610, 'TIGHT BINDINGS': 120, 'SNIPE': 172, 'SNAP SHOT': 265, 'SHADOW TENDRILS': 283, 'RICOCHET': 60, 'RAPID FIRE': 451.2, 'PIERCING SHOT': 56.4, 'NEEDLE STRIKE': 94.2, 'FRAGMENTATION SHOT': 241.2, "DEATH'S SWIFTNESS": 0, 'DEADSHOT': 426.13, 'DAZING SHOT': 94.2, 'CORRUPTION SHOT': 200, 'BOMBARDMENT': 131.4, 'BINDING SHOT': 60, 'WRACK': 56.4, 'WILD MAGIC': 265, 'TSUNAMI': 250, 'SUNSHINE': 0, 'SONIC WAVE': 94.2, 'SMOKE TENDRILS': 345, 'OMNIPOWER': 300, 'METAMORPHOSIS': 0, 'IMPACT': 60, 'DRAGON BREATH': 112.8, 'DETONATE': 225, 'DEEP IMPACT': 120, 'CORRUPTION BLAST': 200, 'CONCENTRATED BLAST': 152.8, 'COMBUST': 241.2, 'CHAIN': 60, 'ASPHYXIATE': 451.2, "TUSKA'S WRATH": 5940, 'SHATTER': 0, 'STORM SHARDS': 0, 'SACRIFICE': 60, 'ONSLAUGHT': 532, 'PULVERISE': 300, 'FRENZY': 610, 'BERSERK': 0, 'OVERPOWER': 300, 'MASSACRE': 426.13, 'SEVER': 112.8, 'CLEAVE': 112.8, 'DESTROY': 451.2, 'BACKHAND': 60, 'BARGE': 75, 'BLOOD TENDRILS': 324, 'FLURRY': 204, 'FORCEFUL BACKHAND': 120, 'HAVOC': 94.2, 'HURRICANE': 265, 'SLAUGHTER': 435, 'SLICE': 75, 'SMASH': 94.2, 'ASSAULT': 525.6, 'DECIMATE': 112.8, 'DISMEMBER': 120.6, 'FURY': 152.8, 'KICK': 60, 'PUNISH': 56.4, 'QUAKE': 131.4, 'STOMP': 120} # Ability damage of every ability
+AbilityDamage = {'DEBILITATE': 60, 'UNLOAD': 610, 'TIGHT BINDINGS': 120, 'SNIPE': 172, 'SNAP SHOT': 265, 'SHADOW TENDRILS': 283, 'RICOCHET': 60, 'RAPID FIRE': 451.2, 'PIERCING SHOT': 56.4, 'NEEDLE STRIKE': 94.2, 'FRAGMENTATION SHOT': 120.6, "DEATH'S SWIFTNESS": 0, 'DEADSHOT': 426.13, 'DAZING SHOT': 94.2, 'CORRUPTION SHOT': 200, 'BOMBARDMENT': 131.4, 'BINDING SHOT': 60, 'WRACK': 56.4, 'WILD MAGIC': 265, 'TSUNAMI': 250, 'SUNSHINE': 0, 'SONIC WAVE': 94.2, 'SMOKE TENDRILS': 345, 'OMNIPOWER': 300, 'METAMORPHOSIS': 0, 'IMPACT': 60, 'DRAGON BREATH': 112.8, 'DETONATE': 225, 'DEEP IMPACT': 120, 'CORRUPTION BLAST': 200, 'CONCENTRATED BLAST': 152.8, 'COMBUST': 120.6, 'CHAIN': 60, 'ASPHYXIATE': 451.2, "TUSKA'S WRATH": 5940, 'SHATTER': 0, 'STORM SHARDS': 0, 'SACRIFICE': 60, 'ONSLAUGHT': 532, 'PULVERISE': 300, 'FRENZY': 610, 'BERSERK': 0, 'OVERPOWER': 300, 'MASSACRE': 426.13, 'SEVER': 112.8, 'CLEAVE': 112.8, 'DESTROY': 451.2, 'BACKHAND': 60, 'BARGE': 75, 'BLOOD TENDRILS': 324, 'FLURRY': 204, 'FORCEFUL BACKHAND': 120, 'HAVOC': 94.2, 'HURRICANE': 265, 'SLAUGHTER': 145, 'SLICE': 75, 'SMASH': 94.2, 'ASSAULT': 525.6, 'DECIMATE': 112.8, 'DISMEMBER': 120.6, 'FURY': 152.8, 'KICK': 60, 'PUNISH': 56.4, 'QUAKE': 131.4, 'STOMP': 120} # Ability damage of every ability
 AbilityCooldown = {'DEBILITATE': 30, 'UNLOAD': 60, 'TIGHT BINDINGS': 15, 'SNIPE': 10.2, 'SNAP SHOT': 20.4, 'SHADOW TENDRILS': 45, 'RICOCHET': 10.2, 'RAPID FIRE': 20.4, 'PIERCING SHOT': 3, 'NEEDLE STRIKE': 5.4, 'FRAGMENTATION SHOT': 15, "DEATH'S SWIFTNESS": 60, 'DEADSHOT': 30, 'DAZING SHOT': 5.4, 'CORRUPTION SHOT': 15, 'BOMBARDMENT': 30, 'BINDING SHOT': 15, 'WRACK': 3, 'WILD MAGIC': 20.4, 'TSUNAMI': 60, 'SUNSHINE': 60, 'SONIC WAVE': 5.4, 'SMOKE TENDRILS': 45, 'OMNIPOWER': 30, 'METAMORPHOSIS': 60, 'IMPACT': 15, 'DRAGON BREATH': 10.2, 'DETONATE': 30, 'DEEP IMPACT': 15, 'CORRUPTION BLAST': 15, 'CONCENTRATED BLAST': 5.4, 'COMBUST': 15, 'CHAIN': 10.2, 'ASPHYXIATE': 20.4, "TUSKA'S WRATH": 120, 'SHATTER': 120, 'STORM SHARDS': 30, 'SACRIFICE': 30, 'ONSLAUGHT': 120, 'PULVERISE': 60, 'FRENZY': 60, 'BERSERK': 60, 'OVERPOWER': 60, 'MASSACRE': 60,  'SEVER': 15, 'CLEAVE': 7.2, 'DESTROY': 20.4, 'BACKHAND': 15, 'BARGE': 20.4, 'BLOOD TENDRILS': 45, 'FLURRY': 20.4, 'FORCEFUL BACKHAND': 15, 'HAVOC': 10.2, 'HURRICANE': 20.4, 'SLAUGHTER': 30, 'SLICE': 3, 'SMASH': 10.2, 'ASSAULT': 30, 'DECIMATE': 7.2, 'DISMEMBER': 15, 'FURY': 5.4, 'KICK': 15, 'PUNISH': 3, 'QUAKE': 20.4, 'STOMP': 15} # Cooldowns of abilties (in seconds)
 AbilityType = {'DEBILITATE': 'T', 'UNLOAD': 'U', 'TIGHT BINDINGS': 'T', 'SNIPE': 'B', 'SNAP SHOT': 'T', 'SHADOW TENDRILS': 'T', 'RICOCHET': 'B', 'RAPID FIRE': 'T', 'PIERCING SHOT': 'B', 'NEEDLE STRIKE': 'B', 'FRAGMENTATION SHOT': 'B', "DEATH'S SWIFTNESS": 'U', 'DEADSHOT': 'U', 'DAZING SHOT': 'B', 'CORRUPTION SHOT': 'B', 'BOMBARDMENT': 'T', 'BINDING SHOT': 'B', 'WRACK': 'B', 'WILD MAGIC': 'T', 'TSUNAMI': 'U', 'SUNSHINE': 'U', 'SONIC WAVE': 'B', 'SMOKE TENDRILS': 'T', 'OMNIPOWER': 'U', 'METAMORPHOSIS': 'U', 'IMPACT': 'B', 'DRAGON BREATH': 'B', 'DETONATE': 'T', 'DEEP IMPACT': 'T', 'CORRUPTION BLAST': 'B', 'CONCENTRATED BLAST': 'B', 'COMBUST': 'B', 'CHAIN': 'B', 'ASPHYXIATE': 'T', "TUSKA'S WRATH": 'B', 'SHATTER': 'T', 'STORM SHARDS': 'B', 'SACRIFICE': 'B', 'ONSLAUGHT': 'U', 'PULVERISE': 'U', 'FRENZY': 'U', 'BERSERK': 'U', 'OVERPOWER': 'U', 'SEVER': 'B', 'CLEAVE': 'B', 'DESTROY': 'T', 'BACKHAND': 'B', 'BARGE': 'B', 'BLOOD TENDRILS': 'T', 'FLURRY': 'T', 'FORCEFUL BACKHAND': 'T', 'HAVOC': 'B', 'HURRICANE': 'T', 'SLAUGHTER': 'T', 'SLICE': 'B', 'SMASH': 'B', 'ASSAULT': 'T', 'DECIMATE': 'B', 'DISMEMBER': 'B', 'FURY': 'B', 'KICK': 'B', 'PUNISH': 'B', 'QUAKE': 'T', 'STOMP': 'T', 'MASSACRE': 'U'} # Type of ability (B = basic, T = threshold, U = ultimate)
 Ready = {'DEBILITATE': False, 'UNLOAD': False, 'TIGHT BINDINGS': False, 'SNIPE': True, 'SNAP SHOT': False, 'SHADOW TENDRILS': False, 'RICOCHET': True, 'RAPID FIRE': False, 'PIERCING SHOT': True, 'NEEDLE STRIKE': True, 'FRAGMENTATION SHOT': True, "DEATH'S SWIFTNESS": False, 'DEADSHOT': False, 'DAZING SHOT': True, 'CORRUPTION SHOT': True, 'BOMBARDMENT': False, 'BINDING SHOT': True, 'WRACK': True, 'WILD MAGIC': False, 'TSUNAMI': False, 'SUNSHINE': False, 'SONIC WAVE': True, 'SMOKE TENDRILS': False, 'OMNIPOWER': False, 'METAMORPHOSIS': False, 'IMPACT': True, 'DRAGON BREATH': True, 'DETONATE': False, 'DEEP IMPACT': False, 'CORRUPTION BLAST': True, 'CONCENTRATED BLAST': True, 'COMBUST': True, 'CHAIN': True, 'ASPHYXIATE': False, "TUSKA'S WRATH": True, 'SHATTER': False, 'STORM SHARDS': True, 'SACRIFICE': True, 'ONSLAUGHT': False, 'PULVERISE': False, 'FRENZY': False, 'BERSERK': False, 'OVERPOWER': False, 'SEVER': True, 'CLEAVE': True, 'DESTROY': False, 'BACKHAND': True, 'BARGE': True, 'BLOOD TENDRILS': False, 'FLURRY': False, 'FORCEFUL BACKHAND': False, 'HAVOC': True, 'HURRICANE': False, 'SLAUGHTER': False, 'SLICE': True, 'SMASH': True, 'ASSAULT': False, 'DECIMATE': True, 'DISMEMBER': True, 'FURY': True, 'KICK': True, 'PUNISH': True, 'QUAKE': False, 'STOMP': False, 'MASSACRE': False} # Flag on if you can use abilties (based on adrenaline)
 Bleeds = {'SHADOW TENDRILS': 1.8, 'FRAGMENTATION SHOT': 6, 'DEADSHOT': 6, 'CORRUPTION SHOT': 6, 'SMOKE TENDRILS': 5.4, 'CORRUPTION BLAST': 6, 'COMBUST': 6, 'SLAUGHTER': 6, 'DISMEMBER': 6, 'BLOOD TENDRILS': 4.8, 'MASSACRE': 6}  # time DOT abilties last (seconds)
-SpecialBleeds = ['MASSACRE','DEADSHOT'] # Bleeds that have their first hit affected by damage modifying abilities
-SpecialAbilities = ['DEEP IMPACT','SNIPE'] # Abilities that take longer than 1.8 seconds to use but will still have full impact from abilties in list CritBoost
+Walking_Bleeds = {'FRAGMENTATION SHOT': 1, 'COMBUST': 1, 'SLAUGHTER': 1.5}
+SpecialBleeds = ['MASSACRE','DEADSHOT', 'SMOKE TENDRILS'] # Bleeds that have their first hit affected by damage modifying abilities
+SpecialAbilities = ['DETONATE','SNIPE'] # Abilities that take longer than 1.8 seconds to use but will still have full impact from abilties in list CritBoost
 Buff_Time = {'BARGE': 6.6, 'FURY': 5.4, 'RAPID FIRE': 6, 'TIGHT BINDINGS': 9.6, 'BINDING SHOT': 9.6, 'NEEDLE STRIKE': 3.6, "DEATH'S SWIFTNESS": 30, 'SUNSHINE': 30, 'METAMORPHOSIS': 15, 'DEEP IMPACT': 3.6, 'CONCENTRATED BLAST': 5.4, 'BERSERK': 19.8, 'FORCEFUL BACKHAND': 3.6, 'STOMP': 3.6} # How long stuns, DPS increases .. etc last
 Buff_Effect = {'NEEDLE STRIKE': 1.07, "DEATH'S SWIFTNESS": 1.5, 'SUNSHINE': 1.5, 'METAMORPHOSIS': 1.625, 'FURY': 1.1, 'CONCENTRATED BLAST': 1.1, 'BERSERK': 2,'SLICE':1.506,'PUNISH':2,'WRACK':2,'PIERCING SHOT':2} # multiplier for boosted damage
 CritBoost = ['NEEDLE STRIKE','FURY','CONCENTRATED BLAST',"DEATH'S SWIFTNESS",'SUNSHINE','BERSERK','METAMORPHOSIS']
@@ -40,6 +41,8 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
     if Adrenaline >= 100:
         Adrenaline = 100
         for Ability in UltimateIterator:
+            Ready[Ability] = True
+        for Ability in ThresholdIterator:
             Ready[Ability] = True
     elif Adrenaline >= 50:
         for Ability in ThresholdIterator:
@@ -71,41 +74,43 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                         Current += round(Shards * 85, 1)
                         Shards = 0
                     # --- Calculating how much damage abilities should do --- #
-                    Warning = False
-                    Multiplier = float(1)
+                    MoreBinds = False
+                    Altered_Bleeds = False
+                    Modified_Damage = False
+                    Damage_Multiplier = float(1) # Multiplier for damage due to damage boosting abilities
+                    Bleed_Multiplier = float(1) # Multiplier incase target is bound (and bind about to run out)
                     for Ability in TrackBuff:
-                        if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[ability]) and (Ability in CritBoost):
-                            Warning = True  # Determins if abilties increasing potential damage next hit will runout during ability usage.
-                            Multiplier = Multiplier * ((Buff_Time[Ability] - TrackBuff[Ability]) / AbilityTime[ability])
+                        if Ability in CritBoost:
+                            if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[ability]) and ((ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8)):
+                                Damage_Multiplier *= ((((Buff_Time[Ability] - TrackBuff[Ability])/AbilityTime[ability]) * (Buff_Effect[Ability]-1))+1)
+                            else:
+                                Damage_Multiplier *= Buff_Effect[Ability]
+                        elif (Ability in Binds) and (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (len(Debilitating) > 0):
+                            if (MoreBinds is False) and (Buff_Time[Ability] - TrackBuff[Ability] < Bleeds[ability]):
+                                Bleed_Multiplier = Walking_Bleeds[ability] * (1 + (Buff_Time[Ability] - TrackBuff[Ability])/Bleeds[ability])
+                            else:
+                                Bleed_Multiplier = 1
+                                MoreBinds = True
+                            Altered_Bleeds = True
+                    if (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (Altered_Bleeds is False):
+                        Bleed_Multiplier = Walking_Bleeds[ability] * 2
+                    Altered_Bleeds = False
+                    TimeMultiplier = ModifyTime(Time,Clock,ability)
                     if ability in Bleeds:
-                        if (Activate_Bleeds is True) and (Altered_Bleeds is False):
-                            if Ability in (a for a in Binds if a in TrackBuff):
-                                Alter_Bleeds(Activate_Bleeds)
-                                Altered_Bleeds = True
                         if ability in SpecialBleeds:
-                            AbilityDamage[ability] = ((112.8 * Current_Buff) + 313.33)
-                        if (Time - Clock) >= Bleeds[ability]:
-                            Current += round(AbilityDamage[ability], 1)
-                        else:
-                            Current += round((float(float(Time - Clock) / Bleeds[ability]) * AbilityDamage[ability]), 1)
-                        if (Activate_Bleeds is True) and (Altered_Bleeds is True) and (Ability not in (a for a in Binds if a in TrackBuff)):
-                                Alter_Bleeds(Activate_Bleeds)
-                                Altered_Bleeds = False
+                            if (ability == 'SMOKE TENDRILS'):
+                                Current += (AbilityDamage[ability] * Damage_Multiplier)
+                            else:
+                                AbilityDamage[ability] = ((112.8 * Damage_Multiplier) + 313.33)
+                                Modified_Damage = True
+                        Current += round(AbilityDamage[ability] * Bleed_Multiplier * TimeMultiplier, 1)
+                        if Modified_Damage is True:
+                            AbilityDamage[ability] = 426.13
+                            Modified_Damage = False    
                     elif (ability in Punishing) and (Buff_Available() is True):
-                        if (Time - Clock) >= AbilityTime[ability]:
-                            Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Current_Buff, 1)
-                        else:
-                            Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Current_Buff * ((Time - Clock) / AbilityTime[ability]), 1)
-                    elif (Warning is True) and (Current_Buff > 1) and (AbilityTime[ability] > 1.8) and (ability not in SpecialAbilities):
-                        if (Time - Clock) >= AbilityTime[ability]:
-                            Current += round(AbilityDamage[ability] * (((Current_Buff - 1) * Multiplier) + 1), 1)
-                        else:
-                            Current += round(AbilityDamage[ability] * (((Current_Buff - 1) * Multiplier) + 1) * ((Time - Clock) / AbilityTime[ability]), 1)
+                        Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Damage_Multiplier * TimeMultiplier, 1)
                     else:
-                        if (Time - Clock) >= AbilityTime[ability]:
-                            Current += round(AbilityDamage[ability] * Current_Buff, 1)
-                        else:
-                            Current += round(AbilityDamage[ability] * Current_Buff * ((Time - Clock) / AbilityTime[ability]), 1)
+                        Current += round(AbilityDamage[ability] * Damage_Multiplier * TimeMultiplier, 1)
                     # --- Increasing rotation duration and managing cooldowns --- #
                     Clock += AbilityTime[ability]
                     Clock = round(Clock, 1)
@@ -142,10 +147,8 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                 if Auto_Available() is True:
                     if (Clock + AttackSpeedCooldowns[AttackSpeed]) <= Time:
                         Clock +=  AttackSpeedCooldowns[AttackSpeed]
-                        Clock = round(Clock, 1)
                     else:
                         Clock += (Time - Clock)
-                        Clock = round(Clock, 1) # PyCharm is complaining that this is never used..
                         break
                     AbilityPath.append(f'AUTO D: {round(Current, 1)} T: {round(Clock, 1)} A: {Adrenaline}')
                     if float(Time - Clock) >= 0.6:
@@ -159,8 +162,8 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                     Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, (AttackSpeedCooldowns[AttackSpeed] + 0.6)) # Will also manage cooldowns
                 else:
                     Clock += 0.6
-                    Clock = round(Clock, 1)
                     Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, 0.6)
+                Clock = round(Clock, 1)
     return Current
 
 def Error(): # Called on during invalid inputs
@@ -288,13 +291,6 @@ Start_Adrenaline = int(configurations[0])
 Gain = int(configurations[1])
 AttackSpeed = configurations[2].upper()
 Activate_Bleeds = configurations[3]
-if Activate_Bleeds == 'False':
-    for item in AbilityDamage:
-        # --- Adjusts DOT multiplier that occurs when an enemy moves during bleed --- #
-        if item == 'FRAGMENTATION SHOT' or item == 'COMBUST':
-            AbilityDamage[item] = AbilityDamage[item]/2 
-        elif item == 'SLAUGHTER':
-            AbilityDamage[item] = AbilityDamage[item]/3
 Bound = configurations[4]
 if Bound == 'False':
     Debilitating = []
@@ -316,7 +312,6 @@ if Units == 'ticks':
     Time *= 0.6
 # --- Functions are layed out here --- #
 def Auto_Available(): # Will check if an auto attack is needed to be used
-    Is_Available = True #This variable is never used..
     for Ability in TrackCooldown:
         if (AbilityCooldown[Ability] - TrackCooldown[Ability]) < AttackSpeedCooldowns[AttackSpeed]:
             return False
@@ -347,22 +342,13 @@ def Get_Time(Seconds): # Converts raw seconds into Years, Weeks, etc...
     Time = str(Years) + f' years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds'
     return Time
 
-def Alter_Bleeds(Activate_Bleeds):
-    if 'FRAGMENTATION SHOT' in AbilityDamage:
-        if AbilityDamage['FRAGMENTATION SHOT'] == 120.6:
-            AbilityDamage['FRAGMENTATION SHOT'] *= 2
-        if AbilityDamage['FRAGMENTATION SHOT'] == 241.2:
-            AbilityDamage['FRAGMENTATION SHOT'] /= 2
-    if 'COMBUST' in AbilityDamage:
-        if AbilityDamage['COMBUST'] == 120.6:
-            AbilityDamage['COMBUST'] *= 2
-        if AbilityDamage['COMBUST'] == 241.2:
-            AbilityDamage['COMBUST'] /= 2
-    if 'SLAUGHTER' in AbilityDamage:
-        if AbilityDamage['SLAUGHTER'] == 145:
-            AbilityDamage['SLAUGHTER'] *= 3
-        if AbilityDamage['SLAUGHTER'] == 435:
-            AbilityDamage['SLAUGHTER'] /= 3
+def ModifyTime(Time,Clock,ability):
+    if (ability in Bleeds) and (ability != 'SHADOW TENDRILS') and ((Time - Clock) < Bleeds[ability]):
+        return (Time-Clock)/Bleeds[ability]
+    else:
+        if (ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8) and ((Time - Clock) < AbilityTime[ability]):
+            return (Time-Clock)/AbilityTime[ability]
+    return 1
             
 def Remove(CopyOfReady): # Removes abilities from lists and dictionaries not being used to save runtime and memory
     for ability in Abilities:
@@ -372,6 +358,8 @@ def Remove(CopyOfReady): # Removes abilities from lists and dictionaries not bei
             del AbilityType[ability]
             del AbilityTime[ability]
             del Ready[ability]
+            if ability in Walking_Bleeds:
+                del Walking_Bleeds[ability]
             if ability in Bleeds:
                 del Bleeds[ability]
             if ability in Buff_Time:
@@ -513,3 +501,4 @@ print(f'{BestRotation}\n')
 print(f'Lowest ability damage: {CurrentLowest}%')
 print(f'Worst ability bar found: {WorstBar}')
 print(WorstRotation)
+input('\nPress enter to exit\n')
