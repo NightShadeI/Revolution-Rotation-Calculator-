@@ -42,6 +42,8 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
         Adrenaline = 100
         for Ability in UltimateIterator:
             Ready[Ability] = True
+        for Ability in ThresholdIterator:
+            Ready[Ability] = True
     elif Adrenaline >= 50:
         for Ability in ThresholdIterator:
             Ready[Ability] = True
@@ -145,10 +147,8 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                 if Auto_Available() is True:
                     if (Clock + AttackSpeedCooldowns[AttackSpeed]) <= Time:
                         Clock +=  AttackSpeedCooldowns[AttackSpeed]
-                        Clock = round(Clock, 1)
                     else:
                         Clock += (Time - Clock)
-                        Clock = round(Clock, 1) # PyCharm is complaining that this is never used..
                         break
                     AbilityPath.append(f'AUTO D: {round(Current, 1)} T: {round(Clock, 1)} A: {Adrenaline}')
                     if float(Time - Clock) >= 0.6:
@@ -162,8 +162,8 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                     Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, (AttackSpeedCooldowns[AttackSpeed] + 0.6)) # Will also manage cooldowns
                 else:
                     Clock += 0.6
-                    Clock = round(Clock, 1)
                     Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, 0.6)
+                Clock = round(Clock, 1)
     return Current
 
 def Error(): # Called on during invalid inputs
@@ -312,7 +312,6 @@ if Units == 'ticks':
     Time *= 0.6
 # --- Functions are layed out here --- #
 def Auto_Available(): # Will check if an auto attack is needed to be used
-    Is_Available = True #This variable is never used..
     for Ability in TrackCooldown:
         if (AbilityCooldown[Ability] - TrackCooldown[Ability]) < AttackSpeedCooldowns[AttackSpeed]:
             return False
@@ -502,3 +501,4 @@ print(f'{BestRotation}\n')
 print(f'Lowest ability damage: {CurrentLowest}%')
 print(f'Worst ability bar found: {WorstBar}')
 print(WorstRotation)
+input('\nPress enter to exit\n')
