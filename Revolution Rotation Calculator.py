@@ -14,10 +14,10 @@ Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 'BINDING S
 
 # --- Defining how abilities work --- #
 
-# Cooldowns for casewhere no abilities may be used
+# Define cooldowns for cases where no abilities may be used
 AttackSpeedCooldowns = {'FASTEST': 2.4, 'FAST': 3.0, 'AVERAGE': 3.6, 'SLOW': 4.2, 'SLOWEST': 7.2}
 
-# Ability damage of every ability
+# Define ability damage for every ability
 AbilityDamage = {'ASPHYXIATE': 451.2, 'ASSAULT': 525.6, 'BACKHAND': 60, 'BARGE': 75, 'BERSERK': 0, 'BINDING SHOT': 60,
                  'BLOOD TENDRILS': 324, 'BOMBARDMENT': 131.4, 'CHAIN': 60, 'CLEAVE': 112.8, 'COMBUST': 241.2,
                  'CONCENTRATED BLAST': 152.8, 'CORRUPTION BLAST': 200, 'CORRUPTION SHOT': 200, 'DAZING SHOT': 94.2,
@@ -32,7 +32,7 @@ AbilityDamage = {'ASPHYXIATE': 451.2, 'ASSAULT': 525.6, 'BACKHAND': 60, 'BARGE':
                  'STORM SHARDS': 0, 'SUNSHINE': 0, 'TIGHT BINDINGS': 120, 'TSUNAMI': 250, "TUSKA'S WRATH": 5940,
                  'UNLOAD': 610, 'WILD MAGIC': 265, 'WRACK': 56.4}
 
-# Cooldowns of abilties (in seconds)
+# Define the cooldown of abilities (in seconds)
 AbilityCooldown = {'ASPHYXIATE': 20.4, 'ASSAULT': 30, 'BACKHAND': 15, 'BARGE': 20.4, 'BERSERK': 60, 'BINDING SHOT': 15,
                    'BLOOD TENDRILS': 45, 'BOMBARDMENT': 30, 'CHAIN': 10.2, 'CLEAVE': 7.2, 'COMBUST': 15,
                    'CONCENTRATED BLAST': 5.4, 'CORRUPTION BLAST': 15, 'CORRUPTION SHOT': 15, 'DAZING SHOT': 5.4,
@@ -62,7 +62,7 @@ AbilityTime = {'ASPHYXIATE': 5.4, 'ASSAULT': 5.4, 'BACKHAND': 1.8, 'BARGE': 1.8,
                'STORM SHARDS': 1.8, 'SUNSHINE': 1.8, 'TIGHT BINDINGS': 1.8, 'TSUNAMI': 1.8, "TUSKA'S WRATH": 1.8,
                'UNLOAD': 4.2, 'WILD MAGIC': 4.8, 'WRACK': 1.8}
 
-# Type of ability (B = basic, T = threshold, U = ultimate)
+# Define the type of abilities (B = basic, T = threshold, U = ultimate)
 AbilityType = {'ASPHYXIATE': 'T', 'ASSAULT': 'T', 'BACKHAND': 'B', 'BARGE': 'B', 'BERSERK': 'U', 'BINDING SHOT': 'B',
                'BLOOD TENDRILS': 'T', 'BOMBARDMENT': 'T', 'CHAIN': 'B', 'CLEAVE': 'B', 'COMBUST': 'B',
                'CONCENTRATED BLAST': 'B', 'CORRUPTION BLAST': 'B', 'CORRUPTION SHOT': 'B', 'DAZING SHOT': 'B',
@@ -77,7 +77,7 @@ AbilityType = {'ASPHYXIATE': 'T', 'ASSAULT': 'T', 'BACKHAND': 'B', 'BARGE': 'B',
                'STORM SHARDS': 'B', 'SUNSHINE': 'U', 'TIGHT BINDINGS': 'T', 'TSUNAMI': 'U', "TUSKA'S WRATH": 'B',
                'UNLOAD': 'U', 'WILD MAGIC': 'T', 'WRACK': 'B'}
 
-# Flag on if you can use abilties (based on adrenaline)
+# Define a flag to decide if you can use abilities (based on adrenaline)
 Ready = {'DEBILITATE': False, 'UNLOAD': False, 'TIGHT BINDINGS': False, 'SNIPE': True, 'SNAP SHOT': False,
          'SHADOW TENDRILS': False, 'RICOCHET': True, 'RAPID FIRE': False, 'PIERCING SHOT': True, 'NEEDLE STRIKE': True,
          'FRAGMENTATION SHOT': True, "DEATH'S SWIFTNESS": False, 'DEADSHOT': False, 'DAZING SHOT': True,
@@ -93,16 +93,19 @@ Ready = {'DEBILITATE': False, 'UNLOAD': False, 'TIGHT BINDINGS': False, 'SNIPE':
          'PUNISH': True, 'QUAKE': False, 'STOMP': False,
          'MASSACRE': False}
 
-# time DOT abilties last (seconds)
+# Define the time DOT abilities last (in seconds)
 Bleeds = {'BLOOD TENDRILS': 4.8, 'COMBUST': 6, 'CORRUPTION BLAST': 6, 'CORRUPTION SHOT': 6, 'DEADSHOT': 6,
           'DISMEMBER': 6, 'FRAGMENTATION SHOT': 6, 'MASSACRE': 6, 'SHADOW TENDRILS': 1.8, 'SLAUGHTER': 6,
           'SMOKE TENDRILS': 5.4}
+
+# Define damage multiplier of walking bleeds
 Walking_Bleeds = {'COMBUST': 1, 'FRAGMENTATION SHOT': 1, 'SLAUGHTER': 1.5}
 
-# Bleeds that have their first hit affected by damage modifying abilities
+# Define bleed abilities that have their first hit affected by damage modifying abilities
 SpecialBleeds = ['DEADSHOT', 'MASSACRE', 'SMOKE TENDRILS']
 
-# Abilities that take longer than 1.8 seconds to use but will still have full impact from abilties in list CritBoost
+# Define abilities that take longer than 1.8 seconds to use but will still have full impact from abilities in the
+# CritBoost list
 SpecialAbilities = ['DETONATE', 'SNIPE']
 
 # How long stuns, DPS increases .. etc last
@@ -110,20 +113,26 @@ Buff_Time = {'BARGE': 6.6, 'BERSERK': 19.8, 'BINDING SHOT': 9.6, 'CONCENTRATED B
              'DEEP IMPACT': 3.6, 'FORCEFUL BACKHAND': 3.6, 'FURY': 5.4, 'METAMORPHOSIS': 15, 'NEEDLE STRIKE': 3.6,
              'RAPID FIRE': 6, 'STOMP': 3.6, 'SUNSHINE': 30, 'TIGHT BINDINGS': 9.6}
 
-# multiplier for boosted damage
+# Define the Multiplier for boosted damage
 Buff_Effect = {'BERSERK': 2, 'CONCENTRATED BLAST': 1.1, "DEATH'S SWIFTNESS": 1.5, 'FURY': 1.1, 'METAMORPHOSIS': 1.625,
                'NEEDLE STRIKE': 1.07, 'PIERCING SHOT': 2, 'PUNISH': 2, 'SLICE': 1.506, 'SUNSHINE': 1.5, 'WRACK': 2}
 
-# Abilities that do extra damage when target stun or bound
+# Define crit-boosting abilities
 CritBoost = ['BERSERK', 'CONCENTRATED BLAST', "DEATH'S SWIFTNESS", 'FURY', 'METAMORPHOSIS', 'NEEDLE STRIKE', 'SUNSHINE']
+
+# Define the abilities that do extra damage when the target is stun or bound
 Punishing = ['PIERCING SHOT', 'PUNISH', 'SLICE', 'WRACK']
 
-# Abilities that can stun or bind target
+# Define abilities that can stun or bind the target
 Debilitating = ['BARGE', 'BINDING SHOT', 'DEEP IMPACT', 'FORCEFUL BACKHAND', 'RAPID FIRE', 'STOMP', 'TIGHT BINDINGS']
+
+# Define abilities that bind the target
 Binds = ['BARGE', 'BINDING SHOT', 'DEEP IMPACT', 'TIGHT BINDINGS']
 
+# Define the amount of targets affected by area of effect attacks
 AoEAverageTargetsHit = 2.5
 
+# Define area of effect abilities
 AoE = ['BOMBARDMENT', 'CHAIN', 'CLEAVE', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DRAGON BREATH', 'FLURRY', 'HURRICANE',
        'QUAKE', 'RICOCHET', 'TSUNAMI']
 
@@ -181,7 +190,7 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                     Altered_Bleeds = False
                     Modified_Damage = False
                     Damage_Multiplier = float(1)  # Multiplier for damage due to damage boosting abilities
-                    Bleed_Multiplier = float(1)  # Multiplier incase target is bound (and bind about to run out)
+                    Bleed_Multiplier = float(1)  # Multiplier in case target is bound (and bind about to run out)
                     for Ability in TrackBuff:
                         if Ability in CritBoost:
                             if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[ability]) and (
@@ -279,14 +288,14 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
 
 # Called on during invalid inputs
 def Error():
-    print('Invalid Input')
+    print('Invalid Input.')
 
 
 def Repair():
-    repair = input('Configurations.txt has been modified, perform repair? (Y/N)\n>> ').upper()
+    repair = input('Configurations.txt has been modified, perform repair? (Y/N).\n>> ').upper()
     if (repair == 'Y') or (repair == 'YES'):
         import os
-        correct_data = ['# Rotation Paramaters', '', 'Adrenaline: ', 'Gain: ', 'AttackSpeed: ', 'Bleeds: ', 'Stuns: ',
+        correct_data = ['# Rotation Parameters', '', 'Adrenaline: ', 'Gain: ', 'AttackSpeed: ', 'Bleeds: ', 'Stuns: ',
                         'Abilities: [,,,]', 'Style: (,)', 'Time: ', '', '# Mode', '', 'units: seconds']
         if os.path.exists('Configurations.txt'):
             os.remove('Configurations.txt')
@@ -294,7 +303,7 @@ def Repair():
             for line in correct_data:
                 settings.write(line + str('\n'))
         input('Repair successful! fill out settings in Configurations.txt before running calculator again. '
-              'Press enter to exit\n>> ')
+              'Press enter to exit.\n>> ')
     sys.exit()
 
 
@@ -315,33 +324,33 @@ def Validate(configurations):
         if config == '':
             Null = True
     if Null is True:
-        ErrorLog.append('One or more settings have been left as null')
+        ErrorLog.append('One or more settings have been left empty.')
 
     try:
         setting = int(configurations[0])
         if not (0 <= setting <= 100):
-            ErrorLog.append('Adrenaline must be between 0 and 100 inclusive')
+            ErrorLog.append('Adrenaline must be between 0 and 100 inclusive.')
     except ValueError:
-        ErrorLog.append('Adrenaline must be of form integer')
+        ErrorLog.append('Adrenaline must be an integer.')
 
     try:
         setting = int(configurations[1])
         if not (0 <= setting <= 100):
-            ErrorLog.append('Gain must be a positive integer between 0 and 100')
+            ErrorLog.append('Gain must be a positive integer between 0 and 100 inclusive.')
     except ValueError:
-        ErrorLog.append('Gain must be of form integer')
+        ErrorLog.append('Gain must be an integer.')
 
     if configurations[2].upper() not in ('SLOWEST', 'SLOW', 'AVERAGE', 'FAST', 'FASTEST'):
         ErrorLog.append("AttackSpeed must either be one of the following options: ('slowest, slow, average, fast,"
-                        " fastest')")
+                        " fastest').")
 
     setting = configurations[3]
     if not ((setting.lower() == 'false') or (setting.lower() == 'true')):
-        ErrorLog.append('Bleeds must be true or false')
+        ErrorLog.append('Bleeds must be true or false.')
 
     setting = configurations[4]
     if not ((setting.lower() == 'false') or (setting.lower() == 'true')):
-        ErrorLog.append('Stuns must be true or false')
+        ErrorLog.append('Stuns must be true or false.')
 
     setting = configurations[5]
     if (setting[0] == '[' and setting[-1] == ']'):
@@ -352,38 +361,39 @@ def Validate(configurations):
                 ability = ability.upper().strip()
                 if (ability not in Abilities) and (ability not in Counter):
                     ErrorLog.append(f'{ability.strip()} is not a recognised ability, or is not included in this '
-                                    f'calculator')
+                                    f'calculator.')
                 if ability in Counter:
                     Counter[ability] += 1
                     if Counter[ability] == 2:
                         ErrorLog.append(f'{(ability.strip())} is referenced 2 or more times within array. Ensure it '
-                                        f'is only referenced once')
+                                        f'is only referenced once.')
                 else:
                     Counter[ability] = 1
         else:
             ErrorLog.append('No abilities were added')
     else:
-        ErrorLog.append("Abilities must start and end with [], With abilities being seperated by comma's (,)")
+        ErrorLog.append("Abilities must be surrounded by square brackets [], and separated by comma's (,).")
 
     setting = configurations[6]
     if (setting[0] == '(' and setting[-1] == ')'):
         setting = setting[1:-1].split(',')
         if setting[0].upper() not in ('MAGIC', 'RANGED', 'MELEE'):
-            ErrorLog.append('First option of Style should be either "magic", "ranged" or "melee" (without quotes)')
+            ErrorLog.append('First style option must be "magic", "ranged" or "melee" (without quotes).')
         if setting[1] not in ('1', '2'):
-            ErrorLog.append('Second option of Style should either be 1 or 2 (1 handed / 2 handed weapon)')
+            ErrorLog.append('Second style option must be 1 or 2 (for 1 handed / 2 handed weapon)3')
     else:
-        ErrorLog.append('Style must start and end with (), with each option being seperate by a single comma (,)')
+        ErrorLog.append('Style must start and end with round brackets (), with each option separated by a single '
+                        'comma (,).')
 
     try:
         setting = float(configurations[7])
         if not (setting > 0):
-            ErrorLog.append('Time must be positive, and not equal to zero or negative')
+            ErrorLog.append('Time must be a number greater than zero.')
     except ValueError:
-        ErrorLog.append('Time must be a positive decimal (float) or a positive integer')
+        ErrorLog.append('Time must be a number.')
 
     if configurations[8].upper() not in ('SECONDS', 'TICKS'):
-        ErrorLog.append('units must be either "seconds" or "ticks" (without quoets)')
+        ErrorLog.append('Units must be either "seconds" or "ticks" (without quotes).')
 
     return ErrorLog
 
@@ -404,11 +414,11 @@ except:
 
 ErrorLog = Validate(configurations)
 if len(ErrorLog) > 0:
-    print('Errors were found, which are listed below:\n')
+    print('Errors were found!!!\n')
     for error in ErrorLog:
         print(error)
-    input('\nCould not complete setup, please change fields accordingly and run calculator again. '
-          'Press enter to exit\n>> ')
+    input('\nCould not complete setup, please change fields accordingly and run the calculator again. '
+          'Press enter to exit.\n>> ')
     sys.exit()
 
 Start_Adrenaline = int(configurations[0])
@@ -436,7 +446,7 @@ if Units == 'ticks':
     Time *= 0.6
 
 
-# --- Functions are layed out here --- #
+# --- Functions are laid out here --- #
 # Will check if an auto attack is needed to be used
 def Auto_Available():
     for Ability in TrackCooldown:
@@ -470,7 +480,7 @@ def Get_Time(Seconds):
     Seconds -= Hours * 3600
     Minutes = int(Seconds / 60)
     Seconds -= Minutes * 60
-    Time = str(Years) + f' years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds'
+    Time = str(Years) + f' years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds.'
     return Time
 
 
@@ -557,8 +567,8 @@ def AdjustCooldowns(Current_Buff, Adrenaline, Time):
     return Current_Buff
 
 
-# --- Dictionaries, lists and other data types layed out here --- #
-print('Starting process ... ')
+# --- Dictionaries, lists and other data types laid out here --- #
+print('Starting process ...')
 
 CopyOfReady = {}
 CopyOfReady = Remove(CopyOfReady)
@@ -593,11 +603,10 @@ while True:
 if AoEAverageTargetsHit > 1:
     for ability in MyAbilities:
         if ability in AoE:
-            # print("Altering average damage of ability " + ability + " from " + str(AbilityDamage[ability]) + " to " + str(AbilityDamage[ability]*AoEAverageTargetsHit))
             AbilityDamage[ability] = AbilityDamage[ability] * AoEAverageTargetsHit
 
-print('Startup Complete! Warning, the more abilities and the higher the time entered, higher wait times will be '
-      'reached. A better processor will improve this speed.')
+print('Startup Complete! Warning, the more the abilities, and the higher the cycle time, the more time it will take '
+      'to process. A better processor will improve this speed.')
 choice = input('Start Calculations? (Y/N) ').upper()
 if (choice != 'Y') and (choice != 'YES'):
     sys.exit()
@@ -619,7 +628,7 @@ try:  # Will keep running until Control C (or other) is pressed to end process
             BestRotation = []
             BestRotation = list(AbilityPath)
             BestBar = list(Permutation)
-            print("New best bar with damage " + str(CurrentHighest) + ": " + str(BestBar))
+            print(f"New best bar with damage {CurrentHighest}: {BestBar}")
         if round(Current, 1) < CurrentLowest:
             CurrentLowest = round(Current, 1)
             WorstRotation = []
@@ -631,10 +640,9 @@ try:  # Will keep running until Control C (or other) is pressed to end process
         if Runthrough == 10000:
             End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
         if Runthrough % 10000 == 0:
-            # print(f'\r===== {round(float(Runthrough/Permutations) * 100, 3)}% ===== Estimated time remaining: {Get_Time(int(End_Estimation - (time.time() - Start)))}; Best found: {CurrentHighest}%' + (' ' * 22), end = '')
-            print('\r===== ' + str(round(float(Runthrough / Permutations) * 100, 3)) +
-                  '% ===== Estimated time remaining: ' + str(Get_Time(int(End_Estimation - (time.time() - Start)))) +
-                  '; Best found: ' + str(CurrentHighest) + '%' + (' ' * 22), end='')
+            print(f'\r===== {round(float(Runthrough / Permutations) * 100, 3)}'
+                  f'% ===== Estimated time remaining: {Get_Time(int(End_Estimation - (time.time() - Start)))}'
+                  f'; Best found: {CurrentHighest}%' + (' ' * 22), end='')
             Time_Remaining_Calculation -= 1
             End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
             Start = time.time()

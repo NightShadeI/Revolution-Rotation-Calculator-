@@ -1,4 +1,4 @@
-# Rotation Paramaters
+# Rotation Parameters
 
 Adrenaline: 
 Gain:  
