@@ -165,80 +165,79 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
     Clock = round(Clock, 1)
     while Clock < Time:
         for ability in Permutation:
-            if Clock < Time:  # TODO: This is used a lot, is it a necessity?
-                if Ready[ability] is True:  # Checks if ability can be used
-                    Ready[ability] = False
-                    # --- Modifying adrenaline as required --- #
-                    AbilityPath.append(f'{ability} D: {round(Current, 1)} T: {round(Clock, 1)} A: {Adrenaline}')
-                    if ability in BasicIterator:
-                        Adrenaline += 8
-                    elif ability in ThresholdIterator:
-                        Adrenaline -= 15
-                    else:
-                        Adrenaline = Gain
-                    if Adrenaline > 100:
-                        Adrenaline = 100
-                    # --- Adding shards if they are used, or using them if activated --- #
-                    if ability == 'STORM SHARDS':
-                        if Shards < 10:
-                            Shards += 1
-                    elif ability == 'SHATTER':
-                        Current += round(Shards * 85, 1)
-                        Shards = 0
+            if Clock < Time and Ready[ability] is True:  # Checks if ability can be used TODO:Check if this is necessary
+                Ready[ability] = False
+                # --- Modifying adrenaline as required --- #
+                AbilityPath.append(f'{ability} D: {round(Current, 1)} T: {round(Clock, 1)} A: {Adrenaline}')
+                if ability in BasicIterator:
+                    Adrenaline += 8
+                elif ability in ThresholdIterator:
+                    Adrenaline -= 15
+                else:
+                    Adrenaline = Gain
+                if Adrenaline > 100:
+                    Adrenaline = 100
+                # --- Adding shards if they are used, or using them if activated --- #
+                if ability == 'STORM SHARDS':
+                    if Shards < 10:
+                        Shards += 1
+                elif ability == 'SHATTER':
+                    Current += round(Shards * 85, 1)
+                    Shards = 0
                     # --- Calculating how much damage abilities should do --- #
-                    MoreBinds = False
-                    Altered_Bleeds = False
-                    Modified_Damage = False
-                    Damage_Multiplier = float(1)  # Multiplier for damage due to damage boosting abilities
-                    Bleed_Multiplier = float(1)  # Multiplier in case target is bound (and bind about to run out)
-                    for Ability in TrackBuff:
-                        if Ability in CritBoost:
-                            if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[ability]) and (
-                                        (ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8)):
-                                Damage_Multiplier *= ((((Buff_Time[Ability] - TrackBuff[Ability]) / AbilityTime[
-                                    ability]) * (Buff_Effect[Ability] - 1)) + 1)
-                            else:
-                                Damage_Multiplier *= Buff_Effect[Ability]
-                        elif (Ability in Binds) and (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (
-                                    len(Debilitating) > 0):
-                            if (MoreBinds is False) and (Buff_Time[Ability] - TrackBuff[Ability] < Bleeds[ability]):
-                                Bleed_Multiplier = Walking_Bleeds[ability] * (
-                                    1 + (Buff_Time[Ability] - TrackBuff[Ability]) / Bleeds[ability])
-                            else:
-                                Bleed_Multiplier = 1
-                                MoreBinds = True
-                            Altered_Bleeds = True
-                    if (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (Altered_Bleeds is False):
-                        Bleed_Multiplier = Walking_Bleeds[ability] * 2
-                    Altered_Bleeds = False
-                    TimeMultiplier = ModifyTime(Time, Clock, ability)
-                    if ability in Bleeds:
-                        if ability in SpecialBleeds:
-                            if (ability == 'SMOKE TENDRILS'):
-                                Current += (AbilityDamage[ability] * Damage_Multiplier)
-                            else:
-                                AbilityDamage[ability] = ((112.8 * Damage_Multiplier) + 313.33)
-                                Modified_Damage = True
-                        Current += round(AbilityDamage[ability] * Bleed_Multiplier * TimeMultiplier, 1)
-                        if Modified_Damage is True:
-                            AbilityDamage[ability] = 426.13
-                            Modified_Damage = False
-                    elif (ability in Punishing) and (Buff_Available() is True):
-                        Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Damage_Multiplier *
-                                         TimeMultiplier, 1)
-                    else:
-                        Current += round(AbilityDamage[ability] * Damage_Multiplier * TimeMultiplier, 1)
-                    # --- Increasing rotation duration and managing cooldowns --- #
-                    Clock += AbilityTime[ability]
-                    Clock = round(Clock, 1)
-                    TrackCooldown[ability] = float(0)
-                    if ability in Buff_Time and ability not in Punishing:
-                        TrackBuff[ability] = 0
-                        if ability in Buff_Effect:
-                            Current_Buff = Current_Buff * Buff_Effect[ability]
-                    # Will also manage cooldowns
-                    Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, AbilityTime[ability])
-                    break
+                MoreBinds = False
+                Altered_Bleeds = False
+                Modified_Damage = False
+                Damage_Multiplier = float(1)  # Multiplier for damage due to damage boosting abilities
+                Bleed_Multiplier = float(1)  # Multiplier in case target is bound (and bind about to run out)
+                for Ability in TrackBuff:
+                    if Ability in CritBoost:
+                        if ((Buff_Time[Ability] - TrackBuff[Ability]) < AbilityTime[ability]) and (
+                                    (ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8)):
+                            Damage_Multiplier *= ((((Buff_Time[Ability] - TrackBuff[Ability]) / AbilityTime[ability]) *
+                                                   (Buff_Effect[Ability] - 1)) + 1)
+                        else:
+                            Damage_Multiplier *= Buff_Effect[Ability]
+                    elif (Ability in Binds) and (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (
+                                len(Debilitating) > 0):
+                        if (MoreBinds is False) and (Buff_Time[Ability] - TrackBuff[Ability] < Bleeds[ability]):
+                            Bleed_Multiplier = Walking_Bleeds[ability] * (
+                                1 + (Buff_Time[Ability] - TrackBuff[Ability]) / Bleeds[ability])
+                        else:
+                            Bleed_Multiplier = 1
+                            MoreBinds = True
+                        Altered_Bleeds = True
+                if (Activate_Bleeds is True) and (ability in Walking_Bleeds) and (Altered_Bleeds is False):
+                    Bleed_Multiplier = Walking_Bleeds[ability] * 2
+                Altered_Bleeds = False
+                TimeMultiplier = ModifyTime(Time, Clock, ability)
+                if ability in Bleeds:
+                    if ability in SpecialBleeds:
+                        if ability == 'SMOKE TENDRILS':
+                            Current += (AbilityDamage[ability] * Damage_Multiplier)
+                        else:
+                            AbilityDamage[ability] = ((112.8 * Damage_Multiplier) + 313.33)
+                            Modified_Damage = True
+                    Current += round(AbilityDamage[ability] * Bleed_Multiplier * TimeMultiplier, 1)
+                    if Modified_Damage is True:
+                        AbilityDamage[ability] = 426.13
+                        Modified_Damage = False
+                elif (ability in Punishing) and (Buff_Available() is True):
+                    Current += round(AbilityDamage[ability] * Buff_Effect[ability] * Damage_Multiplier * TimeMultiplier,
+                                     1)
+                else:
+                    Current += round(AbilityDamage[ability] * Damage_Multiplier * TimeMultiplier, 1)
+                # --- Increasing rotation duration and managing cooldowns --- #
+                Clock += AbilityTime[ability]
+                Clock = round(Clock, 1)
+                TrackCooldown[ability] = float(0)
+                if ability in Buff_Time and ability not in Punishing:
+                    TrackBuff[ability] = 0
+                    if ability in Buff_Effect:
+                        Current_Buff = Current_Buff * Buff_Effect[ability]
+                # Will also manage cooldowns
+                Current_Buff = AdjustCooldowns(Current_Buff, Adrenaline, AbilityTime[ability])
+                break
         # --- Determines whether thresholds or ultimates may be used --- #
         if Clock < Time:
             if Adrenaline == 100:
@@ -353,7 +352,7 @@ def Validate(configurations):
         ErrorLog.append('Stuns must be true or false.')
 
     setting = configurations[5]
-    if (setting[0] == '[' and setting[-1] == ']'):
+    if setting[0] == '[' and setting[-1] == ']':
         setting = setting[1:-1].split(',')
         Counter = {}
         if len(setting) > 0:
@@ -375,7 +374,7 @@ def Validate(configurations):
         ErrorLog.append("Abilities must be surrounded by square brackets [], and separated by comma's (,).")
 
     setting = configurations[6]
-    if (setting[0] == '(' and setting[-1] == ')'):
+    if setting[0] == '(' and setting[-1] == ')':
         setting = setting[1:-1].split(',')
         if setting[0].upper() not in ('MAGIC', 'RANGED', 'MELEE'):
             ErrorLog.append('First style option must be "magic", "ranged" or "melee" (without quotes).')
@@ -559,11 +558,10 @@ def AdjustCooldowns(Current_Buff, Adrenaline, Time):
         if TrackBuff[Ability] >= Buff_Time[Ability]:
             TrackBuff[Ability] = 0
     for Ability in Permutation:
-        if Ability in TrackBuff:
-            if TrackBuff[Ability] == 0:
-                del TrackBuff[Ability]
-                if (Ability not in Punishing) and (Ability in Buff_Effect):
-                    Current_Buff = Current_Buff / Buff_Effect[Ability]
+        if Ability in TrackBuff and TrackBuff[Ability] == 0:
+            del TrackBuff[Ability]
+            if (Ability not in Punishing) and (Ability in Buff_Effect):
+                Current_Buff = Current_Buff / Buff_Effect[Ability]
     return Current_Buff
 
 
@@ -623,7 +621,7 @@ try:  # Will keep running until Control C (or other) is pressed to end process
         Ready = dict(CopyOfReady)
         TrackCooldown = {}
         TrackBuff = {}
-        if (round(Current, 1) > CurrentHighest):
+        if round(Current, 1) > CurrentHighest:
             CurrentHighest = round(Current, 1)
             BestRotation = []
             BestRotation = list(AbilityPath)
