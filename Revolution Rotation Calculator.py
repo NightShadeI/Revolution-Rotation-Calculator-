@@ -393,10 +393,12 @@ def AdjustCooldowns(Current_Buff, Adrenaline, Time): # Decreases Cooldowns of ab
         TrackCooldown[Ability] = round(TrackCooldown[Ability], 1)
         if TrackCooldown[Ability] >= AbilityCooldown[Ability]:
             TrackCooldown[Ability] = 0
-            if Ability in ThresholdIterator and Adrenaline >= 50:
-                Ready[Ability] = True
-            elif Ability in UltimateIterator and Adrenaline == 100:
-                Ready[Ability] = True
+            if Ability in ThresholdIterator:
+                Adrenaline >= 50:
+                    Ready[Ability] = True
+            elif Ability in UltimateIterator: 
+                Adrenaline == 100:
+                    Ready[Ability] = True
             else:
                 Ready[Ability] = True
     for Ability in Permutation:
