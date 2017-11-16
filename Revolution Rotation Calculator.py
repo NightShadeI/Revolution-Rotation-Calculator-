@@ -18,49 +18,49 @@ Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 'BINDING S
 AttackSpeedCooldowns = {'FASTEST': 2.4, 'FAST': 3.0, 'AVERAGE': 3.6, 'SLOW': 4.2, 'SLOWEST': 7.2}
 
 # Ability damage of every ability
-AbilityDamage = {'DEBILITATE': 60, 'UNLOAD': 610, 'TIGHT BINDINGS': 120, 'SNIPE': 172, 'SNAP SHOT': 265,
-                 'SHADOW TENDRILS': 283, 'RICOCHET': 60, 'RAPID FIRE': 451.2, 'PIERCING SHOT': 56.4,
-                 'NEEDLE STRIKE': 94.2, 'FRAGMENTATION SHOT': 120.6, "DEATH'S SWIFTNESS": 0, 'DEADSHOT': 426.13,
-                 'DAZING SHOT': 94.2, 'CORRUPTION SHOT': 200, 'BOMBARDMENT': 131.4, 'BINDING SHOT': 60, 'WRACK': 56.4,
-                 'WILD MAGIC': 265, 'TSUNAMI': 250, 'SUNSHINE': 0, 'SONIC WAVE': 94.2, 'SMOKE TENDRILS': 345,
-                 'OMNIPOWER': 300, 'METAMORPHOSIS': 0, 'IMPACT': 60, 'DRAGON BREATH': 112.8, 'DETONATE': 225,
-                 'DEEP IMPACT': 120, 'CORRUPTION BLAST': 200, 'CONCENTRATED BLAST': 152.8, 'COMBUST': 120.6,
-                 'CHAIN': 60, 'ASPHYXIATE': 451.2, "TUSKA'S WRATH": 5940, 'SHATTER': 0, 'STORM SHARDS': 0,
-                 'SACRIFICE': 60, 'ONSLAUGHT': 532, 'PULVERISE': 300, 'FRENZY': 610, 'BERSERK': 0, 'OVERPOWER': 300,
-                 'MASSACRE': 426.13, 'SEVER': 112.8, 'CLEAVE': 112.8, 'DESTROY': 451.2, 'BACKHAND': 60, 'BARGE': 75,
-                 'BLOOD TENDRILS': 324, 'FLURRY': 204, 'FORCEFUL BACKHAND': 120, 'HAVOC': 94.2, 'HURRICANE': 265,
-                 'SLAUGHTER': 145, 'SLICE': 75, 'SMASH': 94.2, 'ASSAULT': 525.6, 'DECIMATE': 112.8, 'DISMEMBER': 120.6,
-                 'FURY': 152.8, 'KICK': 60, 'PUNISH': 56.4, 'QUAKE': 131.4, 'STOMP': 120}
+AbilityDamage = {'ASPHYXIATE': 451.2, 'ASSAULT': 525.6, 'BACKHAND': 60, 'BARGE': 75, 'BERSERK': 0, 'BINDING SHOT': 60,
+                 'BLOOD TENDRILS': 324, 'BOMBARDMENT': 131.4, 'CHAIN': 60, 'CLEAVE': 112.8, 'COMBUST': 241.2,
+                 'CONCENTRATED BLAST': 152.8, 'CORRUPTION BLAST': 200, 'CORRUPTION SHOT': 200, 'DAZING SHOT': 94.2,
+                 'DEADSHOT': 426.13, "DEATH'S SWIFTNESS": 0, 'DEBILITATE': 60, 'DECIMATE': 112.8, 'DEEP IMPACT': 120,
+                 'DESTROY': 451.2, 'DETONATE': 225, 'DISMEMBER': 120.6, 'DRAGON BREATH': 112.8, 'FLURRY': 204,
+                 'FORCEFUL BACKHAND': 120, 'FRAGMENTATION SHOT': 120.6, 'FRENZY': 610, 'FURY': 152.8, 'HAVOC': 94.2,
+                 'HURRICANE': 265, 'IMPACT': 60, 'KICK': 60, 'MASSACRE': 426.13, 'METAMORPHOSIS': 0,
+                 'NEEDLE STRIKE': 94.2, 'OMNIPOWER': 300, 'ONSLAUGHT': 532, 'OVERPOWER': 300, 'PIERCING SHOT': 56.4,
+                 'PULVERISE': 300, 'PUNISH': 56.4, 'QUAKE': 131.4, 'RAPID FIRE': 451.2, 'RICOCHET': 60, 'SACRIFICE': 60,
+                 'SEVER': 112.8, 'SHADOW TENDRILS': 283, 'SHATTER': 0, 'SLAUGHTER': 145, 'SLICE': 75, 'SMASH': 94.2,
+                 'SMOKE TENDRILS': 345, 'SNAP SHOT': 265, 'SNIPE': 172, 'SONIC WAVE': 94.2, 'STOMP': 120,
+                 'STORM SHARDS': 0, 'SUNSHINE': 0, 'TIGHT BINDINGS': 120, 'TSUNAMI': 250, "TUSKA'S WRATH": 5940,
+                 'UNLOAD': 610, 'WILD MAGIC': 265, 'WRACK': 56.4}
 
 # Cooldowns of abilties (in seconds)
-AbilityCooldown = {'DEBILITATE': 30, 'UNLOAD': 60, 'TIGHT BINDINGS': 15, 'SNIPE': 10.2, 'SNAP SHOT': 20.4,
-                   'SHADOW TENDRILS': 45, 'RICOCHET': 10.2, 'RAPID FIRE': 20.4, 'PIERCING SHOT': 3,
-                   'NEEDLE STRIKE': 5.4, 'FRAGMENTATION SHOT': 15, "DEATH'S SWIFTNESS": 60, 'DEADSHOT': 30,
-                   'DAZING SHOT': 5.4, 'CORRUPTION SHOT': 15, 'BOMBARDMENT': 30, 'BINDING SHOT': 15, 'WRACK': 3,
-                   'WILD MAGIC': 20.4, 'TSUNAMI': 60, 'SUNSHINE': 60, 'SONIC WAVE': 5.4, 'SMOKE TENDRILS': 45,
-                   'OMNIPOWER': 30, 'METAMORPHOSIS': 60, 'IMPACT': 15, 'DRAGON BREATH': 10.2, 'DETONATE': 30,
-                   'DEEP IMPACT': 15, 'CORRUPTION BLAST': 15, 'CONCENTRATED BLAST': 5.4, 'COMBUST': 15, 'CHAIN': 10.2,
-                   'ASPHYXIATE': 20.4, "TUSKA'S WRATH": 120, 'SHATTER': 120, 'STORM SHARDS': 30, 'SACRIFICE': 30,
-                   'ONSLAUGHT': 120, 'PULVERISE': 60, 'FRENZY': 60, 'BERSERK': 60, 'OVERPOWER': 60, 'MASSACRE': 60,
-                   'SEVER': 15, 'CLEAVE': 7.2, 'DESTROY': 20.4, 'BACKHAND': 15, 'BARGE': 20.4, 'BLOOD TENDRILS': 45,
-                   'FLURRY': 20.4, 'FORCEFUL BACKHAND': 15, 'HAVOC': 10.2, 'HURRICANE': 20.4, 'SLAUGHTER': 30,
-                   'SLICE': 3, 'SMASH': 10.2, 'ASSAULT': 30, 'DECIMATE': 7.2, 'DISMEMBER': 15, 'FURY': 5.4, 'KICK': 15,
-                   'PUNISH': 3, 'QUAKE': 20.4, 'STOMP': 15}
+AbilityCooldown = {'ASPHYXIATE': 20.4, 'ASSAULT': 30, 'BACKHAND': 15, 'BARGE': 20.4, 'BERSERK': 60, 'BINDING SHOT': 15,
+                   'BLOOD TENDRILS': 45, 'BOMBARDMENT': 30, 'CHAIN': 10.2, 'CLEAVE': 7.2, 'COMBUST': 15,
+                   'CONCENTRATED BLAST': 5.4, 'CORRUPTION BLAST': 15, 'CORRUPTION SHOT': 15, 'DAZING SHOT': 5.4,
+                   'DEADSHOT': 30, "DEATH'S SWIFTNESS": 60, 'DEBILITATE': 30, 'DECIMATE': 7.2, 'DEEP IMPACT': 15,
+                   'DESTROY': 20.4, 'DETONATE': 30, 'DISMEMBER': 15, 'DRAGON BREATH': 10.2, 'FLURRY': 20.4,
+                   'FORCEFUL BACKHAND': 15, 'FRAGMENTATION SHOT': 15, 'FRENZY': 60, 'FURY': 5.4, 'HAVOC': 10.2,
+                   'HURRICANE': 20.4, 'IMPACT': 15, 'KICK': 15, 'MASSACRE': 60, 'METAMORPHOSIS': 60,
+                   'NEEDLE STRIKE': 5.4, 'OMNIPOWER': 30, 'ONSLAUGHT': 120, 'OVERPOWER': 60, 'PIERCING SHOT': 3,
+                   'PULVERISE': 60, 'PUNISH': 3, 'QUAKE': 20.4, 'RAPID FIRE': 20.4, 'RICOCHET': 10.2, 'SACRIFICE': 30,
+                   'SEVER': 15, 'SHADOW TENDRILS': 45, 'SHATTER': 120, 'SLAUGHTER': 30, 'SLICE': 3, 'SMASH': 10.2,
+                   'SMOKE TENDRILS': 45, 'SNAP SHOT': 20.4, 'SNIPE': 10.2, 'SONIC WAVE': 5.4, 'STOMP': 15,
+                   'STORM SHARDS': 30, 'SUNSHINE': 60, 'TIGHT BINDINGS': 15, 'TSUNAMI': 60, "TUSKA'S WRATH": 120,
+                   'UNLOAD': 60, 'WILD MAGIC': 20.4, 'WRACK': 3}
 
 # Type of ability (B = basic, T = threshold, U = ultimate)
-AbilityType = {'DEBILITATE': 'T', 'UNLOAD': 'U', 'TIGHT BINDINGS': 'T', 'SNIPE': 'B', 'SNAP SHOT': 'T',
-               'SHADOW TENDRILS': 'T', 'RICOCHET': 'B', 'RAPID FIRE': 'T', 'PIERCING SHOT': 'B', 'NEEDLE STRIKE': 'B',
-               'FRAGMENTATION SHOT': 'B', "DEATH'S SWIFTNESS": 'U', 'DEADSHOT': 'U', 'DAZING SHOT': 'B',
-               'CORRUPTION SHOT': 'B', 'BOMBARDMENT': 'T', 'BINDING SHOT': 'B', 'WRACK': 'B', 'WILD MAGIC': 'T',
-               'TSUNAMI': 'U', 'SUNSHINE': 'U', 'SONIC WAVE': 'B', 'SMOKE TENDRILS': 'T', 'OMNIPOWER': 'U',
-               'METAMORPHOSIS': 'U', 'IMPACT': 'B', 'DRAGON BREATH': 'B', 'DETONATE': 'T', 'DEEP IMPACT': 'T',
-               'CORRUPTION BLAST': 'B', 'CONCENTRATED BLAST': 'B', 'COMBUST': 'B', 'CHAIN': 'B', 'ASPHYXIATE': 'T',
-               "TUSKA'S WRATH": 'B', 'SHATTER': 'T', 'STORM SHARDS': 'B', 'SACRIFICE': 'B', 'ONSLAUGHT': 'U',
-               'PULVERISE': 'U', 'FRENZY': 'U', 'BERSERK': 'U', 'OVERPOWER': 'U', 'SEVER': 'B', 'CLEAVE': 'B',
-               'DESTROY': 'T', 'BACKHAND': 'B', 'BARGE': 'B', 'BLOOD TENDRILS': 'T', 'FLURRY': 'T',
-               'FORCEFUL BACKHAND': 'T', 'HAVOC': 'B', 'HURRICANE': 'T', 'SLAUGHTER': 'T', 'SLICE': 'B', 'SMASH': 'B',
-               'ASSAULT': 'T', 'DECIMATE': 'B', 'DISMEMBER': 'B', 'FURY': 'B', 'KICK': 'B', 'PUNISH': 'B', 'QUAKE': 'T',
-               'STOMP': 'T', 'MASSACRE': 'U'}
+AbilityType = {'ASPHYXIATE': 'T', 'ASSAULT': 'T', 'BACKHAND': 'B', 'BARGE': 'B', 'BERSERK': 'U', 'BINDING SHOT': 'B',
+               'BLOOD TENDRILS': 'T', 'BOMBARDMENT': 'T', 'CHAIN': 'B', 'CLEAVE': 'B', 'COMBUST': 'B',
+               'CONCENTRATED BLAST': 'B', 'CORRUPTION BLAST': 'B', 'CORRUPTION SHOT': 'B', 'DAZING SHOT': 'B',
+               'DEADSHOT': 'U', "DEATH'S SWIFTNESS": 'U', 'DEBILITATE': 'T', 'DECIMATE': 'B', 'DEEP IMPACT': 'T',
+               'DESTROY': 'T', 'DETONATE': 'T', 'DISMEMBER': 'B', 'DRAGON BREATH': 'B', 'FLURRY': 'T',
+               'FORCEFUL BACKHAND': 'T', 'FRAGMENTATION SHOT': 'B', 'FRENZY': 'U', 'FURY': 'B', 'HAVOC': 'B',
+               'HURRICANE': 'U', 'IMPACT': 'B', 'KICK': 'B', 'MASSACRE': 'U', 'METAMORPHOSIS': 'U',
+               'NEEDLE STRIKE': 'B', 'OMNIPOWER': 'U', 'ONSLAUGHT': 'U', 'OVERPOWER': 'U', 'PIERCING SHOT': 'B',
+               'PULVERISE': 'U', 'PUNISH': 'B', 'QUAKE': 'T', 'RAPID FIRE': 'T', 'RICOCHET': 'B', 'SACRIFICE': 'B',
+               'SEVER': 'B', 'SHADOW TENDRILS': 'T', 'SHATTER': 'T', 'SLAUGHTER': 'T', 'SLICE': 'B', 'SMASH': 'B',
+               'SMOKE TENDRILS': 'T', 'SNAP SHOT': 'T', 'SNIPE': 'B', 'SONIC WAVE': 'B', 'STOMP': 'T',
+               'STORM SHARDS': 'B', 'SUNSHINE': 'U', 'TIGHT BINDINGS': 'T', 'TSUNAMI': 'U', "TUSKA'S WRATH": 'B',
+               'UNLOAD': 'U', 'WILD MAGIC': 'T', 'WRACK': 'B'}
 
 # Flag on if you can use abilties (based on adrenaline)
 Ready = {'DEBILITATE': False, 'UNLOAD': False, 'TIGHT BINDINGS': False, 'SNIPE': True, 'SNAP SHOT': False,
@@ -79,37 +79,37 @@ Ready = {'DEBILITATE': False, 'UNLOAD': False, 'TIGHT BINDINGS': False, 'SNIPE':
          'MASSACRE': False}
 
 # time DOT abilties last (seconds)
-Bleeds = {'SHADOW TENDRILS': 1.8, 'FRAGMENTATION SHOT': 6, 'DEADSHOT': 6, 'CORRUPTION SHOT': 6, 'SMOKE TENDRILS': 5.4,
-          'CORRUPTION BLAST': 6, 'COMBUST': 6, 'SLAUGHTER': 6, 'DISMEMBER': 6, 'BLOOD TENDRILS': 4.8,
-          'MASSACRE': 6}
-Walking_Bleeds = {'FRAGMENTATION SHOT': 1, 'COMBUST': 1, 'SLAUGHTER': 1.5}
+Bleeds = {'BLOOD TENDRILS': 4.8, 'COMBUST': 6, 'CORRUPTION BLAST': 6, 'CORRUPTION SHOT': 6, 'DEADSHOT': 6,
+          'DISMEMBER': 6, 'FRAGMENTATION SHOT': 6, 'MASSACRE': 6, 'SHADOW TENDRILS': 1.8, 'SLAUGHTER': 6,
+          'SMOKE TENDRILS': 5.4}
+Walking_Bleeds = {'COMBUST': 1, 'FRAGMENTATION SHOT': 1, 'SLAUGHTER': 1.5}
 
 # Bleeds that have their first hit affected by damage modifying abilities
-SpecialBleeds = ['MASSACRE', 'DEADSHOT', 'SMOKE TENDRILS']
+SpecialBleeds = ['DEADSHOT', 'MASSACRE', 'SMOKE TENDRILS']
 
 # Abilities that take longer than 1.8 seconds to use but will still have full impact from abilties in list CritBoost
 SpecialAbilities = ['DETONATE', 'SNIPE']
 
 # How long stuns, DPS increases .. etc last
-Buff_Time = {'BARGE': 6.6, 'FURY': 5.4, 'RAPID FIRE': 6, 'TIGHT BINDINGS': 9.6, 'BINDING SHOT': 9.6,
-             'NEEDLE STRIKE': 3.6, "DEATH'S SWIFTNESS": 30, 'SUNSHINE': 30, 'METAMORPHOSIS': 15, 'DEEP IMPACT': 3.6,
-             'CONCENTRATED BLAST': 5.4, 'BERSERK': 19.8, 'FORCEFUL BACKHAND': 3.6, 'STOMP': 3.6}
+Buff_Time = {'BARGE': 6.6, 'BERSERK': 19.8, 'BINDING SHOT': 9.6, 'CONCENTRATED BLAST': 5.4, "DEATH'S SWIFTNESS": 30,
+             'DEEP IMPACT': 3.6, 'FORCEFUL BACKHAND': 3.6, 'FURY': 5.4, 'METAMORPHOSIS': 15, 'NEEDLE STRIKE': 3.6,
+             'RAPID FIRE': 6, 'STOMP': 3.6, 'SUNSHINE': 30, 'TIGHT BINDINGS': 9.6}
 
 # multiplier for boosted damage
-Buff_Effect = {'NEEDLE STRIKE': 1.07, "DEATH'S SWIFTNESS": 1.5, 'SUNSHINE': 1.5, 'METAMORPHOSIS': 1.625, 'FURY': 1.1,
-               'CONCENTRATED BLAST': 1.1, 'BERSERK': 2, 'SLICE': 1.506, 'PUNISH': 2, 'WRACK': 2, 'PIERCING SHOT': 2}
+Buff_Effect = {'BERSERK': 2, 'CONCENTRATED BLAST': 1.1, "DEATH'S SWIFTNESS": 1.5, 'FURY': 1.1, 'METAMORPHOSIS': 1.625,
+               'NEEDLE STRIKE': 1.07, 'PIERCING SHOT': 2, 'PUNISH': 2, 'SLICE': 1.506, 'SUNSHINE': 1.5, 'WRACK': 2}
 
 # Abilities that do extra damage when target stun or bound
-CritBoost = ['NEEDLE STRIKE', 'FURY', 'CONCENTRATED BLAST', "DEATH'S SWIFTNESS", 'SUNSHINE', 'BERSERK', 'METAMORPHOSIS']
-Punishing = ['SLICE', 'PUNISH', 'WRACK', 'PIERCING SHOT']
+CritBoost = ['BERSERK', 'CONCENTRATED BLAST', "DEATH'S SWIFTNESS", 'FURY', 'METAMORPHOSIS', 'NEEDLE STRIKE', 'SUNSHINE']
+Punishing = ['PIERCING SHOT', 'PUNISH', 'SLICE', 'WRACK']
 
 # Abilities that can stun or bind target
-Debilitating = ['BARGE', 'FORCEFUL BACKHAND', 'STOMP', 'DEEP IMPACT', 'BINDING SHOT', 'TIGHT BINDINGS', 'RAPID FIRE']
-Binds = ['BARGE', 'DEEP IMPACT', 'BINDING SHOT', 'TIGHT BINDINGS']
+Debilitating = ['BARGE', 'BINDING SHOT', 'DEEP IMPACT', 'FORCEFUL BACKHAND', 'RAPID FIRE', 'STOMP', 'TIGHT BINDINGS']
+Binds = ['BARGE', 'BINDING SHOT', 'DEEP IMPACT', 'TIGHT BINDINGS']
 
 AoEAverageTargetsHit = 2.5
 
-AoE = ['BOMBARDMENT', 'CHAIN', "DRAGON BREATH", 'CLEAVE', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'FLURRY', 'HURRICANE',
+AoE = ['BOMBARDMENT', 'CHAIN', 'CLEAVE', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DRAGON BREATH', 'FLURRY', 'HURRICANE',
        'QUAKE', 'RICOCHET', 'TSUNAMI']
 
 
@@ -546,19 +546,19 @@ def AdjustCooldowns(Current_Buff, Adrenaline, Time):
 print('Starting process ... ')
 
 # How long it takes to use each ability
-AbilityTime = {'DEBILITATE': 1.8, 'UNLOAD': 4.2, 'TIGHT BINDINGS': 1.8, 'SNIPE': 3.6, 'SNAP SHOT': 1.8,
-               'SHADOW TENDRILS': 1.8, 'RICOCHET': 1.8, 'RAPID FIRE': 5.4, 'PIERCING SHOT': 1.8, 'NEEDLE STRIKE': 1.8,
-               'FRAGMENTATION SHOT': 1.8, "DEATH'S SWIFTNESS": 1.8, 'DEADSHOT': 1.8, 'DAZING SHOT': 1.8,
-               'CORRUPTION SHOT': 1.8, 'BOMBARDMENT': 1.8, 'BINDING SHOT': 1.8, 'WRACK': 1.8, 'WILD MAGIC': 1.8,
-               'TSUNAMI': 1.8, 'SUNSHINE': 1.8, 'SONIC WAVE': 1.8, 'SMOKE TENDRILS': 5.4, 'OMNIPOWER': 1.8,
-               'METAMORPHOSIS': 1.8, 'IMPACT': 1.8, 'DRAGON BREATH': 1.8, 'DETONATE': 3.6, 'DEEP IMPACT': 1.8,
-               'CORRUPTION BLAST': 1.8, 'CONCENTRATED BLAST': 3.6, 'COMBUST': 1.8, 'CHAIN': 1.8, 'ASPHYXIATE': 5.4,
-               "TUSKA'S WRATH": 1.8, 'SHATTER': 1.8, 'STORM SHARDS': 1.8, 'SACRIFICE': 1.8, 'ONSLAUGHT': 4.8,
-               'PULVERISE': 1.8, 'FRENZY': 4.2, 'BERSERK': 1.8, 'OVERPOWER': 1.8, 'MASSACRE': 1.8, 'SEVER': 1.8,
-               'CLEAVE': 1.8, 'DESTROY': 4.2, 'BACKHAND': 1.8, 'BARGE': 1.8, 'BLOOD TENDRILS': 1.8, 'FLURRY': 5.4,
-               'FORCEFUL BACKHAND': 1.8, 'HAVOC': 1.8, 'HURRICANE': 1.8, 'SLAUGHTER': 1.8, 'SLICE': 1.8, 'SMASH': 1.8,
-               'ASSAULT': 5.4, 'DECIMATE': 1.8, 'DISMEMBER': 1.8, 'FURY': 3.6, 'KICK': 1.8, 'PUNISH': 1.8, 'QUAKE': 1.8,
-               'STOMP': 1.8}
+AbilityTime = {'ASPHYXIATE': 5.4, 'ASSAULT': 5.4, 'BACKHAND': 1.8, 'BARGE': 1.8, 'BERSERK': 1.8, 'BINDING SHOT': 1.8,
+               'BLOOD TENDRILS': 1.8, 'BOMBARDMENT': 1.8, 'CHAIN': 1.8, 'CLEAVE': 1.8, 'COMBUST': 1.8,
+               'CONCENTRATED BLAST': 3.6, 'CORRUPTION BLAST': 1.8, 'CORRUPTION SHOT': 1.8, 'DAZING SHOT': 1.8,
+               'DEADSHOT': 1.8, "DEATH'S SWIFTNESS": 1.8, 'DEBILITATE': 1.8, 'DECIMATE': 1.8, 'DEEP IMPACT': 1.8,
+               'DESTROY': 4.2, 'DETONATE': 3.6, 'DISMEMBER': 1.8, 'DRAGON BREATH': 1.8, 'FLURRY': 5.4,
+               'FORCEFUL BACKHAND': 1.8, 'FRAGMENTATION SHOT': 1.8, 'FRENZY': 4.2, 'FURY': 3.6, 'HAVOC': 1.8,
+               'HURRICANE': 1.8, 'IMPACT': 1.8, 'KICK': 1.8, 'MASSACRE': 1.8, 'METAMORPHOSIS': 1.8,
+               'NEEDLE STRIKE': 1.8, 'OMNIPOWER': 1.8, 'ONSLAUGHT': 4.8, 'OVERPOWER': 1.8, 'PIERCING SHOT': 1.8,
+               'PULVERISE': 1.8, 'PUNISH': 1.8, 'QUAKE': 1.8, 'RAPID FIRE': 5.4, 'RICOCHET': 1.8, 'SACRIFICE': 1.8,
+               'SEVER': 1.8, 'SHADOW TENDRILS': 1.8, 'SHATTER': 1.8, 'SLAUGHTER': 1.8, 'SLICE': 1.8, 'SMASH': 1.8,
+               'SMOKE TENDRILS': 5.4, 'SNAP SHOT': 1.8, 'SNIPE': 3.6, 'SONIC WAVE': 1.8, 'STOMP': 1.8,
+               'STORM SHARDS': 1.8, 'SUNSHINE': 1.8, 'TIGHT BINDINGS': 1.8, 'TSUNAMI': 1.8, "TUSKA'S WRATH": 1.8,
+               'UNLOAD': 4.2, 'WILD MAGIC': 4.8, 'WRACK': 1.8}
 CopyOfReady = {}
 CopyOfReady = Remove(CopyOfReady)
 BasicIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == 'B']
