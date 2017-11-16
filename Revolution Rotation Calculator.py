@@ -47,6 +47,21 @@ AbilityCooldown = {'ASPHYXIATE': 20.4, 'ASSAULT': 30, 'BACKHAND': 15, 'BARGE': 2
                    'STORM SHARDS': 30, 'SUNSHINE': 60, 'TIGHT BINDINGS': 15, 'TSUNAMI': 60, "TUSKA'S WRATH": 120,
                    'UNLOAD': 60, 'WILD MAGIC': 20.4, 'WRACK': 3}
 
+# How long it takes to use each ability
+AbilityTime = {'ASPHYXIATE': 5.4, 'ASSAULT': 5.4, 'BACKHAND': 1.8, 'BARGE': 1.8, 'BERSERK': 1.8, 'BINDING SHOT': 1.8,
+               'BLOOD TENDRILS': 1.8, 'BOMBARDMENT': 1.8, 'CHAIN': 1.8, 'CLEAVE': 1.8, 'COMBUST': 1.8,
+               'CONCENTRATED BLAST': 3.6, 'CORRUPTION BLAST': 1.8, 'CORRUPTION SHOT': 1.8, 'DAZING SHOT': 1.8,
+               'DEADSHOT': 1.8, "DEATH'S SWIFTNESS": 1.8, 'DEBILITATE': 1.8, 'DECIMATE': 1.8, 'DEEP IMPACT': 1.8,
+               'DESTROY': 4.2, 'DETONATE': 3.6, 'DISMEMBER': 1.8, 'DRAGON BREATH': 1.8, 'FLURRY': 5.4,
+               'FORCEFUL BACKHAND': 1.8, 'FRAGMENTATION SHOT': 1.8, 'FRENZY': 4.2, 'FURY': 3.6, 'HAVOC': 1.8,
+               'HURRICANE': 1.8, 'IMPACT': 1.8, 'KICK': 1.8, 'MASSACRE': 1.8, 'METAMORPHOSIS': 1.8,
+               'NEEDLE STRIKE': 1.8, 'OMNIPOWER': 1.8, 'ONSLAUGHT': 4.8, 'OVERPOWER': 1.8, 'PIERCING SHOT': 1.8,
+               'PULVERISE': 1.8, 'PUNISH': 1.8, 'QUAKE': 1.8, 'RAPID FIRE': 5.4, 'RICOCHET': 1.8, 'SACRIFICE': 1.8,
+               'SEVER': 1.8, 'SHADOW TENDRILS': 1.8, 'SHATTER': 1.8, 'SLAUGHTER': 1.8, 'SLICE': 1.8, 'SMASH': 1.8,
+               'SMOKE TENDRILS': 5.4, 'SNAP SHOT': 1.8, 'SNIPE': 3.6, 'SONIC WAVE': 1.8, 'STOMP': 1.8,
+               'STORM SHARDS': 1.8, 'SUNSHINE': 1.8, 'TIGHT BINDINGS': 1.8, 'TSUNAMI': 1.8, "TUSKA'S WRATH": 1.8,
+               'UNLOAD': 4.2, 'WILD MAGIC': 4.8, 'WRACK': 1.8}
+
 # Type of ability (B = basic, T = threshold, U = ultimate)
 AbilityType = {'ASPHYXIATE': 'T', 'ASSAULT': 'T', 'BACKHAND': 'B', 'BARGE': 'B', 'BERSERK': 'U', 'BINDING SHOT': 'B',
                'BLOOD TENDRILS': 'T', 'BOMBARDMENT': 'T', 'CHAIN': 'B', 'CLEAVE': 'B', 'COMBUST': 'B',
@@ -545,20 +560,6 @@ def AdjustCooldowns(Current_Buff, Adrenaline, Time):
 # --- Dictionaries, lists and other data types layed out here --- #
 print('Starting process ... ')
 
-# How long it takes to use each ability
-AbilityTime = {'ASPHYXIATE': 5.4, 'ASSAULT': 5.4, 'BACKHAND': 1.8, 'BARGE': 1.8, 'BERSERK': 1.8, 'BINDING SHOT': 1.8,
-               'BLOOD TENDRILS': 1.8, 'BOMBARDMENT': 1.8, 'CHAIN': 1.8, 'CLEAVE': 1.8, 'COMBUST': 1.8,
-               'CONCENTRATED BLAST': 3.6, 'CORRUPTION BLAST': 1.8, 'CORRUPTION SHOT': 1.8, 'DAZING SHOT': 1.8,
-               'DEADSHOT': 1.8, "DEATH'S SWIFTNESS": 1.8, 'DEBILITATE': 1.8, 'DECIMATE': 1.8, 'DEEP IMPACT': 1.8,
-               'DESTROY': 4.2, 'DETONATE': 3.6, 'DISMEMBER': 1.8, 'DRAGON BREATH': 1.8, 'FLURRY': 5.4,
-               'FORCEFUL BACKHAND': 1.8, 'FRAGMENTATION SHOT': 1.8, 'FRENZY': 4.2, 'FURY': 3.6, 'HAVOC': 1.8,
-               'HURRICANE': 1.8, 'IMPACT': 1.8, 'KICK': 1.8, 'MASSACRE': 1.8, 'METAMORPHOSIS': 1.8,
-               'NEEDLE STRIKE': 1.8, 'OMNIPOWER': 1.8, 'ONSLAUGHT': 4.8, 'OVERPOWER': 1.8, 'PIERCING SHOT': 1.8,
-               'PULVERISE': 1.8, 'PUNISH': 1.8, 'QUAKE': 1.8, 'RAPID FIRE': 5.4, 'RICOCHET': 1.8, 'SACRIFICE': 1.8,
-               'SEVER': 1.8, 'SHADOW TENDRILS': 1.8, 'SHATTER': 1.8, 'SLAUGHTER': 1.8, 'SLICE': 1.8, 'SMASH': 1.8,
-               'SMOKE TENDRILS': 5.4, 'SNAP SHOT': 1.8, 'SNIPE': 3.6, 'SONIC WAVE': 1.8, 'STOMP': 1.8,
-               'STORM SHARDS': 1.8, 'SUNSHINE': 1.8, 'TIGHT BINDINGS': 1.8, 'TSUNAMI': 1.8, "TUSKA'S WRATH": 1.8,
-               'UNLOAD': 4.2, 'WILD MAGIC': 4.8, 'WRACK': 1.8}
 CopyOfReady = {}
 CopyOfReady = Remove(CopyOfReady)
 BasicIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == 'B']
