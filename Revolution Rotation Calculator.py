@@ -78,20 +78,19 @@ AbilityType = {"ASPHYXIATE": "T", "ASSAULT": "T", "BACKHAND": "B", "BARGE": "B",
                "UNLOAD": "U", "WILD MAGIC": "T", "WRACK": "B"}
 
 # Define a flag to decide if you can use abilities (based on adrenaline)
-Ready = {"DEBILITATE": False, "UNLOAD": False, "TIGHT BINDINGS": False, "SNIPE": True, "SNAP SHOT": False,
-         "SHADOW TENDRILS": False, "RICOCHET": True, "RAPID FIRE": False, "PIERCING SHOT": True, "NEEDLE STRIKE": True,
-         "FRAGMENTATION SHOT": True, "DEATH'S SWIFTNESS": False, "DEADSHOT": False, "DAZING SHOT": True,
-         "CORRUPTION SHOT": True, "BOMBARDMENT": False, "BINDING SHOT": True, "WRACK": True, "WILD MAGIC": False,
-         "TSUNAMI": False, "SUNSHINE": False, "SONIC WAVE": True, "SMOKE TENDRILS": False, "OMNIPOWER": False,
-         "METAMORPHOSIS": False, "IMPACT": True, "DRAGON BREATH": True, "DETONATE": False, "DEEP IMPACT": False,
-         "CORRUPTION BLAST": True, "CONCENTRATED BLAST": True, "COMBUST": True, "CHAIN": True, "ASPHYXIATE": False,
-         "TUSKA'S WRATH": True, "SHATTER": False, "STORM SHARDS": True, "SACRIFICE": True, "ONSLAUGHT": False,
-         "PULVERISE": False, "FRENZY": False, "BERSERK": False, "OVERPOWER": False, "SEVER": True, "CLEAVE": True,
-         "DESTROY": False, "BACKHAND": True, "BARGE": True, "BLOOD TENDRILS": False, "FLURRY": False,
-         "FORCEFUL BACKHAND": False, "HAVOC": True, "HURRICANE": False, "SLAUGHTER": False, "SLICE": True,
-         "SMASH": True, "ASSAULT": False, "DECIMATE": True, "DISMEMBER": True, "FURY": True, "KICK": True,
-         "PUNISH": True, "QUAKE": False, "STOMP": False,
-         "MASSACRE": False}
+Ready = {"ASPHYXIATE": False, "ASSAULT": False, "BACKHAND": True, "BARGE": True, "BERSERK": False, "BINDING SHOT": True,
+         "BLOOD TENDRILS": False, "BOMBARDMENT": False, "CHAIN": True, "CLEAVE": True, "COMBUST": True,
+         "CONCENTRATED BLAST": True, "CORRUPTION BLAST": True, "CORRUPTION SHOT": True, "DAZING SHOT": True,
+         "DEADSHOT": False, "DEATH'S SWIFTNESS": False, "DEBILITATE": False, "DECIMATE": True, "DEEP IMPACT": False,
+         "DESTROY": False, "DETONATE": False, "DISMEMBER": True, "DRAGON BREATH": True, "FLURRY": False,
+         "FORCEFUL BACKHAND": False, "FRAGMENTATION SHOT": True, "FRENZY": True, "FURY": True, "HAVOC": True,
+         "HURRICANE": False, "IMPACT": True, "KICK": True, "MASSACRE": False, "METAMORPHOSIS": False,
+         "NEEDLE STRIKE": True, "OMNIPOWER": False, "ONSLAUGHT": False, "OVERPOWER": False, "PIERCING SHOT": True,
+         "PULVERISE": False, "PUNISH": True, "QUAKE": False, "RAPID FIRE": False, "RICOCHET": True, "SACRIFICE": True,
+         "SEVER": True, "SHADOW TENDRILS": False, "SHATTER": False, "SLAUGHTER": False, "SLICE": True, "SMASH": True,
+         "SMOKE TENDRILS": False, "SNAP SHOT": False, "SNIPE": True, "SONIC WAVE": True, "STOMP": False,
+         "STORM SHARDS": True, "SUNSHINE": False, "TIGHT BINDINGS": False, "TSUNAMI": False, "TUSKA'S WRATH": True,
+         "UNLOAD": False, "WILD MAGIC": False, "WRACK": True}
 
 # Define the time DOT abilities last (in seconds)
 Bleeds = {"BLOOD TENDRILS": 4.8, "COMBUST": 6, "CORRUPTION BLAST": 6, "CORRUPTION SHOT": 6, "DEADSHOT": 6,
