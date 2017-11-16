@@ -1,4 +1,7 @@
-import math, sys, time
+import math
+import sys
+import time
+
 Abilities = ['ASPHYXIATE', 'ASSAULT', 'BACKHAND', 'BARGE', 'BERSERK', 
 'BINDING SHOT', 'BLOOD TENDRILS', 'BOMBARDMENT', 'CHAIN', 'CLEAVE', 'COMBUST', 
 'CONCENTRATED BLAST', 'CORRUPTION BLAST', 'CORRUPTION SHOT', 'DAZING SHOT', 'DEADSHOT', "DEATH'S SWIFTNESS", 'DEBILITATE', 'DECIMATE', 
@@ -70,7 +73,7 @@ def AbilityRotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adren
                     if ability == 'STORM SHARDS':
                         if Shards < 10:
                             Shards += 1
-                    if ability == 'SHATTER':
+                    elif ability == 'SHATTER':
                         Current += round(Shards * 85, 1)
                         Shards = 0
                     # --- Calculating how much damage abilities should do --- #
