@@ -454,7 +454,7 @@ def auto_available():
 
 
 # Will generate an ability bar that has not been analysed yet
-def get_premutation(MyList, index):
+def get_permutation(MyList, index):
     NewList = []
     Temp_List = list(MyList)
     Denominator = len(Temp_List)
@@ -478,7 +478,7 @@ def get_time(Seconds):
     Seconds -= Hours * 3600
     Minutes = int(Seconds / 60)
     Seconds -= Minutes * 60
-    Time = str(Years) + f" years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds."
+    Time = f"{Years} years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds."
     return Time
 
 
@@ -612,7 +612,7 @@ if (choice != "Y") and (choice != "YES"):
 Start = int(time.time())  # Record time since epoch (UTC) (in seconds)
 try:  # Will keep running until Control C (or other) is pressed to end process
     for index in range(0, Permutations):
-        Permutation = get_premutation(MyAbilities, index)
+        Permutation = get_permutation(MyAbilities, index)
         Current = ability_rotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adrenaline, Auto_Adrenaline,
                                    Time)
         # --- Reset data ready for next ability bar to be tested
