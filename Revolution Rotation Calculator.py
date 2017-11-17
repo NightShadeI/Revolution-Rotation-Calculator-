@@ -128,9 +128,6 @@ Debilitating = ["BARGE", "BINDING SHOT", "DEEP IMPACT", "FORCEFUL BACKHAND", "RA
 # Define abilities that bind the target
 Binds = ["BARGE", "BINDING SHOT", "DEEP IMPACT", "TIGHT BINDINGS"]
 
-# Define the amount of targets affected by area of effect attacks
-AoEAverageTargetsHit = 2.5
-
 # Define area of effect abilities
 AoE = ["BOMBARDMENT", "CHAIN", "CLEAVE", "CORRUPTION BLAST", "CORRUPTION SHOT", "DRAGON BREATH", "FLURRY", "HURRICANE",
        "QUAKE", "RICOCHET", "TSUNAMI"]
@@ -138,6 +135,60 @@ AoE = ["BOMBARDMENT", "CHAIN", "CLEAVE", "CORRUPTION BLAST", "CORRUPTION SHOT", 
 
 # Will return how much damage an ability bar will do over a given time
 def ability_rotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adrenaline, Auto_Adrenaline, Time):
+    # Will check if an auto attack is needed to be used
+    def auto_available():
+        for Ability in TrackCooldown:
+            if (AbilityCooldown[Ability] - TrackCooldown[Ability]) < AttackSpeedCooldowns[AttackSpeed]:
+                return False
+        return True
+
+    # Decreases Cooldowns of abilities and buffs as well as modifying and damage multipliers
+    def adjust_cooldowns(Current_Buff, Adrenaline, Time, Permutation):
+        for Ability in TrackCooldown:
+            TrackCooldown[Ability] += Time
+            TrackCooldown[Ability] = round(TrackCooldown[Ability], 1)
+            if TrackCooldown[Ability] >= AbilityCooldown[Ability]:
+                TrackCooldown[Ability] = 0
+                if Ability in ThresholdIterator:
+                    if Adrenaline >= 50:
+                        Ready[Ability] = True
+                elif Ability in UltimateIterator:
+                    if Adrenaline == 100:
+                        Ready[Ability] = True
+                else:
+                    Ready[Ability] = True
+        for Ability in Permutation:
+            if Ability in TrackCooldown:
+                if TrackCooldown[Ability] == 0:
+                    del TrackCooldown[Ability]
+        for Ability in TrackBuff:
+            TrackBuff[Ability] += Time
+            TrackBuff[Ability] = round(TrackBuff[Ability], 1)
+            if TrackBuff[Ability] >= Buff_Time[Ability]:
+                TrackBuff[Ability] = 0
+        for Ability in Permutation:
+            if Ability in TrackBuff and TrackBuff[Ability] == 0:
+                del TrackBuff[Ability]
+                if (Ability not in Punishing) and (Ability in Buff_Effect):
+                    Current_Buff = Current_Buff / Buff_Effect[Ability]
+        return Current_Buff
+
+    # Determines if enemy vulnerable to extra damage due to stuns or binds
+    def buff_available():
+        for ability in Debilitating:
+            if ability in TrackBuff:
+                return True
+        return False
+
+    def modify_time(Time, Clock, ability):
+        if (ability in Bleeds) and (ability != "SHADOW TENDRILS") and ((Time - Clock) < Bleeds[ability]):
+            return (Time - Clock) / Bleeds[ability]
+        else:
+            if (ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8) and (
+                        (Time - Clock) < AbilityTime[ability]):
+                return (Time - Clock) / AbilityTime[ability]
+        return 1
+
     # --- Defining Variables --- #
     Altered_Bleeds = False
     Current = 0
@@ -235,7 +286,7 @@ def ability_rotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adre
                     if ability in Buff_Effect:
                         Current_Buff = Current_Buff * Buff_Effect[ability]
                 # Will also manage cooldowns
-                Current_Buff = adjust_cooldowns(Current_Buff, Adrenaline, AbilityTime[ability])
+                Current_Buff = adjust_cooldowns(Current_Buff, Adrenaline, AbilityTime[ability], Permutation)
                 break
         # --- Determines whether thresholds or ultimates may be used --- #
         if Clock < Time:
@@ -276,380 +327,321 @@ def ability_rotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adre
                     if Adrenaline > 100:
                         Adrenaline = 100
                     # Will also manage cooldowns
-                    Current_Buff = adjust_cooldowns(Current_Buff, Adrenaline, (AttackSpeedCooldowns[AttackSpeed] + 0.6))
+                    Current_Buff = adjust_cooldowns(Current_Buff, Adrenaline, (AttackSpeedCooldowns[AttackSpeed] + 0.6),
+                                                    Permutation)
                 else:
                     Clock += 0.6
-                    Current_Buff = adjust_cooldowns(Current_Buff, Adrenaline, 0.6)
+                    Current_Buff = adjust_cooldowns(Current_Buff, Adrenaline, 0.6, Permutation)
                 Clock = round(Clock, 1)
     return Current
 
 
-# Called on during invalid inputs
-def error_invalid_input():
-    print("Invalid Input.")
+def setup_config():
+    global Start_Adrenaline, Gain, AttackSpeed, Activate_Bleeds, Debilitating, MyAbilities, Auto_Adrenaline, Time
 
+    def compare(lines):
+        # configuration followed by line number
+        correct_data = {"Adrenaline": 2, "Gain": 3, "AttackSpeed": 4, "Bleeds": 5, "Stuns": 6, "Abilities": 7,
+                        "Style": 8,
+                        "Time": 9, "units": 13}
+        for setting in correct_data:
+            if setting != lines[correct_data[setting]]:
+                return False
+        return True
 
-def repair():
-    repair = input("Configurations.txt has been modified, perform repair? (Y/N).\n>> ").upper()
-    if (repair == "Y") or (repair == "YES"):
-        import os
-        correct_data = ["# Rotation Parameters", "", "Adrenaline: ", "Gain: ", "AttackSpeed: ", "Bleeds: ", "Stuns: ",
-                        "Abilities: [,,,]", "Style: (,)", "Time: ", "", "# Mode", "", "units: seconds"]
-        if os.path.exists("Configurations.txt"):
-            os.remove("Configurations.txt")
-        with open("Configurations.txt", "w") as settings:
-            for line in correct_data:
-                settings.write(line + str("\n"))
-        input("Repair successful! fill out settings in Configurations.txt before running calculator again. "
-              "Press enter to exit.\n>> ")
-    sys.exit()
+    def validate(configurations):
+        ErrorLog = []
+        Null = False
+        for config in configurations:
+            if config == "":
+                Null = True
+        if Null is True:
+            ErrorLog.append("One or more settings have been left empty.")
 
+        try:
+            setting = int(configurations[0])
+            if not (0 <= setting <= 100):
+                ErrorLog.append("Adrenaline must be between 0 and 100 inclusive.")
+        except ValueError:
+            ErrorLog.append("Adrenaline must be an integer.")
 
-def compare(lines):
-    # configuration followed by line number
-    correct_data = {"Adrenaline": 2, "Gain": 3, "AttackSpeed": 4, "Bleeds": 5, "Stuns": 6, "Abilities": 7, "Style": 8,
-                    "Time": 9, "units": 13}
-    for setting in correct_data:
-        if setting != lines[correct_data[setting]]:
-            return False
-    return True
+        try:
+            setting = int(configurations[1])
+            if not (0 <= setting <= 100):
+                ErrorLog.append("Gain must be a positive integer between 0 and 100 inclusive.")
+        except ValueError:
+            ErrorLog.append("Gain must be an integer.")
 
+        if configurations[2].upper() not in ("SLOWEST", "SLOW", "AVERAGE", "FAST", "FASTEST"):
+            ErrorLog.append("AttackSpeed must either be one of the following options: ('slowest, slow, average, fast,"
+                            " fastest').")
 
-def validate(configurations):
-    ErrorLog = []
-    Null = False
-    for config in configurations:
-        if config == "":
-            Null = True
-    if Null is True:
-        ErrorLog.append("One or more settings have been left empty.")
+        setting = configurations[3]
+        if not ((setting.lower() == "false") or (setting.lower() == "true")):
+            ErrorLog.append("Bleeds must be true or false.")
 
-    try:
-        setting = int(configurations[0])
-        if not (0 <= setting <= 100):
-            ErrorLog.append("Adrenaline must be between 0 and 100 inclusive.")
-    except ValueError:
-        ErrorLog.append("Adrenaline must be an integer.")
+        setting = configurations[4]
+        if not ((setting.lower() == "false") or (setting.lower() == "true")):
+            ErrorLog.append("Stuns must be true or false.")
 
-    try:
-        setting = int(configurations[1])
-        if not (0 <= setting <= 100):
-            ErrorLog.append("Gain must be a positive integer between 0 and 100 inclusive.")
-    except ValueError:
-        ErrorLog.append("Gain must be an integer.")
-
-    if configurations[2].upper() not in ("SLOWEST", "SLOW", "AVERAGE", "FAST", "FASTEST"):
-        ErrorLog.append("AttackSpeed must either be one of the following options: ('slowest, slow, average, fast,"
-                        " fastest').")
-
-    setting = configurations[3]
-    if not ((setting.lower() == "false") or (setting.lower() == "true")):
-        ErrorLog.append("Bleeds must be true or false.")
-
-    setting = configurations[4]
-    if not ((setting.lower() == "false") or (setting.lower() == "true")):
-        ErrorLog.append("Stuns must be true or false.")
-
-    setting = configurations[5]
-    if setting[0] == "[" and setting[-1] == "]":
-        setting = setting[1:-1].split(",")
-        Counter = {}
-        if len(setting) > 0:
-            for ability in setting:
-                ability = ability.upper().strip()
-                if (ability not in Abilities) and (ability not in Counter):
-                    ErrorLog.append(f"{ability.strip()} is not a recognised ability, or is not included in this "
-                                    f"calculator.")
-                if ability in Counter:
-                    Counter[ability] += 1
-                    if Counter[ability] == 2:
-                        ErrorLog.append(f"{(ability.strip())} is referenced 2 or more times within array. Ensure it "
-                                        f"is only referenced once.")
-                else:
-                    Counter[ability] = 1
+        setting = configurations[5]
+        if setting[0] == "[" and setting[-1] == "]":
+            setting = setting[1:-1].split(",")
+            Counter = {}
+            if len(setting) > 0:
+                for ability in setting:
+                    ability = ability.upper().strip()
+                    if (ability not in Abilities) and (ability not in Counter):
+                        ErrorLog.append(f"{ability.strip()} is not a recognised ability, or is not included in this "
+                                        f"calculator.")
+                    if ability in Counter:
+                        Counter[ability] += 1
+                        if Counter[ability] == 2:
+                            ErrorLog.append(
+                                f"{(ability.strip())} is referenced 2 or more times within array. Ensure it "
+                                f"is only referenced once.")
+                    else:
+                        Counter[ability] = 1
+            else:
+                ErrorLog.append("No abilities were added")
         else:
-            ErrorLog.append("No abilities were added")
-    else:
-        ErrorLog.append("Abilities must be surrounded by square brackets [], and separated by comma's (,).")
+            ErrorLog.append("Abilities must be surrounded by square brackets [], and separated by comma's (,).")
 
-    setting = configurations[6]
-    if setting[0] == "(" and setting[-1] == ")":
-        setting = setting[1:-1].split(",")
-        if setting[0].upper() not in ("MAGIC", "RANGED", "MELEE"):
-            ErrorLog.append("First style option must be 'magic', 'ranged' or 'melee' (without quotes).")
-        if setting[1] not in ("1", "2"):
-            ErrorLog.append("Second style option must be 1 or 2 (for 1 handed / 2 handed weapon)3")
-    else:
-        ErrorLog.append("Style must start and end with round brackets (), with each option separated by a single "
-                        "comma (,).")
+        setting = configurations[6]
+        if setting[0] == "(" and setting[-1] == ")":
+            setting = setting[1:-1].split(",")
+            if setting[0].upper() not in ("MAGIC", "RANGED", "MELEE"):
+                ErrorLog.append("First style option must be 'magic', 'ranged' or 'melee' (without quotes).")
+            if setting[1] not in ("1", "2"):
+                ErrorLog.append("Second style option must be 1 or 2 (for 1 handed / 2 handed weapon)3")
+        else:
+            ErrorLog.append("Style must start and end with round brackets (), with each option separated by a single "
+                            "comma (,).")
 
-    try:
-        setting = float(configurations[7])
-        if not (setting > 0):
-            ErrorLog.append("Time must be a number greater than zero.")
-    except ValueError:
-        ErrorLog.append("Time must be a number.")
+        try:
+            setting = float(configurations[7])
+            if not (setting > 0):
+                ErrorLog.append("Time must be a number greater than zero.")
+        except ValueError:
+            ErrorLog.append("Time must be a number.")
 
-    if configurations[8].upper() not in ("SECONDS", "TICKS"):
-        ErrorLog.append("Units must be either 'seconds' or 'ticks' (without quotes).")
+        if configurations[8].upper() not in ("SECONDS", "TICKS"):
+            ErrorLog.append("Units must be either 'seconds' or 'ticks' (without quotes).")
 
-    return ErrorLog
+        return ErrorLog
 
+    def repair_config_file():
+        repair = input("Configurations.txt has been modified, perform repair? (Y/N).\n>> ").upper()
+        if (repair == "Y") or (repair == "YES"):
+            import os
+            correct_data = ["# Rotation Parameters", "", "Adrenaline: ", "Gain: ", "AttackSpeed: ", "Bleeds: ",
+                            "Stuns: ",
+                            "Abilities: [,,,]", "Style: (,)", "Time: ", "", "# Mode", "", "units: seconds"]
+            if os.path.exists("Configurations.txt"):
+                os.remove("Configurations.txt")
+            with open("Configurations.txt", "w") as settings:
+                for line in correct_data:
+                    settings.write(line + str("\n"))
+            input("Repair successful! fill out settings in Configurations.txt before running calculator again. "
+                  "Press enter to exit.\n>> ")
+        sys.exit()
 
-# --- Gets data for setup  --- #
-try:
+    # --- Gets data for setup  --- #
     filedata = []
     configurations = []
-    with open("Configurations.txt", "r") as settings:
-        for line in settings:
-            filedata.append(line.split(":")[0])
-            if ":" in line:
-                configurations.append(line.split(":")[1].strip())
-    if compare(filedata) is False:
-        repair()
-except:
-    repair()
-
-ErrorLog = validate(configurations)
-if len(ErrorLog) > 0:
-    print("Errors were found!!!\n")
-    for error in ErrorLog:
-        print(error)
-    input("\nCould not complete setup, please change fields accordingly and run the calculator again. "
-          "Press enter to exit.\n>> ")
-    sys.exit()
-
-Start_Adrenaline = int(configurations[0])
-Gain = int(configurations[1])
-AttackSpeed = configurations[2].upper()
-Activate_Bleeds = configurations[3]
-Bound = configurations[4]
-if Bound == "False":
-    Debilitating = []
-MyAbilities = []
-for ability in configurations[5][1:-1].split(","):
-    MyAbilities.append(ability.strip().upper())
-# --- Different styles of combat tree give varying amounts of adrenaline from auto attacks --- #
-Style = tuple(configurations[6][1:-1].split(","))
-if Style[0] == "MAGIC":
-    Auto_Adrenaline = 2
-else:
-    if Style[1] != "2":
+    try:
+        with open("Configurations.txt", "r") as settings:
+            for line in settings:
+                filedata.append(line.split(":")[0])
+                if ":" in line:
+                    configurations.append(line.split(":")[1].strip())
+        if compare(filedata) is False:
+            repair_config_file()
+    except:
+        repair_config_file()
+    ErrorLog = validate(configurations)
+    if len(ErrorLog) > 0:
+        print("Errors were found!!!\n")
+        for error in ErrorLog:
+            print(error)
+        input("\nCould not complete setup, please change fields accordingly and run the calculator again. "
+              "Press enter to exit.\n>> ")
+        sys.exit()
+    Start_Adrenaline = int(configurations[0])
+    Gain = int(configurations[1])
+    AttackSpeed = configurations[2].upper()
+    Activate_Bleeds = configurations[3]
+    Bound = configurations[4]
+    if Bound == "False":
+        Debilitating = []
+    MyAbilities = []
+    for ability in configurations[5][1:-1].split(","):
+        MyAbilities.append(ability.strip().upper())
+    # --- Different styles of combat tree give varying amounts of adrenaline from auto attacks --- #
+    Style = tuple(configurations[6][1:-1].split(","))
+    if Style[0] == "MAGIC":
         Auto_Adrenaline = 2
     else:
-        Auto_Adrenaline = 3
-Time = float(configurations[7])
-Units = configurations[8]
-if Units == "ticks":
-    Time *= 0.6
+        if Style[1] != "2":
+            Auto_Adrenaline = 2
+        else:
+            Auto_Adrenaline = 3
+    Time = float(configurations[7])
+    Units = configurations[8]
+    if Units == "ticks":
+        Time *= 0.6
 
 
-# --- Functions are laid out here --- #
-# Will check if an auto attack is needed to be used
-def auto_available():
-    for Ability in TrackCooldown:
-        if (AbilityCooldown[Ability] - TrackCooldown[Ability]) < AttackSpeedCooldowns[AttackSpeed]:
-            return False
-    return True
+def main():
+    global BasicIterator, ThresholdIterator, UltimateIterator, TrackCooldown, TrackBuff, AbilityPath, Ready
 
+    # Converts raw seconds into Years, Weeks, etc...
+    def get_time(Seconds):
+        Years = int(Seconds / 31449600)
+        Seconds -= Years * 31449600
+        Weeks = int(Seconds / 604800)
+        Seconds -= Weeks * 604800
+        Days = int(Seconds / 86400)
+        Seconds -= Days * 86400
+        Hours = int(Seconds / 3600)
+        Seconds -= Hours * 3600
+        Minutes = int(Seconds / 60)
+        Seconds -= Minutes * 60
+        Time = f"{Years} years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds."
+        return Time
 
-# Will generate an ability bar that has not been analysed yet
-def get_permutation(MyList, index):
-    NewList = []
-    Temp_List = list(MyList)
-    Denominator = len(Temp_List)
-    while len(Temp_List) > 0:
-        NewList.append(Temp_List[index % Denominator])
-        del Temp_List[index % Denominator]
-        index = int(index / Denominator)
-        Denominator -= 1
-    return NewList
+    # Removes abilities from lists and dictionaries not being used to save runtime and memory
+    def remove(CopyOfReady):
+        for ability in Abilities:
+            if not (ability in MyAbilities):
+                del AbilityDamage[ability]
+                del AbilityCooldown[ability]
+                del AbilityType[ability]
+                del AbilityTime[ability]
+                del Ready[ability]
+                if ability in Walking_Bleeds:
+                    del Walking_Bleeds[ability]
+                if ability in Bleeds:
+                    del Bleeds[ability]
+                if ability in Buff_Time:
+                    del Buff_Time[ability]
+                if ability in Buff_Effect:
+                    del Buff_Effect[ability]
+                if ability in Punishing:
+                    Punishing.remove(ability)
+                if ability in Debilitating:
+                    Debilitating.remove(ability)
+                if ability in CritBoost:
+                    CritBoost.remove(ability)
+                if ability in SpecialBleeds:
+                    SpecialBleeds.remove(ability)
+                if ability in SpecialAbilities:
+                    SpecialAbilities.remove(ability)
+                if ability in AoE:
+                    AoE.remove(ability)
+        return dict(Ready)
 
+    # Will generate an ability bar that has not been analysed yet
+    def get_permutation(MyList, index):
+        NewList = []
+        Temp_List = list(MyList)
+        Denominator = len(Temp_List)
+        while len(Temp_List) > 0:
+            NewList.append(Temp_List[index % Denominator])
+            del Temp_List[index % Denominator]
+            index = int(index / Denominator)
+            Denominator -= 1
+        return NewList
 
-# Converts raw seconds into Years, Weeks, etc...
-def get_time(Seconds):
-    Years = int(Seconds / 31449600)
-    Seconds -= Years * 31449600
-    Weeks = int(Seconds / 604800)
-    Seconds -= Weeks * 604800
-    Days = int(Seconds / 86400)
-    Seconds -= Days * 86400
-    Hours = int(Seconds / 3600)
-    Seconds -= Hours * 3600
-    Minutes = int(Seconds / 60)
-    Seconds -= Minutes * 60
-    Time = f"{Years} years, {Weeks} weeks, {Days} days, {Hours} hours, {Minutes} minutes and {Seconds} seconds."
-    return Time
-
-
-def modify_time(Time, Clock, ability):
-    if (ability in Bleeds) and (ability != "SHADOW TENDRILS") and ((Time - Clock) < Bleeds[ability]):
-        return (Time - Clock) / Bleeds[ability]
-    else:
-        if (ability not in SpecialAbilities) and (AbilityTime[ability] > 1.8) and (
-                    (Time - Clock) < AbilityTime[ability]):
-            return (Time - Clock) / AbilityTime[ability]
-    return 1
-
-
-# Removes abilities from lists and dictionaries not being used to save runtime and memory
-def remove(CopyOfReady):
-    for ability in Abilities:
-        if not (ability in MyAbilities):
-            del AbilityDamage[ability]
-            del AbilityCooldown[ability]
-            del AbilityType[ability]
-            del AbilityTime[ability]
-            del Ready[ability]
-            if ability in Walking_Bleeds:
-                del Walking_Bleeds[ability]
-            if ability in Bleeds:
-                del Bleeds[ability]
-            if ability in Buff_Time:
-                del Buff_Time[ability]
-            if ability in Buff_Effect:
-                del Buff_Effect[ability]
-            if ability in Punishing:
-                Punishing.remove(ability)
-            if ability in Debilitating:
-                Debilitating.remove(ability)
-            if ability in CritBoost:
-                CritBoost.remove(ability)
-            if ability in SpecialBleeds:
-                SpecialBleeds.remove(ability)
-            if ability in SpecialAbilities:
-                SpecialAbilities.remove(ability)
+    setup_config()
+    # --- Dictionaries, lists and other data types laid out here --- #
+    print("Starting process ...")
+    CopyOfReady = {}
+    CopyOfReady = remove(CopyOfReady)
+    BasicIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == "B"]
+    ThresholdIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == "T"]
+    UltimateIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == "U"]
+    TrackCooldown = {}
+    TrackBuff = {}
+    AbilityPath = []
+    BestRotation = []
+    WorstRotation = []
+    # --- Calculations for estimation of time remaining --- #
+    Permutations = math.factorial(len(MyAbilities))
+    Time_Remaining_Calculation = int(Permutations / 10000)
+    Runthrough = int(0)
+    # --- Tracking of highest and lowest damaging ability bars  --- #
+    CurrentHighest = float(0)
+    CurrentLowest = float("inf")
+    # Define the amount of targets affected by area of effect attacks
+    AoEAverageTargetsHit = 2.5
+    # --- Gets rotation length --- #
+    while True:
+        try:
+            if len(AoE) > 0:  # Only ask if AoE abilities are in MyAbilities
+                AoEAverageTargetsHit = float(input("How many targets on average will your AoE abilities hit? "))
+                if AoEAverageTargetsHit < 1:
+                    print("Area of effect abilities should hit at least 1 target per use.")
+                    continue
+            break
+        except:
+            print("Invalid Input.")
+    if AoEAverageTargetsHit > 1:
+        for ability in MyAbilities:
             if ability in AoE:
-                AoE.remove(ability)
-    return dict(Ready)
+                AbilityDamage[ability] = AbilityDamage[ability] * AoEAverageTargetsHit
+    print("Startup Complete! Warning, the more the abilities, and the higher the cycle time, the more time it will take"
+          " to process. A better processor will improve this speed.")
+    choice = input("Start Calculations? (Y/N) ").upper()
+    if (choice != "Y") and (choice != "YES"):
+        sys.exit()
+    # --- Calculations start here --- #
+    Start = int(time.time())  # Record time since epoch (UTC) (in seconds)
+    try:  # Will keep running until Control C (or other) is pressed to end process
+        for index in range(0, Permutations):
+            Permutation = get_permutation(MyAbilities, index)
+            Current = ability_rotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adrenaline,
+                                       Auto_Adrenaline, Time)
+            # --- Reset data ready for next ability bar to be tested
+            # and check if any better/worse bars have been found --- #
+            Ready = dict(CopyOfReady)
+            TrackCooldown = {}
+            TrackBuff = {}
+            if round(Current, 1) > CurrentHighest:
+                CurrentHighest = round(Current, 1)
+                BestRotation = []
+                BestRotation = list(AbilityPath)
+                BestBar = list(Permutation)
+                print(f"New best bar with damage {CurrentHighest}: {BestBar}")
+            if round(Current, 1) < CurrentLowest:
+                CurrentLowest = round(Current, 1)
+                WorstRotation = []
+                WorstRotation = list(AbilityPath)
+                WorstBar = list(Permutation)
+            AbilityPath = []
+            Runthrough += 1
+            # --- Time Remaining estimation calculations every 10,000 bars analysed --- #
+            if Runthrough == 10000:
+                End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
+            if Runthrough % 10000 == 0:
+                print(f"\r===== {round(float(Runthrough / Permutations) * 100, 3)}"
+                      f"% ===== Estimated time remaining: {get_time(int(End_Estimation - (time.time() - Start)))}"
+                      f"; Best found: {CurrentHighest}%" + (" " * 22), end="")
+                Time_Remaining_Calculation -= 1
+                End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
+                Start = time.time()
+    except KeyboardInterrupt:
+        print("\nProcess terminated!")
+    # --- Display results --- #
+    print(f"\n\nHighest ability damage: {CurrentHighest}%")
+    print(f"Best ability bar found: {BestBar}")
+    print(f"{BestRotation}\n")
+    print(f"Lowest ability damage: {CurrentLowest}%")
+    print(f"Worst ability bar found: {WorstBar}")
+    print(WorstRotation)
+    input("\nPress enter to exit\n")
 
 
-# Determines if enemy vulnerable to extra damage due to stuns or binds
-def buff_available():
-    for ability in Debilitating:
-        if ability in TrackBuff:
-            return True
-    return False
-
-
-# Decreases Cooldowns of abilities and buffs as well as modifying and damage multipliers
-def adjust_cooldowns(Current_Buff, Adrenaline, Time):
-    for Ability in TrackCooldown:
-        TrackCooldown[Ability] += Time
-        TrackCooldown[Ability] = round(TrackCooldown[Ability], 1)
-        if TrackCooldown[Ability] >= AbilityCooldown[Ability]:
-            TrackCooldown[Ability] = 0
-            if Ability in ThresholdIterator:
-                if Adrenaline >= 50:
-                    Ready[Ability] = True
-            elif Ability in UltimateIterator:
-                if Adrenaline == 100:
-                    Ready[Ability] = True
-            else:
-                Ready[Ability] = True
-    for Ability in Permutation:
-        if Ability in TrackCooldown:
-            if TrackCooldown[Ability] == 0:
-                del TrackCooldown[Ability]
-    for Ability in TrackBuff:
-        TrackBuff[Ability] += Time
-        TrackBuff[Ability] = round(TrackBuff[Ability], 1)
-        if TrackBuff[Ability] >= Buff_Time[Ability]:
-            TrackBuff[Ability] = 0
-    for Ability in Permutation:
-        if Ability in TrackBuff and TrackBuff[Ability] == 0:
-            del TrackBuff[Ability]
-            if (Ability not in Punishing) and (Ability in Buff_Effect):
-                Current_Buff = Current_Buff / Buff_Effect[Ability]
-    return Current_Buff
-
-
-# --- Dictionaries, lists and other data types laid out here --- #
-print("Starting process ...")
-
-CopyOfReady = {}
-CopyOfReady = remove(CopyOfReady)
-BasicIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == "B"]
-ThresholdIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == "T"]
-UltimateIterator = [Ability for Ability in AbilityType if AbilityType[Ability] == "U"]
-TrackCooldown = {}
-TrackBuff = {}
-AbilityPath = []
-BestRotation = []
-WorstRotation = []
-# --- Calculations for estimation of time remaining --- #
-Permutations = math.factorial(len(MyAbilities))
-Time_Remaining_Calculation = int(Permutations / 10000)
-Runthrough = int(0)
-# --- Tracking of highest and lowest damaging ability bars  --- #
-CurrentHighest = float(0)
-CurrentLowest = float("inf")
-
-# --- Gets rotation length --- #
-while True:
-    try:
-        if len(AoE) > 0:  # Only ask if AoE abilities are in MyAbilities
-            AoEAverageTargetsHit = float(input("How many targets on average will your AoE abilities hit? "))
-            if AoEAverageTargetsHit < 1:
-                print("Area of effect abilities should hit at least 1 target per use.")
-                continue
-        break
-    except:
-        error_invalid_input()
-
-if AoEAverageTargetsHit > 1:
-    for ability in MyAbilities:
-        if ability in AoE:
-            AbilityDamage[ability] = AbilityDamage[ability] * AoEAverageTargetsHit
-
-print("Startup Complete! Warning, the more the abilities, and the higher the cycle time, the more time it will take "
-      "to process. A better processor will improve this speed.")
-choice = input("Start Calculations? (Y/N) ").upper()
-if (choice != "Y") and (choice != "YES"):
-    sys.exit()
-# --- Calculations start here --- #
-
-Start = int(time.time())  # Record time since epoch (UTC) (in seconds)
-try:  # Will keep running until Control C (or other) is pressed to end process
-    for index in range(0, Permutations):
-        Permutation = get_permutation(MyAbilities, index)
-        Current = ability_rotation(Permutation, AttackSpeed, Activate_Bleeds, Gain, Start_Adrenaline, Auto_Adrenaline,
-                                   Time)
-        # --- Reset data ready for next ability bar to be tested
-        # and check if any better/worse bars have been found --- #
-        Ready = dict(CopyOfReady)
-        TrackCooldown = {}
-        TrackBuff = {}
-        if round(Current, 1) > CurrentHighest:
-            CurrentHighest = round(Current, 1)
-            BestRotation = []
-            BestRotation = list(AbilityPath)
-            BestBar = list(Permutation)
-            print(f"New best bar with damage {CurrentHighest}: {BestBar}")
-        if round(Current, 1) < CurrentLowest:
-            CurrentLowest = round(Current, 1)
-            WorstRotation = []
-            WorstRotation = list(AbilityPath)
-            WorstBar = list(Permutation)
-        AbilityPath = []
-        Runthrough += 1
-        # --- Time Remaining estimation calculations every 10,000 bars analysed --- #
-        if Runthrough == 10000:
-            End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
-        if Runthrough % 10000 == 0:
-            print(f"\r===== {round(float(Runthrough / Permutations) * 100, 3)}"
-                  f"% ===== Estimated time remaining: {get_time(int(End_Estimation - (time.time() - Start)))}"
-                  f"; Best found: {CurrentHighest}%" + (" " * 22), end="")
-            Time_Remaining_Calculation -= 1
-            End_Estimation = int(Time_Remaining_Calculation * (time.time() - Start))
-            Start = time.time()
-except KeyboardInterrupt:
-    print("\nProcess terminated!")
-# --- Display results --- #
-print(f"\n\nHighest ability damage: {CurrentHighest}%")
-print(f"Best ability bar found: {BestBar}")
-print(f"{BestRotation}\n")
-print(f"Lowest ability damage: {CurrentLowest}%")
-print(f"Worst ability bar found: {WorstBar}")
-print(WorstRotation)
-input("\nPress enter to exit\n")
+# Execute main() function
+if __name__ == '__main__':
+    main()
