@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import math
+import itertools
 import sys
 import time
 from typing import List, Dict, Tuple
@@ -571,18 +571,6 @@ def main() -> None:
                     aoe.remove(ability)
         return dict(ability_ready)
 
-    # Will generate an ability bar that has not been analysed yet
-    def get_permutation(my_list: List[str], index: int) -> List[str]:
-        new_list: List[str] = []
-        temp_list: List[str] = list(my_list)
-        denominator: int = len(temp_list)
-        while len(temp_list) > 0:
-            new_list.append(temp_list[index % denominator])
-            del temp_list[index % denominator]
-            index = int(index / denominator)
-            denominator -= 1
-        return new_list
-
     setup_config()
     # --- Dictionaries, lists and other data types laid out here --- #
     print("Starting process ...")
@@ -596,8 +584,8 @@ def main() -> None:
     best_rotation: List[str] = []
     worst_rotation: List[str] = []
     # --- Calculations for estimation of time remaining --- #
-    permutations: int = math.factorial(len(my_abilities))
-    time_remaining_calculation: int = int(permutations / 10000)
+    permutations: List[List[str]] = list(itertools.permutations(my_abilities))
+    time_remaining_calculation: int = int(len(permutations) / 10000)
     runthrough: int = 0
     # --- Tracking of highest and lowest damaging ability bars  --- #
     current_highest: float = 0
@@ -627,8 +615,7 @@ def main() -> None:
     # --- Calculations start here --- #
     start: int = int(time.time())  # Record time since epoch (UTC) (in seconds)
     try:  # Will keep running until Control C (or other) is pressed to end process
-        for index in range(0, permutations):
-            permutation = get_permutation(my_abilities, index)
+        for permutation in permutations:
             damage_dealt: float = ability_rotation(permutation)
             # --- Reset data ready for next ability bar to be tested
             # and check if any better/worse bars have been found --- #
@@ -652,7 +639,7 @@ def main() -> None:
             if runthrough == 10000:
                 end_estimation = int(time_remaining_calculation * (time.time() - start))
             if runthrough % 10000 == 0:
-                print(f"\r===== {round(float(runthrough / permutations) * 100, 3)}"
+                print(f"\r===== {round(float(runthrough / len(permutations)) * 100, 3)}"
                       f"% ===== Estimated time remaining: {get_time(int(end_estimation - (time.time() - start)))}"
                       f"; Best found: {current_highest}%" + (" " * 22), end="")
                 time_remaining_calculation -= 1
