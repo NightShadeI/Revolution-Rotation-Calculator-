@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import itertools
+import math
 import sys
 import time
 from typing import List, Dict, Tuple
@@ -584,8 +585,8 @@ def main() -> None:
     best_rotation: List[str] = []
     worst_rotation: List[str] = []
     # --- Calculations for estimation of time remaining --- #
-    permutations: List[List[str]] = list(itertools.permutations(my_abilities))
-    time_remaining_calculation: int = int(len(permutations) / 10000)
+    permutation_count: int = math.factorial(len(my_abilities))
+    time_remaining_calculation: int = permutation_count / 10000
     runthrough: int = 0
     # --- Tracking of highest and lowest damaging ability bars  --- #
     current_highest: float = 0
@@ -615,7 +616,7 @@ def main() -> None:
     # --- Calculations start here --- #
     start: int = int(time.time())  # Record time since epoch (UTC) (in seconds)
     try:  # Will keep running until Control C (or other) is pressed to end process
-        for permutation in permutations:
+        for permutation in itertools.permutations(my_abilities):
             damage_dealt: float = ability_rotation(permutation)
             # --- Reset data ready for next ability bar to be tested
             # and check if any better/worse bars have been found --- #
@@ -639,7 +640,7 @@ def main() -> None:
             if runthrough == 10000:
                 end_estimation = int(time_remaining_calculation * (time.time() - start))
             if runthrough % 10000 == 0:
-                print(f"\r===== {round(float(runthrough / len(permutations)) * 100, 3)}"
+                print(f"\r===== {round(float(runthrough / permutation_count) * 100, 3)}"
                       f"% ===== Estimated time remaining: {get_time(int(end_estimation - (time.time() - start)))}"
                       f"; Best found: {current_highest}%" + (" " * 22), end="")
                 time_remaining_calculation -= 1
