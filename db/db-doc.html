@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>revoDB.db Database Schema</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <style type="text/css">
+                    body { background-color: #fff; color: #000; font-family: Consolas, monospace}
+                    a:link { color: #03d; }
+                    a:visited { color: #039; }
+                    a:hover { color: #09f; }
+                    table { border-collapse: collapse; width: 100%; }
+                    table caption { color: #666; text-align: right; font-size: 65%; margin-bottom: .5ex; }
+                    table td, table th { border: solid 1px #666; border-collapse: collapse; padding: .3ex .5ex; vertical-align: top; }
+                    table tbody tr:hover { background-color: #ffc; }
+                    table thead th { text-align: left; background-color: #ccc; }
+                    table tbody th { text-align: left; white-space: nowrap; }
+                    .table { page-break-inside: avoid; }
+                    .pk { float: right; cursor: arrow; color: #999; }
+                    .type { white-space: nowrap; }
+                    .null { text-align: center; }
+                    .flag { white-space: nowrap; font-size: 70%; display: inline-block; border: solid 1px #ccc; padding: .25ex .5ex; background-color: #ddd; margin-right: 1ex; }
+                    .tocref { float: right; text-decoration: none; font-weight: normal; }
+                    .footer { text-align: center; margin-top: 1em; font-size: 80%;}
+                    li.view:before { content: "VIEW"; font-size: 70%; display: inline-block; border: solid 1px #ccc; padding: .25ex .5ex; background-color: #ddd; margin-right: 1ex; }
+                    @media print {
+                    body { font-size: .8em; }
+                    #toc, .tocref { display: none; }
+                    a:link, a:visited { color: #000; text-decoration: none; }
+                    }
+                </style>
+  </head>
+  <body>
+    <h1>revoDB.db Database Schema</h1>
+    <div id="toc">
+      <ul>
+        <li class="table"><a href="#Ability">Ability</a></li>
+        <li class="table"><a href="#AbilityType">AbilityType</a></li>
+        <li class="table"><a href="#AoeAbility">AoeAbility</a></li>
+        <li class="table"><a href="#AttackSpeedCooldown">AttackSpeedCooldown</a></li>
+        <li class="table"><a href="#AttackStyle">AttackStyle</a></li>
+        <li class="table"><a href="#BindingAbility">BindingAbility</a></li>
+        <li class="table"><a href="#BleedingAbility">BleedingAbility</a></li>
+        <li class="table"><a href="#BuffEffect">BuffEffect</a></li>
+        <li class="table"><a href="#BuffTime">BuffTime</a></li>
+        <li class="table"><a href="#CritBoostAbility">CritBoostAbility</a></li>
+        <li class="table"><a href="#DebilitatingAbility">DebilitatingAbility</a></li>
+        <li class="table"><a href="#PunishingAbility">PunishingAbility</a></li>
+        <li class="table"><a href="#Setting">Setting</a></li>
+        <li class="table"><a href="#SpecialAbility">SpecialAbility</a></li>
+        <li class="table"><a href="#SpecialBleedingAbility">SpecialBleedingAbility</a></li>
+        <li class="table"><a href="#WalkingAbility">WalkingAbility</a></li>
+      </ul>
+    </div>
+    <div class="table">
+      <h2 id=""><a href="#toc" class="tocref">⇧</a>
+        Database Properties
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="type">Database</td>
+            <td class="type">.\revoDB.db</td>
+          </tr>
+          <tr>
+            <td class="type">ServerVersion</td>
+            <td class="type">3.18.0</td>
+          </tr>
+          <tr>
+            <td class="type">DatabaseSize</td>
+            <td class="type">208 KB</td>
+          </tr>
+          <tr>
+            <td class="type">Created</td>
+            <td class="type">20/11/2017 10:13 PM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="Ability"><a href="#toc" class="tocref">⇧</a>Table Ability</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_Ability_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <td class="type">nvarchar (1)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_Ability_1_0">⇨ <a href="#AbilityType">AbilityType</a>.Type</span></td>
+          </tr>
+          <tr>
+            <th>Damage</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>Ready</th>
+            <td class="type">bit</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>Style</th>
+            <td class="type">nvarchar (10)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_Ability_0_0">⇨ <a href="#AttackStyle">AttackStyle</a>.Style</span></td>
+          </tr>
+          <tr>
+            <th>Time</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>Cooldown</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="AbilityType"><a href="#toc" class="tocref">⇧</a>Table AbilityType</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_AbilityType_1">◆</span>Type</th>
+            <td class="type">nvarchar (1)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="AoeAbility"><a href="#toc" class="tocref">⇧</a>Table AoeAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_AoeAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_AoeAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="AttackSpeedCooldown"><a href="#toc" class="tocref">⇧</a>Table AttackSpeedCooldown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_AttackSpeedCooldown_1">◆</span>Speed</th>
+            <td class="type">nvarchar (10)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>value</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="AttackStyle"><a href="#toc" class="tocref">⇧</a>Table AttackStyle</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_AttackStyle_1">◆</span>Style</th>
+            <td class="type">nvarchar (10)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="BindingAbility"><a href="#toc" class="tocref">⇧</a>Table BindingAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_BindingAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_BindingAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="BleedingAbility"><a href="#toc" class="tocref">⇧</a>Table BleedingAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_BleedingAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_BleedingAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+          <tr>
+            <th>Value</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="BuffEffect"><a href="#toc" class="tocref">⇧</a>Table BuffEffect</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_BuffEffect_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_BuffEffect_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+          <tr>
+            <th>Value</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="BuffTime"><a href="#toc" class="tocref">⇧</a>Table BuffTime</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_BuffTime_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_BuffTime_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+          <tr>
+            <th>Value</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="CritBoostAbility"><a href="#toc" class="tocref">⇧</a>Table CritBoostAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_CritBoostAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_CritBoostAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="DebilitatingAbility"><a href="#toc" class="tocref">⇧</a>Table DebilitatingAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_DebilitatingAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_DebilitatingAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="PunishingAbility"><a href="#toc" class="tocref">⇧</a>Table PunishingAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_PunishingAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_PunishingAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="Setting"><a href="#toc" class="tocref">⇧</a>Table Setting</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_Setting_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>Value</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="SpecialAbility"><a href="#toc" class="tocref">⇧</a>Table SpecialAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_SpecialAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_SpecialAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="SpecialBleedingAbility"><a href="#toc" class="tocref">⇧</a>Table SpecialBleedingAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_SpecialBleedingAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_SpecialBleedingAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table">
+      <h2 id="WalkingAbility"><a href="#toc" class="tocref">⇧</a>Table WalkingAbility</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30ex">Name</th>
+            <th style="width:20ex">Type</th>
+            <th style="width:4ex">NULL</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><span class="pk" title="PRIMARY KEY sqlite_autoindex_WalkingAbility_1">◆</span>Name</th>
+            <td class="type">nvarchar (25)</td>
+            <td class="null">☐</td>
+            <td><span class="flag" title="FK_WalkingAbility_0_0">⇨ <a href="#Ability">Ability</a>.Name</span></td>
+          </tr>
+          <tr>
+            <th>Value</th>
+            <td class="type">float (53, 0)</td>
+            <td class="null">☐</td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer">
+                    Generated by <a href="http://SqlDbDoc.codeplex.com/">DB&gt;doc</a> and <a href="https://github.com/ErikEJ/SqlCeToolbox">SQLite/SQL Server Compact Toolbox</a> on
+                    November 21, 2017, 00:37:02</div>
+  </body>
+</html>
