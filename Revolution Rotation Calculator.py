@@ -389,7 +389,7 @@ def setup_config() -> None:
                     if c.fetchone() is None and ability not in counter:
                         error_log.append(f"{ability.strip()} is not a recognised ability, or is not included in this "
                                          f"calculator.")
-                        conn.close()
+                    conn.close()
                     if ability in counter:
                         counter[ability] += 1
                         if counter[ability] == 2:
